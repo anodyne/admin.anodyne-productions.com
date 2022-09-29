@@ -28,11 +28,4 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
-    'anodyne' => [
-        'docs-versions' => explode(',', env('ANODYNE_DOCS_VERSIONS')),
-        'exchange' => env('ANODYNE_NOVA_EXCHANGE'),
-        'galaxy' => env('ANODYNE_GALAXY'),
-        'login' => env('ANODYNE_HAS_LOGIN'),
-    ],
 ];

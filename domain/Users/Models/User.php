@@ -2,12 +2,14 @@
 
 namespace Domain\Users\Models;
 
+use App\Models\Sponsor;
 use Domain\Exchange\Models\Addon;
 use Domain\Users\Role;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -48,9 +50,10 @@ class User extends Authenticatable implements FilamentUser
         'is_exchange_author' => 'boolean',
     ];
 
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    public function sponsor(): HasOne
+    {
+        return $this->hasOne(Sponsor::class);
+    }
 
     public function canAccessFilament(): bool
     {

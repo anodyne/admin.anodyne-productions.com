@@ -9,6 +9,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserResource extends Resource
 {
@@ -54,8 +55,15 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('email')->searchable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->description(fn (User $record) => $record->email)
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->where(
+                            fn ($q) => $q
+                                ->where('name', 'like', "%{$search}%")
+                                ->orWhere('email', 'like', "%{$search}%")
+                        );
+                    }),
                 Tables\Columns\BadgeColumn::make('role')
                     ->enum([
                         'admin' => 'Admin',

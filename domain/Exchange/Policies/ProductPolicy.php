@@ -21,12 +21,12 @@ class ProductPolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->isStaff;
     }
 
     public function view(User $user, Product $product): bool
     {
-        return true;
+        return $user->isStaff;
     }
 
     public function create(User $user): bool
