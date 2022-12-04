@@ -30,6 +30,7 @@
         "lorisleiva/laravel-actions": "^2.0",
         "silber/page-cache": "^1.0",
         "spatie/laravel-activitylog": "^4.0",
+        "staudenmeir/belongs-to-through": "^2.5",
         "torchlight/torchlight-commonmark": "^0.5.5"
     },
     "require-dev": {

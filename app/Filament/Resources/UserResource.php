@@ -47,6 +47,10 @@ class UserResource extends Resource
                         ->label('Exchange author')
                         ->helperText('Can this user create add-ons in Exchange?')
                         ->columnSpan('full'),
+                    Forms\Components\Toggle::make('is_blog_author')
+                        ->label('Blog author')
+                        ->helperText('Can this user create blog posts?')
+                        ->columnSpan('full'),
                 ]),
             ]);
     }
@@ -75,8 +79,14 @@ class UserResource extends Resource
                         'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-400' => 'staff',
                         'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-400' => 'user',
                     ]),
-                Tables\Columns\BooleanColumn::make('is_exchange_author')
+                Tables\Columns\IconColumn::make('is_exchange_author')
+                    ->boolean()
                     ->label('Exchange Author')
+                    ->trueIcon('flex-check-square')
+                    ->falseIcon('flex-delete-square'),
+                Tables\Columns\IconColumn::make('is_blog_author')
+                    ->boolean()
+                    ->label('Blog Author')
                     ->trueIcon('flex-check-square')
                     ->falseIcon('flex-delete-square'),
             ])
@@ -88,6 +98,7 @@ class UserResource extends Resource
                         'user' => 'User',
                     ]),
                 Tables\Filters\TernaryFilter::make('is_exchange_author')->label('Is Exchange Author'),
+                Tables\Filters\TernaryFilter::make('is_blog_author')->label('Is Blog Author'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()

@@ -23,10 +23,11 @@ class QuestionsRelationManager extends RelationManager
                     ->required()
                     ->rows(2)
                     ->columnSpan('full'),
-                Forms\Components\RichEditor::make('answer')
+                Forms\Components\MarkdownEditor::make('answer')
                     ->required()
                     ->columnSpan('full'),
-                Forms\Components\Toggle::make('published'),
+                Forms\Components\Toggle::make('published')
+                    ->helperText('Only published questions will be shown to users'),
             ]);
     }
 
@@ -77,6 +78,6 @@ class QuestionsRelationManager extends RelationManager
 
     protected function getTableEmptyStateIcon(): ?string
     {
-        return 'uxl-customer-doubt-1';
+        return 'uxl-customer-doubt';
     }
 }

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AddonResource\Pages;
 use App\Filament\Resources\AddonResource\RelationManagers;
 use Domain\Exchange\Models\Addon;
+use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -31,7 +32,13 @@ class AddonResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form->schema([]);
+        return $form->schema(
+            Forms\Components\Card::make()->schema(
+                self::getFormSchema()
+            )
+            ->columns(1)
+            ->columnSpan('full')
+        );
     }
 
     public static function table(Table $table): Table
@@ -133,8 +140,92 @@ class AddonResource extends Resource
         return 'Create your first add-on to share with the community.';
     }
 
-    protected function getTableEmptyStateIcon(): ?string
+    public static function getFormSchema(?string $section = null): array
     {
-        return 'uxl-plugin-sharing-1';
+        if ($section === 'versions') {
+            return [
+                Forms\Components\Repeater::make('versions')
+                    ->relationship()
+                    ->label('')
+                    ->maxItems(1)
+                    ->columnSpan('full')
+                    ->disableItemDeletion()
+                    ->disableItemMovement()
+                    ->columns(4)
+                    ->schema([
+                        Forms\Components\TextInput::make('version')
+                            ->required()
+                            ->columnSpan(2),
+
+                        Forms\Components\Select::make('product')
+                            ->required()
+                            ->multiple()
+                            ->placeholder('Select product')
+                            ->relationship('product', 'name', fn (Builder $query) => $query->published())
+                            ->preload()
+                            ->maxItems(1)
+                            ->columnSpan(2),
+
+                        Forms\Components\MarkdownEditor::make('release_notes')
+                            ->columnSpan('full'),
+
+                        Forms\Components\MarkdownEditor::make('upgrade_instructions')
+                            ->columnSpan('full'),
+
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('filename')
+                            ->required()
+                            ->collection('downloads')
+                            ->columnSpan('full'),
+
+                        Forms\Components\Toggle::make('published')
+                            ->default(true)
+                            ->columnSpan(2),
+                    ]),
+            ];
+        }
+
+        return [
+            Forms\Components\Group::make([
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->columnSpan(1),
+
+                Forms\Components\Select::make('type')
+                    ->placeholder('Select a type')
+                    ->required()
+                    ->options(function () {
+                        $options = [
+                            'theme' => 'Skin',
+                            'extension' => 'MOD',
+                        ];
+
+                        if (! auth()->user()->isUser) {
+                            $options['rank'] = 'Rank';
+                        }
+
+                        return $options;
+                    })
+                    ->columnSpan(1),
+
+                Forms\Components\Select::make('products')
+                    ->label('Product(s)')
+                    ->required()
+                    ->multiple()
+                    ->placeholder('Select product(s)')
+                    ->relationship('products', 'name', fn (Builder $query) => $query->published())
+                    ->preload()
+                    ->columnSpan(1),
+
+                Forms\Components\MarkdownEditor::make('description')
+                    ->columnSpan('full'),
+
+                Forms\Components\Toggle::make('published')
+                    ->helperText('Only published add-ons will be available for download')
+                    ->default(false)
+                    ->columnSpan('full'),
+            ])
+            ->columns(3)
+            ->columnSpan('full'),
+        ];
     }
 }

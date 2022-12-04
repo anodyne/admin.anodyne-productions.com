@@ -26,10 +26,14 @@ class VersionsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('version')->required(),
                 Forms\Components\Select::make('product')
-                    ->options(Product::published()->get()->pluck('name', 'id'))
-                    ->placeholder('Select a product'),
-                Forms\Components\RichEditor::make('release_notes')->columnSpan('full'),
-                Forms\Components\RichEditor::make('upgrade_instructions')->columnSpan('full'),
+                    ->required()
+                    ->multiple()
+                    ->placeholder('Select product')
+                    ->relationship('product', 'name', fn (Builder $query) => $query->published())
+                    ->preload()
+                    ->maxItems(1),
+                Forms\Components\MarkdownEditor::make('release_notes')->columnSpan('full'),
+                Forms\Components\MarkdownEditor::make('upgrade_instructions')->columnSpan('full'),
                 Forms\Components\SpatieMediaLibraryFileUpload::make('filename')
                     ->columnSpan('full')
                     ->collection('downloads'),
@@ -111,7 +115,7 @@ class VersionsRelationManager extends RelationManager
 
     protected function getTableEmptyStateIcon(): ?string
     {
-        return 'uxl-download-1';
+        return 'uxl-download';
     }
 
     protected function getTableQuery(): Builder | Relation
