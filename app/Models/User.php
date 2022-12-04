@@ -1,10 +1,8 @@
 <?php
 
-namespace Domain\Users\Models;
+namespace App\Models;
 
-use App\Models\Addon;
-use App\Models\Sponsor;
-use Domain\Users\Role;
+use App\Role;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

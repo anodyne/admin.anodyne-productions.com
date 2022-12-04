@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Sponsor;
-use Domain\Users\Models\User;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SponsorPolicy
@@ -27,7 +27,7 @@ class SponsorPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \Domain\Users\Models\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(User $user)
@@ -38,7 +38,7 @@ class SponsorPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \Domain\Users\Models\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Models\Sponsor  $sponsor
      * @return \Illuminate\Auth\Access\Response|bool
      */
@@ -50,7 +50,7 @@ class SponsorPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \Domain\Users\Models\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user)
@@ -61,7 +61,7 @@ class SponsorPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \Domain\Users\Models\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Models\Sponsor  $sponsor
      * @return \Illuminate\Auth\Access\Response|bool
      */
@@ -73,7 +73,7 @@ class SponsorPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \Domain\Users\Models\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Models\Sponsor  $sponsor
      * @return \Illuminate\Auth\Access\Response|bool
      */
@@ -85,7 +85,7 @@ class SponsorPolicy
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \Domain\Users\Models\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Models\Sponsor  $sponsor
      * @return \Illuminate\Auth\Access\Response|bool
      */
@@ -97,7 +97,7 @@ class SponsorPolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \Domain\Users\Models\User  $user
+     * @param  \App\Models\User  $user
      * @param  \App\Models\Sponsor  $sponsor
      * @return \Illuminate\Auth\Access\Response|bool
      */

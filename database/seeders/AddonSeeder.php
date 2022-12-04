@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Addon;
-use Domain\Users\Models\User;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AddonSeeder extends Seeder

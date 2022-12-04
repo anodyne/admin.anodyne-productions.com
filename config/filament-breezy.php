@@ -34,7 +34,7 @@ return [
     */
     'user_model' => config(
         'auth.providers.users.model',
-        Domain\Users\Models\User::class
+        App\Models\User::class
     ),
     /*
     |--------------------------------------------------------------------------

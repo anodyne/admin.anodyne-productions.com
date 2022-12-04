@@ -70,7 +70,7 @@
                                 {{ __('Dashboard') }}
                             </x-jet-nav-link>
 
-                            @can('viewAny', Domain\Users\Models\User::class)
+                            @can('viewAny', App\Models\User::class)
                             <x-jet-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
                                 {{ __('Users') }}
                             </x-jet-nav-link>

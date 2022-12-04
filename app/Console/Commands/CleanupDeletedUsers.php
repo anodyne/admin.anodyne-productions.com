@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Users\Commands;
+namespace App\Console\Commands;
 
-use Domain\Users\Models\User;
+use App\Models\User;
 use Illuminate\Console\Command;
 
 class CleanupDeletedUsers extends Command
