@@ -2,8 +2,8 @@
 
 namespace Domain\Users\Models;
 
+use App\Models\Addon;
 use App\Models\Sponsor;
-use Domain\Exchange\Models\Addon;
 use Domain\Users\Role;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;

@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AddonResource\Pages;
 use App\Filament\Resources\AddonResource\RelationManagers;
-use Domain\Exchange\Models\Addon;
+use App\Models\Addon;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;

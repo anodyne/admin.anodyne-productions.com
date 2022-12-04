@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Filament\Resources\AddonResource;
+use App\Models;
 use App\View\Components\Button;
 use App\View\Components\LandingDefinitionList;
 use App\View\Components\LandingDefinitionListItem;
@@ -16,6 +17,7 @@ use Filament\Navigation\NavigationItem;
 use Filament\Navigation\UserMenuItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -46,6 +48,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('landing-feature-list-item', LandingFeatureListItem::class);
         Blade::component('landing-definition-list', LandingDefinitionList::class);
         Blade::component('landing-definition-list-item', LandingDefinitionListItem::class);
+
+        Relation::morphMap([
+            'addon' => Models\Addon::class,
+            'question' => Models\Question::class,
+            'version' => Models\Version::class,
+        ]);
 
         $this->setupFactories();
         $this->setupMacros();

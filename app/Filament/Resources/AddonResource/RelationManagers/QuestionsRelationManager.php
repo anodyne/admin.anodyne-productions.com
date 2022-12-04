@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\AddonResource\RelationManagers;
 
-use Domain\Exchange\Models\Question;
+use App\Models\Question;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;

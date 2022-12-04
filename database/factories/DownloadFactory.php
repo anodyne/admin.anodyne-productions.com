@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use Domain\Exchange\Models\Download;
+use App\Models\Download;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

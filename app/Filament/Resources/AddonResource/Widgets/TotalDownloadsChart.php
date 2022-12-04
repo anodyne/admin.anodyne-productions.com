@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\AddonResource\Widgets;
 
-use Domain\Exchange\Models\Addon;
+use App\Models\Addon;
 use Filament\Widgets\BarChartWidget;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;

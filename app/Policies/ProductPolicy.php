@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Domain\Exchange\Policies;
+namespace App\Policies;
 
-use Domain\Exchange\Models\Product;
+use App\Models\Product;
 use Domain\Users\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

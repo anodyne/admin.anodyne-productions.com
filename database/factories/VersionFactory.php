@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use Domain\Exchange\Models\Version;
+use App\Models\Version;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

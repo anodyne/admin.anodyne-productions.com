@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use Domain\Exchange\Models\Addon;
+use App\Models\Addon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AddonFactory extends Factory

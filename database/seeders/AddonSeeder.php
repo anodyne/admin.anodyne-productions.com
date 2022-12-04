@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Domain\Exchange\Models\Addon;
+use App\Models\Addon;
 use Domain\Users\Models\User;
 use Illuminate\Database\Seeder;
 

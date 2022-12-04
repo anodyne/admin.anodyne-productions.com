@@ -11,7 +11,7 @@
 ]) }}>
     <div @class([
         'flex items-center justify-center text-primary-500',
-        'dark:bg-gray-700' => config('tables.dark_mode'),
+        'dark:bg-gray-800' => config('tables.dark_mode'),
     ])>
         <x-dynamic-component
             :component="$icon"

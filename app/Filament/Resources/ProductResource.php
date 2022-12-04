@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
-use Domain\Exchange\Models\Product;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;

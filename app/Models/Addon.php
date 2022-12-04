@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Domain\Exchange\Models;
+namespace App\Models;
 
-use Domain\Exchange\Models\Builders\AddonBuilder;
 use Domain\Users\Models\User;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -60,8 +59,8 @@ class Addon extends Model
         );
     }
 
-    public function newEloquentBuilder($query): AddonBuilder
+    public function scopePublished($query)
     {
-        return new AddonBuilder($query);
+        return $query->where('published', true);
     }
 }

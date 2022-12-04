@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\AddonResource\RelationManagers;
 
-use Domain\Exchange\Models\Product;
-use Domain\Exchange\Models\Version;
+use App\Models\Product;
+use App\Models\Version;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;

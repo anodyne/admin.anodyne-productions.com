@@ -1,7 +1,7 @@
 <?php
 
-use Domain\Exchange\Models\Addon;
-use Domain\Exchange\Models\Version;
+use App\Models\Addon;
+use App\Models\Version;
 use Domain\Users\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

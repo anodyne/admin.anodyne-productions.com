@@ -4,7 +4,7 @@ namespace App\Filament\Resources\AddonResource\Pages;
 
 use App\Filament\Resources\AddonResource;
 use App\Forms\Components\Header;
-use Domain\Exchange\Models\Product;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Wizard\Step;
