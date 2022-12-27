@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\AddonType;
 use App\Filament\Resources\AddonResource\Pages;
 use App\Filament\Resources\AddonResource\RelationManagers;
 use App\Models\Addon;
@@ -33,11 +34,19 @@ class AddonResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema(
-            Forms\Components\Card::make()->schema(
-                self::getFormSchema()
-            )
-            ->columns(1)
-            ->columnSpan('full')
+            [
+                Forms\Components\Card::make()->schema(
+                    self::getFormSchema()
+                )
+                ->columns(1)
+                ->columnSpan('full'),
+
+                Forms\Components\Card::make()->schema(
+                    self::getFormSchema('previews')
+                )
+                ->columns(1)
+                ->columnSpan('full'),
+            ]
         );
     }
 
@@ -49,17 +58,16 @@ class AddonResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\BadgeColumn::make('type')
-                    ->enum([
-                        'theme' => 'Skin',
-                        'extension' => 'MOD',
-                        'genre' => 'Genre',
-                        'rank' => 'Rank Set',
-                    ])
+                    ->enum(
+                        collect(AddonType::cases())
+                            ->flatMap(fn ($case) => [$case->value => $case->displayName()])
+                            ->all()
+                    )
                     ->colors([
-                        'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-400' => 'extension',
-                        'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-400' => 'theme',
-                        'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-400' => 'genre',
-                        'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-400' => 'rank',
+                        'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-400' => AddonType::extension->value,
+                        'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-400' => AddonType::theme->value,
+                        // 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-400' => AddonType::genre->value,
+                        'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-400' => AddonType::rank->value,
                     ]),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Author')
@@ -69,9 +77,7 @@ class AddonResource extends Resource
                     ->counts('downloads')
                     ->label('# of Downloads'),
                 Tables\Columns\TextColumn::make('rating')->sortable(),
-                Tables\Columns\BooleanColumn::make('published')
-                    ->trueIcon('flex-check-square')
-                    ->falseIcon('flex-delete-square'),
+                Tables\Columns\ToggleColumn::make('published'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
@@ -184,6 +190,21 @@ class AddonResource extends Resource
             ];
         }
 
+        if ($section === 'previews') {
+            return [
+                Forms\Components\Group::make([
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('previews')
+                        ->label('Preview image(s)')
+                        ->helperText('Upload up to 5 screenshots for your add-on to give users a preview of what they can expect')
+                        ->maxFiles(5)
+                        ->collection('previews')
+                        ->columnSpan('full'),
+                ])
+                ->columns(3)
+                ->columnSpan('full'),
+            ];
+        }
+
         return [
             Forms\Components\Group::make([
                 Forms\Components\TextInput::make('name')
@@ -193,18 +214,11 @@ class AddonResource extends Resource
                 Forms\Components\Select::make('type')
                     ->placeholder('Select a type')
                     ->required()
-                    ->options(function () {
-                        $options = [
-                            'theme' => 'Skin',
-                            'extension' => 'MOD',
-                        ];
-
-                        if (! auth()->user()->isUser) {
-                            $options['rank'] = 'Rank';
-                        }
-
-                        return $options;
-                    })
+                    ->options(
+                        collect(AddonType::cases())
+                            ->flatMap(fn ($case) => [$case->value => $case->displayName()])
+                            ->all()
+                    )
                     ->columnSpan(1),
 
                 Forms\Components\Select::make('products')

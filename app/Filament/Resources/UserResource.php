@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UserRole;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
@@ -36,11 +37,12 @@ class UserResource extends Resource
                         ->columnSpan(2),
                     Forms\Components\Select::make('role')
                         ->required()
-                        ->options([
-                            'user' => 'User',
-                            'staff' => 'Staff Member',
-                            'admin' => 'Admin',
-                        ])
+                        ->placeholder('Select a role')
+                        ->options(
+                            collect(UserRole::cases())
+                                ->flatMap(fn ($case) => [$case->value => $case->displayName()])
+                                ->all()
+                        )
                         ->visible(fn () => auth()->user()->isAdmin)
                         ->columnSpan(2),
                     Forms\Components\Toggle::make('is_exchange_author')
@@ -69,15 +71,13 @@ class UserResource extends Resource
                         );
                     }),
                 Tables\Columns\BadgeColumn::make('role')
-                    ->enum([
-                        'admin' => 'Admin',
-                        'staff' => 'Staff',
-                        'user' => 'User',
-                    ])
+                    ->enum(
+                        collect(UserRole::cases())->flatMap(fn ($role) => [$role->value => $role->displayName()])->all()
+                    )
                     ->colors([
-                        'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-400' => 'admin',
-                        'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-400' => 'staff',
-                        'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-400' => 'user',
+                        'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-400' => UserRole::admin->value,
+                        'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-400' => UserRole::staff->value,
+                        'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-400' => UserRole::user->value,
                     ]),
                 Tables\Columns\IconColumn::make('is_exchange_author')
                     ->boolean()
@@ -92,11 +92,10 @@ class UserResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
-                    ->options([
-                        'admin' => 'Admin',
-                        'staff' => 'Staff',
-                        'user' => 'User',
-                    ]),
+                    ->options(array_map(
+                        fn ($role) => $role->value,
+                        UserRole::cases()
+                    )),
                 Tables\Filters\TernaryFilter::make('is_exchange_author')->label('Is Exchange Author'),
                 Tables\Filters\TernaryFilter::make('is_blog_author')->label('Is Blog Author'),
             ])

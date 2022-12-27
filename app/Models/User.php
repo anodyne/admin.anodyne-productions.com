@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Role;
+use App\Enums\UserRole;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,6 +45,7 @@ class User extends Authenticatable implements FilamentUser
     ];
 
     protected $casts = [
+        'role' => UserRole::class,
         'email_verified_at' => 'datetime',
         'is_exchange_author' => 'boolean',
         'is_blog_author' => 'boolean',
@@ -63,21 +64,21 @@ class User extends Authenticatable implements FilamentUser
     public function isAdmin(): Attribute
     {
         return Attribute::make(
-            get: fn ($value): bool => $this->role === Role::ADMIN
+            get: fn ($value): bool => $this->role === UserRole::admin
         );
     }
 
     public function isStaff(): Attribute
     {
         return Attribute::make(
-            get: fn ($value): bool => $this->role === Role::STAFF
+            get: fn ($value): bool => $this->role === UserRole::staff
         );
     }
 
     public function isUser(): Attribute
     {
         return Attribute::make(
-            get: fn ($value): bool => $this->role === Role::USER
+            get: fn ($value): bool => $this->role === UserRole::user
         );
     }
 

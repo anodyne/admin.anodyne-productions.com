@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Addon;
 use App\Models\User;
-use App\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AddonPolicy
@@ -15,7 +15,7 @@ class AddonPolicy
 
     public function before(User $user, $ability)
     {
-        if (in_array($user->role, [Role::ADMIN, Role::STAFF])) {
+        if (in_array($user->role, [UserRole::admin, UserRole::staff])) {
             return true;
         }
     }
