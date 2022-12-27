@@ -45,9 +45,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('versions_count')
                     ->counts('versions')
                     ->label('# of Versions'),
-                Tables\Columns\BooleanColumn::make('published')
-                    ->trueIcon('flex-check-square')
-                    ->falseIcon('flex-delete-square'),
+                Tables\Columns\ToggleColumn::make('published'),
             ])
             ->filters([
                 //

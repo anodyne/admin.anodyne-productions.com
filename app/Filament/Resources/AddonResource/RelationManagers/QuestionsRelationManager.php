@@ -39,9 +39,7 @@ class QuestionsRelationManager extends RelationManager
                     ->description(fn (Question $record): string => $record->answer)
                     ->searchable()
                     ->wrap(),
-                Tables\Columns\BooleanColumn::make('published')
-                    ->trueIcon('flex-check-square')
-                    ->falseIcon('flex-delete-square'),
+                Tables\Columns\ToggleColumn::make('published'),
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('published'),

@@ -54,9 +54,7 @@ class VersionsRelationManager extends RelationManager
                     ->counts('downloads')
                     ->label('Downloads'),
                 Tables\Columns\TextColumn::make('product.name')->label('Product'),
-                Tables\Columns\BooleanColumn::make('published')
-                    ->trueIcon('flex-check-square')
-                    ->falseIcon('flex-delete-square'),
+                Tables\Columns\ToggleColumn::make('published'),
             ])
             ->filters([
                 //
