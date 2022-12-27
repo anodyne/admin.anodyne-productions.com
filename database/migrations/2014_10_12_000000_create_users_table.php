@@ -1,6 +1,6 @@
 <?php
 
-use App\Role;
+use App\Enums\UserRole;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
-            $table->string('role', 5)->default(Role::USER);
+            $table->string('role', 5)->default(UserRole::user->value);
             $table->boolean('is_exchange_author')->default(true);
             $table->boolean('is_blog_author')->default(false);
             $table->boolean('is_galaxy_author')->default(true);
