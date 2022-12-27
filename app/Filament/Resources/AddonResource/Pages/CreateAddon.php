@@ -30,6 +30,10 @@ class CreateAddon extends CreateRecord
                     Card::make(AddonResource::getFormSchema())
                         ->columns(1)
                         ->columnSpan('full'),
+
+                    Card::make(AddonResource::getFormSchema('previews'))
+                        ->columns(1)
+                        ->columnSpan('full'),
                 ]),
 
             Step::make('Add-on files')
