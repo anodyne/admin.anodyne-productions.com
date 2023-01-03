@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use App\Traits\InteractsWithMedia;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,14 +15,16 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\MediaLibrary\HasMedia;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasMedia
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
     use LogsActivity;
     use CausesActivity;
+    use InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -103,5 +106,18 @@ class User extends Authenticatable implements FilamentUser
     protected function defaultProfilePhotoUrl()
     {
         return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=f99c26&background=fef3c7';
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')
+            ->acceptsMimeTypes(['image/jpeg', 'image/jpg', 'image/png'])
+            ->singleFile()
+            ->useFallbackUrl($this->defaultProfilePhotoUrl());
+    }
+
+    public static function getMediaPath(): string
+    {
+        return 'users/{model_id}/';
     }
 }

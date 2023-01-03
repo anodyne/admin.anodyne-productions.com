@@ -6,11 +6,20 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\AddonCollection;
 use App\Models\Addon;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class GetAddonsController
 {
     public function __invoke()
     {
-        return new AddonCollection(Addon::published()->get());
+        $addons = QueryBuilder::for(Addon::class)
+            ->allowedFilters(['name', 'user.name'])
+            ->allowedIncludes(['products'])
+            ->published()
+            ->with('user', 'products')
+            ->withCount('downloads')
+            ->get();
+
+        return new AddonCollection($addons);
     }
 }

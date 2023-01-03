@@ -60,14 +60,14 @@ class AddonResource extends Resource
                 Tables\Columns\BadgeColumn::make('type')
                     ->enum(
                         collect(AddonType::cases())
-                            ->flatMap(fn ($case) => [$case->value => $case->displayName()])
+                            ->flatMap(fn ($type) => [$type->value => $type->displayName()])
                             ->all()
                     )
                     ->colors([
-                        'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-400' => AddonType::extension->value,
-                        'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-400' => AddonType::theme->value,
+                        'ring-1 ring-warning-300 bg-warning-400/10 text-warning-500 dark:ring-warning-400/30 dark:bg-warning-400/10 dark:text-warning-400' => AddonType::extension->value,
+                        'ring-1 ring-success-300 dark:ring-success-400/30 bg-success-400/10 text-success-500 dark:text-success-400' => AddonType::theme->value,
                         // 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-400' => AddonType::genre->value,
-                        'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-400' => AddonType::rank->value,
+                        'ring-1 ring-primary-300 bg-primary-400/10 text-primary-500 dark:ring-primary-400/30 dark:bg-primary-400/10 dark:text-primary-400' => AddonType::rank->value,
                     ]),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Author')
@@ -81,11 +81,11 @@ class AddonResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
-                    ->options([
-                        'theme' => 'Skin',
-                        'extension' => 'MOD',
-                        'rank' => 'Rank Set',
-                    ]),
+                    ->options(
+                        collect(AddonType::cases())
+                            ->flatMap(fn ($type) => [$type->value => $type->displayName()])
+                            ->all()
+                    ),
                 Tables\Filters\SelectFilter::make('author')
                     ->relationship('user', 'name')
                     ->hidden(fn () => auth()->user()->isUser),
@@ -196,6 +196,23 @@ class AddonResource extends Resource
                     Forms\Components\SpatieMediaLibraryFileUpload::make('previews')
                         ->label('Preview image(s)')
                         ->helperText('Upload up to 5 screenshots for your add-on to give users a preview of what they can expect')
+                        ->multiple()
+                        ->maxFiles(5)
+                        ->enableReordering()
+                        ->collection('previews')
+                        ->columnSpan('full'),
+                ])
+                ->columns(3)
+                ->columnSpan('full'),
+            ];
+        }
+
+        if ($section === 'static-previews') {
+            return [
+                Forms\Components\Group::make([
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('previews')
+                        ->label('Preview image(s)')
+                        ->helperText('Upload up to 5 screenshots for your add-on to give users a preview of what they can expect')
                         ->maxFiles(5)
                         ->collection('previews')
                         ->columnSpan('full'),
@@ -216,7 +233,7 @@ class AddonResource extends Resource
                     ->required()
                     ->options(
                         collect(AddonType::cases())
-                            ->flatMap(fn ($case) => [$case->value => $case->displayName()])
+                            ->flatMap(fn ($type) => [$type->value => $type->displayName()])
                             ->all()
                     )
                     ->columnSpan(1),
