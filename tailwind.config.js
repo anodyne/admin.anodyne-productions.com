@@ -28,6 +28,9 @@ module.exports = {
                 success: colors.emerald,
                 warning: colors.amber,
 
+                emerald: colors.emerald,
+                sky: colors.sky,
+
                 amber: {
                     ...colors.amber,
                     ...{ 500: '#f99c26' }
