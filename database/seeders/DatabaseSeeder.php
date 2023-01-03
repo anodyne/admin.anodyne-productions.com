@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             // AddonSeeder::class,
+            GameSeeder::class,
         ]);
     }
 }
