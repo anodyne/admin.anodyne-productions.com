@@ -2,13 +2,18 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\GameGenre;
 use App\Filament\Resources\GameResource\Pages;
+use App\Filament\Resources\GameResource\Widgets\GameGenresChart;
+use App\Filament\Resources\GameResource\Widgets\GamesOverview;
+use App\Filament\Resources\GameResource\Widgets\GameVersionsChart;
 use App\Models\Game;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
 
 class GameResource extends Resource
 {
@@ -30,24 +35,11 @@ class GameResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('name'),
                         Forms\Components\Select::make('genre')
-                            ->options([
-                                'baj' => 'Star Trek: Bajoran',
-                                'bl5' => 'Babylon-5',
-                                'blank' => 'Blank',
-                                'bsg' => 'Battlestar Galactica',
-                                'crd' => 'Star Trek: Cardassian',
-                                'dnd' => 'Dungeons and Dragons',
-                                'ds9' => 'Star Trek: DS9 era',
-                                'dsv' => 'seaQuest DSV',
-                                'ent' => 'Star Trek: Enterprise era',
-                                'kli' => 'Star Trek: Klingon',
-                                'mov' => 'Star Trek: Movie era',
-                                'rom' => 'Star Trek: Romulan',
-                                'sg1' => 'Stargate: SG-1',
-                                'sga' => 'Stargate Atlantis',
-                                'sto' => 'Star Trek Online',
-                                'tos' => 'Star Trek: TOS era',
-                            ]),
+                            ->options(
+                                collect(GameGenre::cases())
+                                    ->flatMap(fn ($genre) => [$genre->value => $genre->displayName()])
+                                    ->all()
+                            ),
                         Forms\Components\TextInput::make('url')
                             ->type('url')
                             ->label('URL')
@@ -83,26 +75,19 @@ class GameResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->description(fn (Game $record): string => $record->url ?? '')
-                    ->searchable(),
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->where(
+                            fn ($q) => $q
+                                ->where('name', 'like', "%{$search}%")
+                                ->orWhere('url', 'like', "%{$search}%")
+                        );
+                    }),
                 Tables\Columns\BadgeColumn::make('genre')
-                    ->enum([
-                        'baj' => 'Star Trek: Bajoran',
-                        'bl5' => 'Babylon-5',
-                        'blank' => 'Blank',
-                        'bsg' => 'Battlestar Galactica',
-                        'crd' => 'Star Trek: Cardassian',
-                        'dnd' => 'Dungeons and Dragons',
-                        'ds9' => 'Star Trek: DS9 era',
-                        'dsv' => 'seaQuest DSV',
-                        'ent' => 'Star Trek: Enterprise era',
-                        'kli' => 'Star Trek: Klingon',
-                        'mov' => 'Star Trek: Movie era',
-                        'rom' => 'Star Trek: Romulan',
-                        'sg1' => 'Stargate: SG-1',
-                        'sga' => 'Stargate Atlantis',
-                        'sto' => 'Star Trek Online',
-                        'tos' => 'Star Trek: TOS era',
-                    ]),
+                    ->enum(
+                        collect(GameGenre::cases())
+                            ->flatMap(fn ($genre) => [$genre->value => $genre->displayName()])
+                            ->all()
+                    ),
                 Tables\Columns\TextColumn::make('version')->label('Nova version'),
                 Tables\Columns\TextColumn::make('php_version')->label('PHP version'),
             ])
@@ -133,6 +118,15 @@ class GameResource extends Resource
             'create' => Pages\CreateGame::route('/create'),
             'view' => Pages\ViewGame::route('/{record}'),
             'edit' => Pages\EditGame::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            GamesOverview::class,
+            GameGenresChart::class,
+            GameVersionsChart::class,
         ];
     }
 }

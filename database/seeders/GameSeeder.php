@@ -14,6 +14,12 @@ class GameSeeder extends Seeder
      */
     public function run()
     {
-        Game::factory()->times(5)->create();
+        for ($i = 1; $i <= 150; $i++) {
+            Game::factory()
+                ->create([
+                    'created_at' => $date = fake()->dateTimeBetween('-6 months'),
+                    'updated_at' => fake()->boolean ? $date : now(),
+                ]);
+        }
     }
 }
