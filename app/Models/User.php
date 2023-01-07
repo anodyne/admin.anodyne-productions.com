@@ -33,7 +33,6 @@ class User extends Authenticatable implements FilamentUser, HasMedia
         'role',
         'is_exchange_author',
         'is_galaxy_author',
-        'is_blog_author',
     ];
 
     protected static $logFillable = true;
@@ -51,7 +50,6 @@ class User extends Authenticatable implements FilamentUser, HasMedia
         'role' => UserRole::class,
         'email_verified_at' => 'datetime',
         'is_exchange_author' => 'boolean',
-        'is_blog_author' => 'boolean',
     ];
 
     public function sponsor(): HasOne

@@ -25,7 +25,6 @@ class CreateUsersTable extends Migration
             $table->text('profile_photo_path')->nullable();
             $table->string('role', 5)->default(UserRole::user->value);
             $table->boolean('is_exchange_author')->default(true);
-            $table->boolean('is_blog_author')->default(false);
             $table->boolean('is_galaxy_author')->default(true);
             $table->timestamps();
         });
