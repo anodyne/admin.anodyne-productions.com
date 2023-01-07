@@ -9,10 +9,10 @@
         "prod": "concurrently \"npm run js:build-prod\" \"npm run css:build-prod\""
     },
     "dependencies": {
-        "@tailwindcss/aspect-ratio": "^0.4.0",
-        "@tailwindcss/forms": "^0.4.1",
-        "@tailwindcss/line-clamp": "^0.3.0",
-        "@tailwindcss/typography": "^0.5.4",
+        "@tailwindcss/aspect-ratio": "^0.4.2",
+        "@tailwindcss/forms": "^0.5.3",
+        "@tailwindcss/line-clamp": "^0.4.2",
+        "@tailwindcss/typography": "^0.5.8",
         "alpinejs": "3.1.1",
         "autoprefixer": "^10.4.8",
         "concurrently": "^6.3.0",
