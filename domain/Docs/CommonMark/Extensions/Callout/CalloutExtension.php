@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Domain\Docs\CommonMark\Extensions\Badge;
+namespace Domain\Docs\CommonMark\Extensions\Callout;
 
-use Domain\Docs\CommonMark\Extensions\Callout\CalloutParser;
-use Domain\Docs\CommonMark\Extensions\Callout\CalloutRenderer;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ExtensionInterface;
 
