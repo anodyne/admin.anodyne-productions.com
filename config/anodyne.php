@@ -24,4 +24,8 @@ return [
             'level' => 'Gold sponsor',
         ],
     ],
+
+    'registration' => [
+        'exceptions' => explode(',', env('ANODYNE_REGISTRATION_EXCEPTIONS')),
+    ],
 ];
