@@ -26,9 +26,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command('activitylog:clean')->weekly();
+        // $schedule->command('activitylog:clean')->weekly();
 
-        $schedule->command('anodyne:cleanup-users')->daily();
+        // $schedule->command('anodyne:cleanup-users')->daily();
+
+        $schedule->command('anodyne:fetch-sponsorship-tiers')->dailyAt('01:00');
+
+        $schedule->command('anodyne:fetch-sponsors')->dailyAt('01:30');
     }
 
     /**
