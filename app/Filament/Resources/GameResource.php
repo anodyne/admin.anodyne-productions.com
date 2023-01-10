@@ -129,4 +129,9 @@ class GameResource extends Resource
             GameVersionsChart::class,
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->orderBy('updated_at', 'desc');
+    }
 }
