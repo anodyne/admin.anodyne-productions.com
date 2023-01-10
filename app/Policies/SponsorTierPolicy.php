@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Sponsor;
+use App\Models\SponsorTier;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SponsorPolicy
+class SponsorTierPolicy
 {
     use HandlesAuthorization;
 
@@ -27,10 +27,10 @@ class SponsorPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Sponsor  $sponsor
+     * @param  \App\Models\SponsorTier  $sponsorTier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Sponsor $sponsor)
+    public function view(User $user, SponsorTier $sponsorTier)
     {
         return $user->isAdmin
             ? $this->allow()
@@ -52,24 +52,22 @@ class SponsorPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Sponsor  $sponsor
+     * @param  \App\Models\SponsorTier  $sponsorTier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Sponsor $sponsor)
+    public function update(User $user, SponsorTier $sponsorTier)
     {
-        return $user->isAdmin
-            ? $this->allow()
-            : $this->denyAsNotFound();
+        return $this->denyAsNotFound();
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Sponsor  $sponsor
+     * @param  \App\Models\SponsorTier  $sponsorTier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Sponsor $sponsor)
+    public function delete(User $user, SponsorTier $sponsorTier)
     {
         return $this->denyAsNotFound();
     }
@@ -78,10 +76,10 @@ class SponsorPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Sponsor  $sponsor
+     * @param  \App\Models\SponsorTier  $sponsorTier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Sponsor $sponsor)
+    public function restore(User $user, SponsorTier $sponsorTier)
     {
         return $this->denyAsNotFound();
     }
@@ -90,10 +88,10 @@ class SponsorPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Sponsor  $sponsor
+     * @param  \App\Models\SponsorTier  $sponsorTier
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Sponsor $sponsor)
+    public function forceDelete(User $user, SponsorTier $sponsorTier)
     {
         return $this->denyAsNotFound();
     }
