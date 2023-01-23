@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\CheckLatestVersionController;
+use App\Http\Controllers\Api\CheckVersionController;
 use App\Http\Controllers\Api\GetAddonsController;
 use App\Http\Controllers\Api\GetPremiumSponsorsController;
+use App\Http\Controllers\Api\LatestVersionController;
 use App\Http\Controllers\Api\RegisterGameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,5 @@ Route::post('/games', RegisterGameController::class);
 
 Route::get('/sponsors/premium', GetPremiumSponsorsController::class);
 
-Route::post('/nova/latest-version', CheckLatestVersionController::class);
+Route::get('/nova/latest-version', LatestVersionController::class);
+Route::post('/nova/check-version', CheckVersionController::class);
