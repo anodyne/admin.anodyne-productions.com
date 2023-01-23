@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Release;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class GameFactory extends Factory
             'name' => str($this->faker->words(3, asText: true))->title(),
             'url' => $this->faker->url,
             'genre' => $this->faker->randomElement(['baj', 'bl5', 'blank', 'bsg', 'crd', 'dnd', 'ds9', 'dsv', 'ent', 'kli', 'mov', 'rom', 'sg1', 'sga', 'sto', 'tos']),
-            'version' => $this->faker->randomElement(['2.6.0', '2.6.1', '2.6.2', '2.7.0', '2.7.1', '2.7.2']),
+            'release_id' => Release::inRandomOrder()->first(),
             'php_version' => $this->faker->randomElement(['7.4', '8.0', '8.1', '8.2']),
             'db_driver' => 'mysqli',
             'db_version' => $this->faker->randomElement(['5.7', '8.0']),
