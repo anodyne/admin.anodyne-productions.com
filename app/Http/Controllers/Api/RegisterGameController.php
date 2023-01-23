@@ -28,7 +28,7 @@ class RegisterGameController extends Controller
     public function __invoke(Request $request)
     {
         $data = [
-            'name' => $request->name,
+            'name' => $request->name ?? $request->url,
             'genre' => $request->genre,
             'release_id' => Release::version($request->version)->first()->id,
             'php_version' => $request->php_version,
