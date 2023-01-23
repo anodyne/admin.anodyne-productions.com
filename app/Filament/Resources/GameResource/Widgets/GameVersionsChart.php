@@ -13,9 +13,10 @@ class GameVersionsChart extends DoughnutChartWidget
 
     protected function getData(): array
     {
-        $data = Game::orderBy('version', 'asc')
-            ->selectRaw('version, count(*) as total')
-            ->groupBy('version')
+        $data = Game::with('release')
+            ->orderBy('release_id', 'asc')
+            ->selectRaw('release_id, count(*) as total')
+            ->groupBy('release_id')
             ->get();
 
         return [
@@ -38,7 +39,7 @@ class GameVersionsChart extends DoughnutChartWidget
                     'spacing' => 15,
                 ],
             ],
-            'labels' => $data->map(fn (Game $game) => $game->version),
+            'labels' => $data->map(fn (Game $game) => $game->release->version),
         ];
     }
 }

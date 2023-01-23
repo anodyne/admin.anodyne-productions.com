@@ -50,7 +50,9 @@ class GameResource extends Resource
 
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\TextInput::make('version')->label('Nova version'),
+                        Forms\Components\Grid::make()->relationship('release')->schema([
+                            Forms\Components\TextInput::make('version')->label('Nova version'),
+                        ]),
                         Forms\Components\TextInput::make('php_version')->label('PHP version'),
                         Forms\Components\TextInput::make('server_software'),
                         Forms\Components\TextInput::make('db_driver')->label('Database platform'),
@@ -88,7 +90,7 @@ class GameResource extends Resource
                             ->flatMap(fn ($genre) => [$genre->value => $genre->displayName()])
                             ->all()
                     ),
-                Tables\Columns\TextColumn::make('version')->label('Nova version'),
+                Tables\Columns\TextColumn::make('release.version')->label('Nova version'),
                 Tables\Columns\TextColumn::make('php_version')->label('PHP version'),
             ])
             ->filters([

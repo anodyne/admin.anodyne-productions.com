@@ -37,21 +37,21 @@ class AddonPolicy
 
     public function update(User $user, Addon $addon): bool
     {
-        return $addon->user->is($user);
+        return $user->is_exchange_author && $addon->user->is($user);
     }
 
     public function delete(User $user, Addon $addon): bool
     {
-        return $addon->user->is($user);
+        return $user->is_exchange_author && $addon->user->is($user);
     }
 
     public function restore(User $user, Addon $addon): bool
     {
-        return $addon->user->is($user);
+        return $user->is_exchange_author && $addon->user->is($user);
     }
 
     public function forceDelete(User $user, Addon $addon): bool
     {
-        return $addon->user->is($user);
+        return $user->is_exchange_author && $addon->user->is($user);
     }
 }

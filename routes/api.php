@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CheckLatestVersionController;
 use App\Http\Controllers\Api\GetAddonsController;
 use App\Http\Controllers\Api\GetPremiumSponsorsController;
 use App\Http\Controllers\Api\RegisterGameController;
@@ -25,3 +26,5 @@ Route::get('/addons', GetAddonsController::class);
 Route::post('/games', RegisterGameController::class);
 
 Route::get('/sponsors/premium', GetPremiumSponsorsController::class);
+
+Route::post('/nova/latest-version', CheckLatestVersionController::class);

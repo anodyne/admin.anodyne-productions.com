@@ -90,23 +90,40 @@ class AddonResource extends Resource
                     ->relationship('user', 'name')
                     ->hidden(fn () => auth()->user()->isUser),
                 Tables\Filters\TernaryFilter::make('published'),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->icon('flex-eye')
-                    ->size('md')
-                    ->iconButton()
-                    ->color('secondary'),
+                // Tables\Actions\ViewAction::make()
+                //     ->icon('flex-eye')
+                //     ->size('md')
+                //     ->iconButton()
+                //     ->color('secondary'),
                 Tables\Actions\EditAction::make()
                     ->icon('flex-edit-circle')
                     ->size('md')
                     ->iconButton()
                     ->color('secondary'),
-                Tables\Actions\DeleteAction::make()
-                    ->icon('flex-delete-bin')
-                    ->size('md')
-                    ->iconButton()
-                    ->successNotificationMessage('Add-on deleted'),
+                // Tables\Actions\DeleteAction::make()
+                //     ->icon('flex-delete-bin')
+                //     ->size('md')
+                //     ->iconButton()
+                //     ->successNotificationTitle('Add-on deleted'),
+
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\DeleteAction::make()
+                        ->icon('flex-delete-bin')
+                        ->size('md')
+                        ->successNotificationTitle('Add-on deleted'),
+                    Tables\Actions\ForceDeleteAction::make()
+                        ->icon('flex-delete-bin')
+                        ->size('md')
+                        ->successNotificationTitle('Add-on permanently deleted'),
+                    Tables\Actions\RestoreAction::make()
+                        ->icon('flex-delete-bin-restore')
+                        ->size('md')
+                        ->successNotificationTitle('Add-on restored'),
+                ])->color('secondary'),
+
             ])
             ->bulkActions([]);
     }
@@ -133,7 +150,10 @@ class AddonResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->when(auth()->user()->isUser, fn ($query) => $query->where('user_id', auth()->id()));
+            ->when(auth()->user()->isUser, fn ($query) => $query->where('user_id', auth()->id()))
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 
     protected function getTableEmptyStateHeading(): ?string
