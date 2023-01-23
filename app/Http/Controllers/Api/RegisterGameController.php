@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Game;
+use App\Models\Release;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class RegisterGameController extends Controller
         $data = [
             'name' => $request->name,
             'genre' => $request->genre,
-            'version' => $request->version,
+            'release_id' => Release::version($request->version)->first()->id,
             'php_version' => $request->php_version,
             'db_driver' => $request->db_driver,
             'db_version' => $request->db_version,
