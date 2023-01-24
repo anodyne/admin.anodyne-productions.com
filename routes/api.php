@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\CheckVersionController;
 use App\Http\Controllers\Api\GetAddonsController;
 use App\Http\Controllers\Api\GetPremiumSponsorsController;
 use App\Http\Controllers\Api\LatestVersionController;
@@ -29,4 +28,3 @@ Route::post('/games', RegisterGameController::class);
 Route::get('/sponsors/premium', GetPremiumSponsorsController::class);
 
 Route::get('/nova/latest-version', LatestVersionController::class);
-Route::post('/nova/check-version', CheckVersionController::class);
