@@ -126,6 +126,6 @@ class SponsorResource extends Resource
 
     protected static function getNavigationBadgeColor(): ?string
     {
-        return 'danger';
+        return static::getNavigationBadge() > 0 ? 'danger' : 'secondary';
     }
 }

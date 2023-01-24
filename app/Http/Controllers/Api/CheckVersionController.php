@@ -12,7 +12,10 @@ class CheckVersionController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $latestRelease = Release::latest('date')->first();
+        $latestRelease = Release::query()
+            ->where('date', '<=', now()->startOfDay())
+            ->latest('date')
+            ->first();
 
         if (version_compare($latestRelease->version, $request->version, '>')) {
             return $latestRelease->toJson();

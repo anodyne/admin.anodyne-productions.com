@@ -11,6 +11,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Database\Eloquent\Model;
 
 class ReleaseResource extends Resource
 {
@@ -30,7 +31,10 @@ class ReleaseResource extends Resource
             ->schema([
                 Forms\Components\Card::make()->schema([
                     Forms\Components\TextInput::make('version')->required()->columnSpanFull(),
-                    Forms\Components\DatePicker::make('date')->columnSpan(1),
+                    Forms\Components\DatePicker::make('date')
+                        ->nullable()
+                        ->weekStartsOnSunday()
+                        ->columnSpan(1),
                     Forms\Components\Select::make('severity')
                         ->options(
                             collect(ReleaseSeverity::cases())->flatMap(fn ($severity) => [$severity->value => $severity->displayName()])
@@ -53,7 +57,10 @@ class ReleaseResource extends Resource
                     ->searchable()
                     ->size('lg')
                     ->weight('bold')
-                    ->sortable(),
+                    ->sortable()
+                    ->icon(fn (Model $record) => $record->pendingRelease ? 'flex-alert-diamond' : '')
+                    ->iconPosition('after')
+                    ->color(fn (Model $record) => $record->pendingRelease ? 'danger' : ''),
                 Tables\Columns\TextColumn::make('date')
                     ->date()
                     ->label('Release date')
@@ -109,5 +116,15 @@ class ReleaseResource extends Resource
             'view' => Pages\ViewRelease::route('/{record}'),
             'edit' => Pages\EditRelease::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::hasPendingRelease()->count();
+    }
+
+    protected static function getNavigationBadgeColor(): ?string
+    {
+        return static::getNavigationBadge() > 0 ? 'danger' : 'secondary';
     }
 }
