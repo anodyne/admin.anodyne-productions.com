@@ -1,9 +1,24 @@
 <?php
 
 use App\Filament\Resources\ReleaseResource;
+use App\Filament\Resources\ReleaseResource\Pages\ListReleases;
+use App\Models\Release;
 use function Pest\Laravel\get;
+use function Pest\Livewire\livewire;
 
 uses()->group('releases');
+
+it('lists releases', function () {
+    signInAsAdmin();
+
+    $releases = Release::factory()
+        ->count(5)
+        ->create();
+
+    livewire(ListReleases::class)
+        ->assertTableColumnExists('version')
+        ->assertCanSeeTableRecords($releases);
+});
 
 it('renders the list of releases for admins', function () {
     signInAsAdmin()
