@@ -11,6 +11,8 @@ class GetPremiumSponsorsController
 {
     public function __invoke()
     {
-        return new SponsorCollection(Sponsor::active()->premiumTier()->get());
+        return new SponsorCollection(
+            Sponsor::active()->premiumTier()->shouldBeDisplayed()->get()
+        );
     }
 }
