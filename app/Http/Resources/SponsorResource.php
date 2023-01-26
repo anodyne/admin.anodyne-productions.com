@@ -16,7 +16,7 @@ class SponsorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->display_name ?? $this->name,
             'link' => $this->link,
             'image' => $this->getFirstMediaUrl('logo'),
         ];
