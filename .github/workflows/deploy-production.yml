@@ -3,18 +3,14 @@ name: Production Deployment
 concurrency: production_deployment
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    branches: [main]
-    types:
-      - completed
+  release:
+    types: [published]
 
 jobs:
   production-deploy:
-    runs-on: ubuntu-22.04
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'release' }}
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy
-        uses: jbrooksuk/laravel-forge-action@v1.0.4
+        uses: jbrooksuk/laravel-forge-action@v1
         with:
           trigger_url: ${{ secrets.PRODUCTION_TRIGGER_URL }}
