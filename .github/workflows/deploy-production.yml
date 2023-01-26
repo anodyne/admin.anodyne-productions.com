@@ -11,6 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
-        uses: jbrooksuk/laravel-forge-action@v1
+        uses: jbrooksuk/laravel-forge-action@v1.0.4
         with:
           trigger_url: ${{ secrets.PRODUCTION_TRIGGER_URL }}
