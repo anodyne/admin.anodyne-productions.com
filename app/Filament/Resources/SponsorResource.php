@@ -73,14 +73,12 @@ class SponsorResource extends Resource
             ->filters([
                 Tables\Filters\TernaryFilter::make('active')->default(),
                 Tables\Filters\SelectFilter::make('tier')
-                    ->options([
-                        'backer' => 'Backer',
-                        'sponsor' => 'Sponsor',
-                        'silver' => 'Silver Sponsor',
-                        'gold' => 'Gold Sponsor',
-                        'platinum' => 'Platinum Sponsor',
-                    ])
+                    ->relationship('tier', 'name')
+                    ->multiple()
                     ->label('Sponsorship tier'),
+                Tables\Filters\Filter::make('requires_attention')
+                    ->toggle()
+                    ->query(fn (Builder $query) => $query->attentionRequired()),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
@@ -93,11 +91,6 @@ class SponsorResource extends Resource
                     ->size('md')
                     ->iconButton()
                     ->color('secondary'),
-                Tables\Actions\DeleteAction::make()
-                    ->icon('flex-delete-bin')
-                    ->size('md')
-                    ->iconButton()
-                    ->successNotificationTitle('Sponsor deleted'),
             ])
             ->bulkActions([]);
     }
