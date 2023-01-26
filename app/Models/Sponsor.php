@@ -65,6 +65,16 @@ class Sponsor extends Model implements HasMedia
         return $query->where('active', true);
     }
 
+    public function scopeAttentionRequired($query): Builder
+    {
+        return $query->premiumTier()->whereNull('link');
+    }
+
+    public function scopeShouldBeDisplayed($query): Builder
+    {
+        return $query->whereNotNull('link');
+    }
+
     public function scopePremiumTier($query): Builder
     {
         return $query->whereIn('sponsor_tier_id', ['6330679', '6330702']);
