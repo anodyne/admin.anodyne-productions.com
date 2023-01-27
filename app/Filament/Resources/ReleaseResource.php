@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Enums\ReleaseSeverity;
 use App\Filament\Resources\ReleaseResource\Pages;
-use App\Filament\Resources\ReleaseResource\RelationManagers\GamesRelationManager;
 use App\Models\Release;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -29,23 +28,22 @@ class ReleaseResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()->schema([
-                    Forms\Components\TextInput::make('version')->required()->columnSpanFull(),
-                    Forms\Components\DatePicker::make('date')
-                        ->nullable()
-                        ->weekStartsOnSunday()
-                        ->columnSpan(1),
-                    Forms\Components\Select::make('severity')
-                        ->options(
-                            collect(ReleaseSeverity::cases())->flatMap(fn ($severity) => [$severity->value => $severity->displayName()])
-                        )
-                        ->columnSpan(1),
-                    Forms\Components\MarkdownEditor::make('notes')->columnSpanFull(),
-                    Forms\Components\TextInput::make('link')
-                        ->default('https://anodyne-productions.com/nova')
-                        ->columnSpan(1),
-                    Forms\Components\TextInput::make('upgrade_guide_link')->columnSpan(1),
-                ])->columns(2),
+                Forms\Components\TextInput::make('version')->required()->columnSpanFull(),
+                Forms\Components\DatePicker::make('date')
+                    ->nullable()
+                    ->weekStartsOnSunday()
+                    ->columnSpan(1),
+                Forms\Components\Select::make('severity')
+                    ->options(
+                        collect(ReleaseSeverity::cases())->flatMap(fn ($severity) => [$severity->value => $severity->displayName()])
+                    )
+                    ->columnSpan(1),
+                Forms\Components\MarkdownEditor::make('notes')->columnSpanFull(),
+                Forms\Components\TextInput::make('link')
+                    ->default('https://anodyne-productions.com/nova')
+                    ->columnSpan(1),
+                Forms\Components\TextInput::make('upgrade_guide_link')->columnSpan(1),
+                Forms\Components\Toggle::make('published')->default(false),
             ]);
     }
 
@@ -57,6 +55,7 @@ class ReleaseResource extends Resource
                     ->searchable()
                     ->size('lg')
                     ->weight('bold')
+                    ->alignLeft()
                     ->sortable()
                     ->icon(fn (Model $record) => $record->pendingRelease ? 'flex-alert-diamond' : '')
                     ->iconPosition('after')
@@ -64,6 +63,7 @@ class ReleaseResource extends Resource
                 Tables\Columns\TextColumn::make('date')
                     ->date()
                     ->label('Release date')
+                    ->alignLeft()
                     ->sortable(),
                 Tables\Columns\BadgeColumn::make('severity')
                     ->formatStateUsing(fn ($state) => ucfirst($state))
@@ -74,7 +74,9 @@ class ReleaseResource extends Resource
                     ]),
                 Tables\Columns\TextColumn::make('games_count')
                     ->counts('games')
+                    ->alignLeft()
                     ->label('# of games'),
+                Tables\Columns\ToggleColumn::make('published'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('severity')->options(
@@ -91,30 +93,22 @@ class ReleaseResource extends Resource
                     ->icon('flex-edit-circle')
                     ->size('md')
                     ->iconButton()
-                    ->color('secondary'),
+                    ->color('secondary')
+                    ->successNotificationTitle('Release updated'),
                 Tables\Actions\DeleteAction::make()
                     ->icon('flex-delete-bin')
                     ->size('md')
-                    ->iconButton(),
+                    ->iconButton()
+                    ->successNotificationTitle('Release deleted'),
             ])
             ->bulkActions([])
             ->defaultSort('date', 'desc');
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            GamesRelationManager::class,
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListReleases::route('/'),
-            'create' => Pages\CreateRelease::route('/create'),
-            'view' => Pages\ViewRelease::route('/{record}'),
-            'edit' => Pages\EditRelease::route('/{record}/edit'),
+            'index' => Pages\ManageReleases::route('/'),
         ];
     }
 
