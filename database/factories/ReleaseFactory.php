@@ -23,6 +23,7 @@ class ReleaseFactory extends Factory
             'severity' => $this->faker->randomElement(ReleaseSeverity::cases()),
             'date' => now(),
             'link' => $this->faker->url,
+            'published' => true,
         ];
     }
 }
