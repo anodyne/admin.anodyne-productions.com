@@ -12,7 +12,7 @@ class LatestVersionController extends Controller
     public function __invoke()
     {
         return Release::query()
-            ->where('date', '<=', now()->startOfDay())
+            ->where('published', true)
             ->latest('date')
             ->first()
             ->toJson();
