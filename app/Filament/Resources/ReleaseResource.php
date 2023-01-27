@@ -37,10 +37,12 @@ class ReleaseResource extends Resource
                     ->options(
                         collect(ReleaseSeverity::cases())->flatMap(fn ($severity) => [$severity->value => $severity->displayName()])
                     )
+                    ->required()
                     ->columnSpan(1),
                 Forms\Components\MarkdownEditor::make('notes')->columnSpanFull(),
                 Forms\Components\TextInput::make('link')
                     ->default('https://anodyne-productions.com/nova')
+                    ->required()
                     ->columnSpan(1),
                 Forms\Components\TextInput::make('upgrade_guide_link')->columnSpan(1),
                 Forms\Components\Toggle::make('published')->default(false),
@@ -76,7 +78,8 @@ class ReleaseResource extends Resource
                     ->counts('games')
                     ->alignLeft()
                     ->label('# of games'),
-                Tables\Columns\ToggleColumn::make('published'),
+                Tables\Columns\ToggleColumn::make('published')
+                    ->hidden(! auth()->user()->isAdmin),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('severity')->options(
