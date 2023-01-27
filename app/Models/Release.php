@@ -13,7 +13,7 @@ class Release extends Model
     use HasFactory;
 
     protected $fillable = [
-        'version', 'date', 'notes', 'severity', 'link', 'upgrade_guide_link',
+        'version', 'date', 'notes', 'severity', 'link', 'upgrade_guide_link', 'published',
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'id'];
@@ -21,6 +21,7 @@ class Release extends Model
     protected $casts = [
         'date' => 'datetime',
         'severity' => ReleaseSeverity::class,
+        'published' => 'boolean',
     ];
 
     public function games(): HasMany
@@ -31,13 +32,13 @@ class Release extends Model
     public function pendingRelease(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->date === null || $this->date->gt(now()->startOfDay())
+            get: fn ($value) => $this->published === false
         );
     }
 
     public function scopeHasPendingRelease($query)
     {
-        return $query->whereNull('date')->orWhere('date', '>', now()->startOfDay());
+        return $query->where('published', false);
     }
 
     public function scopeVersion($query, $value)
