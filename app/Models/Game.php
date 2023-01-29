@@ -11,7 +11,15 @@ class Game extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'url', 'genre', 'php_version', 'db_driver', 'db_version', 'server_software', 'release_id',
+        'name',
+        'url',
+        'genre',
+        'php_version',
+        'db_driver',
+        'db_version',
+        'server_software',
+        'release_id',
+        'created_at',
     ];
 
     public function release(): BelongsTo
