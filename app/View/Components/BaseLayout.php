@@ -6,14 +6,10 @@ use Illuminate\View\Component;
 
 class BaseLayout extends Component
 {
-    public string $bgColor;
-
-    public string $textColor;
-
-    public function __construct($bgColor = 'gray-100', $textColor = 'gray-500')
-    {
-        $this->bgColor = $bgColor;
-        $this->textColor = $textColor;
+    public function __construct(
+        public string $bgColor = 'bg-gray-50',
+        public string $textColor = 'text-gray-500'
+    ) {
     }
 
     public function render()

@@ -9,22 +9,26 @@
         "prod": "concurrently \"npm run js:build-prod\" \"npm run css:build-prod\""
     },
     "dependencies": {
+        "@alpinejs/collapse": "^3.11.1",
+        "@alpinejs/focus": "^3.11.1",
+        "@awcodes/alpine-floating-ui": "^3.5.0",
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@tailwindcss/forms": "^0.5.3",
         "@tailwindcss/line-clamp": "^0.4.2",
-        "@tailwindcss/typography": "^0.5.8",
-        "alpinejs": "3.1.1",
+        "@tailwindcss/typography": "^0.5.9",
+        "alpinejs": "3.10.5",
+        "autoprefix": "^1.0.1",
         "autoprefixer": "^10.4.8",
         "concurrently": "^6.3.0",
         "cross-env": "^7.0.3",
-        "cssnano": "^5.0.8",
+        "cssnano": "^5.1.14",
         "esbuild": "^0.13.8",
-        "postcss": "^8.4.5",
-        "postcss-cli": "^9.0.1",
+        "postcss": "^8.4.21",
+        "postcss-cli": "^10.1.0",
         "postcss-import": "^13.0.0",
         "postcss-nested": "^5.0.3",
         "resolve-url-loader": "^3.1.0",
-        "tailwindcss": "^3.1.8",
+        "tailwindcss": "^3.2.4",
         "tippy.js": "^6.3.7"
     }
 }

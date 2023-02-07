@@ -17,6 +17,7 @@ class AddonResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
             'description' => $this->description,
             'type' => $this->type,
             'downloads' => sprintf('%d %s', $this->downloads_count, str('download')->plural($this->downloads_count)),
@@ -28,7 +29,12 @@ class AddonResource extends JsonResource
                 'value' => $this->rating,
                 'floor' => floor($this->rating),
                 'remaining' => 5 - floor($this->rating),
-            ]
+            ],
+            'latestVersion' => new VersionResource($this->whenLoaded('latestVersion')),
+            'updated_at' => [
+                'nice' => $this->updated_at->format('m/d/Y'),
+                'raw' => $this->updated_at,
+            ],
         ];
     }
 }

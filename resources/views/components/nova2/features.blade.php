@@ -1,29 +1,65 @@
-<div>
-    <div class="max-w-7xl mx-auto pb-16 px-4 sm:px-6 lg:pb-24 lg:px-8 lg:-mt-32">
-        <div class="lg:text-center">
-            <a name="features"></a>
-            <h2 class="text-base text-orange-500 font-semibold tracking-wide uppercase">Features</h2>
-            <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Running an RPG? We've got you covered.
-            </p>
-        </div>
+@php
+  $features = [
+    [
+      'title' => 'All-in-one website',
+      'content' => "A dedicated website with all of your content lets you easily show off your game to the world.",
+      'icon' => 'flex-browser-favorite',
+    ],
+    [
+      'title' => 'Easy character management',
+      'content' => "Manage all of your game's characters in one place and let players take ownership of the characters they play.",
+      'icon' => 'flex-theater-mask',
+    ],
+    [
+      'title' => 'Tell your stories',
+      'content' => "An integrated story and posting system gives you and your players the freedom to tell your game's stories.",
+      'icon' => 'flex-book-edit',
+    ],
+    [
+      'title' => 'Post locking',
+      'content' => "Post locking intelligently locks and unlocks multi-author posts to help prevent your changes being overwritten.",
+      'icon' => 'flex-lock-closed',
+    ],
+    [
+      'title' => 'Reporting',
+      'content' => "Get valuable insights into activity, posting levels, and even forecasting game activity for the rest of the month.",
+      'icon' => 'flex-graph-dot',
+    ],
+    [
+      'title' => 'Customize your way',
+      'content' => "Change the way your site looks or works with tools to customize things any way you want.",
+      'icon' => 'flex-wrench',
+    ],
+  ];
+@endphp
 
-        <div class="pt-20">
-            <div class="max-w-xl mx-auto lg:max-w-7xl">
-                <dl class="space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
-                    <x-nova2.feature title="All-In-One Website" text="Nova gives your game a dedicated website with all of the content you and your players create to show off your game to the world." icon="plump-s-browser-website" />
-
-                    <x-nova2.feature title="Characters" text="Manage all of your game's characters in one place and let players take ownership of the characters they play." icon="plump-s-friends" />
-
-                    <x-nova2.feature title="Tell Your Stories" text="At the heart of Nova is an integrated story and posting system that gives your players the freedom to tell your game's stories." icon="plump-s-pen-vector" />
-
-                    <x-nova2.feature title="Post Locking" text="Never have your changes overwritten by another player with a smart post locking system that locks and unlocks multi-author posts while editing." icon="plump-s-lock" />
-
-                    <x-nova2.feature title="Reporting" text="Get valuable insight into activity, posting levels, player averages, and even forecasting posting for the rest of the month." icon="plump-s-chart-bar" />
-
-                    <x-nova2.feature title="Customizable" text="Whether it's changing the way it looks or the way it works, Nova gives you the tools to customize your site any way you want." icon="plump-s-cog" />
-                </dl>
-            </div>
-        </div>
+<a name="features"></a>
+<section id="features" class="relative pt-20 pb-14 sm:pb-20 sm:pt-32 lg:pb-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl md:text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        Powerful RPG management features
+      </h2>
+      <p class="mt-6 text-lg leading-8 text-slate-600">
+        Simplify your RPG management with features and tools that will let
+        you stop managing your game and start playing it again.
+      </p>
     </div>
-</div>
+
+    <div class="mt-16 grid grid-cols-1 sm:grid-cols-3 sm:gap-x-8 gap-y-16">
+      @foreach ($features as $feature)
+        <div class="flex flex-col">
+          <dt class="text-base font-semibold leading-7 text-slate-900">
+            <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-slate-400">
+              @svg($feature['icon'], 'h-7 w-7 text-white')
+            </div>
+            {{ $feature['title'] }}
+          </dt>
+          <dd class="mt-1 flex flex-auto flex-col text-base leading-7 text-slate-600">
+            <p class="flex-auto">{{ $feature['content'] }}</p>
+          </dd>
+        </div>
+      @endforeach
+    </div>
+  </div>
+</section>

@@ -14,10 +14,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Addon extends Model implements HasMedia
 {
     use HasFactory;
+    use HasSlug;
     use InteractsWithMedia;
     use SoftDeletes;
 
@@ -53,6 +56,11 @@ class Addon extends Model implements HasMedia
         return $this->hasMany(Version::class);
     }
 
+    public function latestVersion()
+    {
+        return $this->hasOne(Version::class)->latestOfMany();
+    }
+
     public function typeColor(): Attribute
     {
         return Attribute::make(
@@ -73,6 +81,19 @@ class Addon extends Model implements HasMedia
     public static function getMediaPath(): string
     {
         return 'addons/{model_id}/{media_id}/';
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
     }
 
     public function registerMediaCollections(): void

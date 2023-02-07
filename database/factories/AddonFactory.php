@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\AddonType;
 use App\Models\Addon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -13,12 +14,8 @@ class AddonFactory extends Factory
     {
         return [
             'name' => str($this->faker->words(3, true))->title(),
-            'type' => $this->faker->randomElement([
-                'theme',
-                'extension',
-                // 'genre',
-                // 'rank'
-            ]),
+            'description' => $this->faker->paragraph,
+            'type' => $this->faker->randomElement(AddonType::cases()),
             'rating' => $this->faker->randomFloat(1, 1, 5),
             'published' => $this->faker->randomElement([true, false]),
         ];

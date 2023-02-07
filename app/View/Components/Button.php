@@ -2,153 +2,44 @@
 
 namespace App\View\Components;
 
-use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class Button extends Component
 {
-    public $color;
-
-    public $fullWidth;
-
-    public $size;
-
-    public function __construct($color = 'white', $size = 'md', $fullWidth = false)
-    {
-        $this->color = $color;
-        $this->fullWidth = $fullWidth;
-        $this->size = $size;
+    public function __construct(
+        public ?string $href = null,
+        public string $variant = 'light',
+        public string $color = 'secondary',
+        public string $size = 'md'
+    ) {
     }
 
     public function baseStyles()
     {
-        $styles = 'inline-flex items-center border rounded-lg transition ease-in-out duration-150 focus:outline-none disabled:cursor-not-allowed disabled:opacity-75';
-
-        if (! Str::endsWith($this->color, ['-text'])) {
-            $styles .= ' font-medium';
-        }
-
-        if (! Str::endsWith($this->color, ['-soft', '-text'])) {
-            $styles .= ' shadow-sm';
-        }
-
-        if ($this->fullWidth) {
-            $styles .= ' w-full justify-center';
-        }
-
-        return $styles;
+        return 'group relative inline-flex items-center justify-center rounded-full font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 transition';
     }
 
     public function colorStyles()
     {
-        switch ($this->color) {
-            case 'white':
-            default:
-                return 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500';
-
-                break;
-
-            case 'dark':
-                return 'border-transparent text-white bg-gray-800 hover:bg-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-gray-500';
-
-                break;
-
-            case 'dark-gray-text':
-                return 'border-transparent text-gray-600 font-medium hover:text-gray-800 focus:text-gray-800';
-
-                break;
-
-            case 'gray-text':
-                return 'border-transparent font-medium text-gray-400 hover:text-gray-600';
-
-                break;
-
-            case 'blue':
-                return 'border-transparent text-white bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500';
-
-                break;
-
-            case 'blue-soft':
-                return 'border-transparent text-blue-700 bg-blue-100 hover:bg-blue-200 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500';
-
-                break;
-
-            case 'blue-text':
-                return 'border-transparent font-medium text-blue-600 hover:text-blue-800';
-
-                break;
-
-            case 'purple':
-                return 'border-transparent text-white bg-purple-600 hover:bg-purple-700 focus:ring-2 focus:ring-offset-2 focus:border-purple-700 focus:ring-purple-500';
-
-                break;
-
-            case 'purple-soft':
-                return 'border-transparent text-purple-700 bg-purple-100 hover:bg-purple-200 focus:ring-2 focus:ring-offset-2 focus:ring-purple-500';
-
-                break;
-
-            case 'purple-text':
-                return 'border-transparent font-medium text-purple-600 hover:text-purple-800';
-
-                break;
-
-            case 'red':
-                return 'border-transparent text-white bg-red-600 hover:bg-red-700 focus:ring-2 focus:ring-offset-2 focus:ring-red-500';
-
-                break;
-
-            case 'red-soft':
-                return 'border-transparent text-red-700 bg-red-100 hover:bg-red-200 focus:ring-2 focus:ring-offset-2 focus:ring-red-500';
-
-                break;
-
-            case 'red-text':
-                return 'border-transparent font-medium text-red-600 hover:text-red-800';
-
-                break;
-        }
+        return [
+            'light' => [
+                'primary' => 'bg-slate-900 text-white hover:bg-slate-700 hover:text-slate-100 hover:shadow-md focus-visible:outline-slate-900',
+                'secondary' => 'bg-white hover:bg-gradient-to-b hover:from-white hover:to-purple-100 ring-1 ring-slate-200 text-slate-700 hover:ring-purple-500/20 shadow hover:shadow-md hover:shadow-purple-500/30 hover:text-purple-900 focus-visible:outline-white',
+            ],
+            'dark' => [
+                'primary' => 'bg-white hover:bg-gradient-to-b hover:from-white hover:to-purple-50 ring-1 ring-slate-200 text-slate-700 hover:ring-purple-500/20 shadow hover:shadow-purple-500/30 hover:text-purple-900 focus-visible:outline-white',
+                'secondary' => 'bg-slate-900 hover:bg-gradient-to-b hover:from-slate-900 hover:to-purple-900/30 ring-1 ring-slate-800 text-white hover:ring-purple-700/30 shadow-md hover:shadow-purple-700/40 hover:text-purple-100 focus-visible:outline-white',
+                'brand' => 'bg-purple-600 text-white shadow-md hover:bg-purple-700',
+            ],
+        ][$this->variant][$this->color];
     }
 
     public function sizeStyles()
     {
-        switch ($this->size) {
-            case 'none':
-                return 'text-sm';
-
-                break;
-
-            case 'none-xs':
-                return 'text-xs';
-
-                break;
-
-            case 'xs':
-                return 'px-2.5 py-1.5 text-xs';
-
-                break;
-
-            case 'sm':
-                return 'px-3 py-2 text-sm';
-
-                break;
-
-            case 'md':
-            default:
-                return 'px-4 py-2 text-sm';
-
-                break;
-
-            case 'lg':
-                return 'px-4 py-2 text-base';
-
-                break;
-
-            case 'xl':
-                return 'px-6 py-3 text-base';
-
-                break;
-        }
+        return [
+            'sm' => 'py-1.5 px-4',
+            'md' => 'py-2 px-5',
+        ][$this->size];
     }
 
     public function render()

@@ -1,47 +1,55 @@
 @props(['sponsors'])
 
-<div>
-    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-        <div class="lg:grid lg:grid-cols-2 lg:gap-8">
-            <div>
-                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                    Thanks to our incredible sponsors
-                </h2>
-                <p class="mt-3 max-w-3xl text-lg text-gray-500">
-                    We've launched a Patreon as a way for people to support Anodyne and help us continue to provide Nova and all of its resources to the community for free. As a patron, you'll have access to a private Discord community, early access to Nova 3, regular updates on Anodyne's products and services, and more. Join today!
-                </p>
-                <div class="mt-8 sm:flex">
-                    <div class="rounded-lg shadow">
-                        <a href="https://patreon.com/anodyneproductions" target="_blank" class="group bg-spanish-roast text-white hover:text-amber-500 rounded-lg shadow px-6 py-3 inline-flex items-center justify-center space-x-2 text-base font-semibold w-full lg:w-auto transition">
-                            <span>Become a patron</span>
-                            @svg('plump-s-arrow-right-circle', 'h-6 w-6 text-white/50 group-hover:text-amber-500 transition')
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-8 grid sm:grid-cols-2 gap-6 sm:gap-y-8 lg:gap-x-8">
-            @foreach ($sponsors as $sponsor)
-                <a href="{{ $sponsor['link'] }}" target="_blank" class="group relative bg-white rounded-lg shadow-md overflow-hidden ring-1 ring-black ring-opacity-5">
-                    <figure>
-                        <div class="relative bg-gray-100 pt-[50%] overflow-hidden">
-                            <div class="absolute inset-0 w-full h-full rounded-t-lg overflow-hidden group-hover:blur-[6px] transition-all duration-300">
-                                <img src="{{ $sponsor['image'] }}" alt="{{ $sponsor['name'] }} logo" class="absolute inset-0 w-auto h-full mx-auto py-2">
-                            </div>
-                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute z-10 inset-0 flex items-center justify-center text-sm {{ $sponsor['hoverColor'] === 'dark' ? 'text-gray-900' : 'text-white' }} font-medium">
-                                Visit site
-                                @svg('plump-s-link-square', 'h-4 w-4 ml-2')
-                            </div>
-                        </div>
-                        <figcaption class="py-3 px-4">
-                            <p class="text-sm font-medium text-gray-900 mb-1">
-                                {{ $sponsor['name'] }}
-                            </p>
-                            <p class="text-xs font-medium text-gray-500">{{ $sponsor['level'] }}</p>
-                        </figcaption>
-                    </figure>
-                </a>
-            @endforeach
-            </div>
+<a name="sponsors"></a>
+<section
+  id="sponsors"
+  aria-labelledby="sponsors-title"
+  class="relative overflow-hidden bg-blue-600 py-20 sm:py-32"
+>
+  <img src="/images/background-features.jpg" class="absolute top-0 max-w-none translate-x-[-30%] -translate-y-1/4" alt="" width="1558" height="946" />
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+    <div class="mx-auto max-w-2xl lg:mx-0">
+      <h2
+        id="sponsors-title"
+        class="font-bold text-3xl tracking-tight text-white sm:text-4xl"
+      >
+        Thanks to our incredible sponsors
+      </h2>
+
+      <p class="mt-4 text-lg tracking-tight text-blue-100">
+        We launched a Patreon as a way for people to support Anodyne and help us continue to provide Nova and all of its resources to the community for free. As a patron, you&rsquo;ll have access to a private Discord community, early access to Nova 3, and more. Join today!
+      </p>
+
+      <x-button href="https://www.patreon.com/anodyneproductions" variant="light" color="primary" class="mt-6" target="_blank">
+        <div class="flex items-center space-x-2.5">
+          <div>Become a patron</div>
+          @svg('flex-arrow-right-circle', 'h-5 w-5 shrink-0')
         </div>
+      </x-button>
     </div>
-</div>
+
+    @if ($sponsors->count() > 0)
+      <ul role="list" class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
+        @foreach ($sponsors as $sponsor)
+          <li class="group relative rounded-lg p-4 bg-white/10 hover:bg-white/[15%] ring-1 ring-inset ring-white/10 space-y-4 text-center transition">
+            <h3 class="font-display text-xl leading-7 text-white">
+              {{ $sponsor->name }}
+            </h3>
+
+            <img src="{{ $sponsor->image }}" alt="{{ $sponsor->name }}" width="500" height="500" layout="fill" class="block mx-auto w-auto h-32" />
+
+            <div class='flex items-center justify-center space-x-1.5 text-blue-100 font-medium text-sm'>
+              <span>Visit site</span>
+              @svg('flex-external-link', 'h-3 w-3')
+            </div>
+
+            <a href="{{ $sponsor->link }}" target="_blank" class="absolute inset-0 group-hover:shadow-xl" rel="noreferrer">
+              <span></span>
+            </a>
+          </li>
+        @endforeach
+      </ul>
+    @endif
+  </div>
+</section>

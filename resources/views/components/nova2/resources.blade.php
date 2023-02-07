@@ -1,29 +1,66 @@
-<div class="relative max-w-7xl mx-auto pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
-    <div class="text-center">
-        <a name="resources"></a>
-        <h2 class="text-base text-orange-500 font-semibold tracking-wide uppercase">Learn</h2>
-        <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            Helpful Resources
-        </p>
+@php
+  $resources = [
+    [
+      'title' => 'Learn all about Nova',
+      'category' => 'Documentation',
+      'cta' => 'Read more',
+      'url' => '/docs',
+      'content' => "Nova's documentation has been re-written to be clearer and more helpful. We've added all-new sections about getting started, added pages to explain complex features, and dug deeper into the core of Nova to help users understand how to get the most out Nova.",
+    ],
+    [
+      'title' => 'Join the community',
+      'category' => 'Community',
+      'cta' => 'Join now',
+      'url' => 'https://discord.gg/7WmKUks',
+      'content' => "Over the years Nova has fostered a global community of artists, developers, and writers who are passionate about the stories they tell. No matter if you're looking to chat with people, find a new game, or get help with Nova, the Anodyne community is ready to welcome you.",
+    ],
+    [
+      'title' => 'Make Nova your own',
+      'category' => 'Add-ons',
+      'cta' => 'Explore add-ons',
+      'url' => '/addons',
+      'content' => "Nova provides incredible flexibility to make your game stand out from others. Whether you're trying to change the way it looks with a brand-new skin or rank set or even update how it works with a MOD, the talented authors on the AnodyneXtras site have you covered.",
+    ],
+  ];
+@endphp
+
+<a name="resources"></a>
+<section id="resources" aria-label="Resources" class="bg-slate-50 py-20 sm:py-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="md:text-center">
+      <h2 class="font-bold text-3xl tracking-tight text-slate-900 sm:text-4xl">
+        <span class="relative whitespace-nowrap">Helpful resources</span>
+      </h2>
     </div>
 
-    <div class="mt-12 max-w-lg mx-auto grid gap-x-6 gap-y-12 lg:grid-cols-3 }} lg:max-w-none">
-        <x-nova2.resource :href="route('docs')" category="Documentation" title="Learn all about Nova">
-            Nova's documentation has been re-written to be clearer and more helpful. We've added all-new sections about getting started, added pages to explain complex features, and dug deeper into the core of Nova to help users understand how to get the most out Nova.
-        </x-nova2.resource>
+    <ul
+      role="list"
+      class="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3 mt-16"
+    >
+      @foreach ($resources as $resource)
+        <article class="group relative flex flex-col items-start">
+          <h3 class="font-semibold text-xl text-slate-800">
+            <div class="absolute -inset-y-6 -inset-x-4 z-0 scale-95 bg-slate-100 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:-inset-x-6 sm:rounded-2xl"></div>
+            <a href="{{ $resource['url'] }}">
+              <span class="absolute -inset-y-6 -inset-x-4 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+              <span class="relative z-10">{{ $resource['title'] }}</span>
+            </a>
+          </h3>
 
-        <x-nova2.resource href="https://discord.gg/7WmKUks" target="_blank" category="Community" title="Join the community">
-            Over the years Nova has fostered a global community of artists, developers, and writers who are passionate about the stories they tell. No matter if you're looking to chat with people, find a new game, or get help with Nova, the Anodyne community is ready to welcome you.
-        </x-nova2.resource>
+          <p class="relative z-10 order-first mb-1 flex items-center text-sm font-medium text-slate-500">
+            <span>{{ $resource['category'] }}</span>
+          </p>
 
-        @if (config('services.anodyne.exchange'))
-            <x-nova2.resource :href="route('exchange.index')" category="Add-Ons" title="Make Nova your own">
-                Nova provides immense flexibility to truly make your game stand out.  Whether you're trying to change the way it looks with a new theme or rank set or even update how it works with an extension, the talented community artisans on the Nova Exchange have you covered.
-            </x-nova2.resource>
-        @else
-            <x-nova2.resource href="https://xtras.anodyne-productions.com" category="Add-Ons" title="Make Nova your own">
-                Nova provides incredible flexibility to truly make your game stand out from others.  Whether you're trying to change the way it looks with a brand-new skin or rank set or even update how it works with a MOD, the talented authors on the AnodyneXtras site have you covered.
-            </x-nova2.resource>
-        @endif
-    </div>
-</div>
+          <p class="relative z-10 mt-2 text-sm leading-6 text-slate-600">
+            {{ $resource['content'] }}
+          </p>
+
+          <div class="relative z-10 mt-4 flex items-center text-sm font-medium text-purple-500 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition">
+            {{ $resource['cta'] }}
+            <span class="ml-1.5">&rarr;</span>
+          </div>
+        </article>
+      @endforeach
+    </ul>
+  </div>
+</section>

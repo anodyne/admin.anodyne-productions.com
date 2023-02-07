@@ -1,24 +1,54 @@
-<div>
-    <a name="demo"></a>
-    <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <div class="bg-gray-500 rounded-2xl shadow-xl overflow-hidden lg:grid lg:grid-cols-2 lg:gap-4">
-            <div class="pt-10 pb-12 px-6 sm:pt-16 sm:px-16 lg:py-16 lg:pr-0 xl:py-20 xl:px-20">
-                <div class="lg:self-center">
-                    <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                        <span class="block">Experience Nova 3</span>
-                        <span class="block text-gray-700 text-3xl">Check out the demo now.</span>
-                    </h2>
-                    <p class="mt-4 text-lg leading-6 text-white">We regularly publish the work being done on Nova 3 to a demo site to give the community a chance to play around with what's coming.</p>
-                    <p class="mt-4 text-lg leading-6 text-white">To log in to the demo site, use the email address <span class="font-mono font-bold text-amber-500">admin@admin.com</span> and the password <span class="font-mono font-bold text-amber-500">secret</span>.</p>
-                    <a href="https://nova3.anodyne-productions.com/login" class="mt-8 bg-white border border-transparent rounded-lg shadow px-6 py-3 space-x-2 inline-flex items-center text-base font-medium text-amber-500 hover:bg-orange-50">
-                        <span>Go to the demo</span>
-                        @svg('fluent-arrow-right-circle', 'h-6 w-6')
-                    </a>
-                </div>
+<a name="demo"></a>
+<section id="demo" class="overflow-hidden bg-slate-900 py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl md:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-y-16 gap-x-8 sm:gap-y-20 lg:grid-cols-2 lg:items-start">
+      <div class="px-6 lg:px-0 lg:pt-4 lg:pr-4">
+        <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg">
+          <h2 class="text-lg font-semibold leading-8 tracking-tight text-purple-400">Demo</h2>
+          <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Explore Nova 3 today</p>
+          <p class="mt-6 text-lg leading-8 text-slate-500">
+            Instead of endlessly scrolling through a list of features and improvements, experience Nova 3 for yourself with our demo site that&rsquo;s regularly updated with the latest development work. Use the email address and password below to start exploring.
+          </p>
+          <dl class="mt-10 max-w-xl space-y-8 text-base leading-7 text-slate-500 lg:max-w-none">
+            <div class="relative pl-9">
+              <dt class="inline font-semibold text-white">
+                @svg('flex-at-symbol', 'absolute top-1 left-1 h-5 w-5 text-purple-400')
+                Email address
+              </dt>
+              <dd class="inline">admin@admin.com</dd>
             </div>
-            <div class="-mt-6 aspect-w-5 aspect-h-3 md:aspect-w-2 md:aspect-h-1">
-                <img class="translate-x-6 translate-y-6 rounded-lg object-cover object-left-top sm:translate-x-16 lg:translate-y-20" src="/images/nova3-dashboard.webp" alt="Nova 3 dashboard screenshot">
+
+            <div class="relative pl-9">
+              <dt class="inline font-semibold text-white">
+                @svg('flex-lock-closed', 'absolute top-1 left-1 h-5 w-5 text-purple-400')
+                Password
+              </dt>
+              <dd class="inline">secret</dd>
             </div>
+
+            <x-button href="https://nova3.anodyne-productions.com" variant="dark" color="secondary">
+              Go to the demo <span class="pl-1.5" aria-hidden="true">&rarr;</span>
+            </x-button>
+          </dl>
         </div>
+      </div>
+
+      <div class="sm:px-6 lg:px-0">
+        <div class="relative isolate overflow-hidden bg-purple-500 px-6 pt-8 sm:mx-auto sm:max-w-2xl sm:rounded-3xl sm:pt-16 sm:pl-16 sm:pr-0 lg:mx-0 lg:max-w-none">
+          <div class="absolute -inset-y-px -left-3 -z-10 w-full origin-bottom-left skew-x-[-30deg] bg-purple-100 opacity-20 ring-1 ring-inset ring-white" aria-hidden="true"></div>
+
+          <div class="mx-auto max-w-2xl sm:mx-0 sm:max-w-none">
+            <img
+              src="https://tailwindui.com/img/component-images/project-app-screenshot.png"
+              alt="Product screenshot"
+              width="2432"
+              height="1442"
+              class="-mb-12 w-[57rem] max-w-none rounded-tl-xl bg-slate-800 ring-1 ring-white/10"
+            />
+          </div>
+          <div class="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/10 sm:rounded-3xl" aria-hidden="true"></div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+</section>

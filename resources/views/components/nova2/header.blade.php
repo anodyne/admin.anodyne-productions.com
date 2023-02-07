@@ -1,42 +1,88 @@
-<div class="relative bg-gray-800 overflow-hidden" x-data="{ open: false }">
-    <div class="relative pt-6 pb-16 sm:pb-0">
-        <div class="transform blur-2xl absolute inset-0 opacity-50">
-            <img src="/images/circle-scatter-haikei.png" alt="">
+<header class="relative">
+  <div class="px-4 sm:px-6 md:px-8">
+    <div class="isolate bg-slate-50 z-10">
+      <div class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
+        <svg class="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]" viewBox="0 0 1155 678" xmlns="http://www.w3.org/2000/svg">
+            <path fill="url(#45de2b6b-92d5-4d68-a6a0-9b9b2abad533)" fill-opacity=".3" d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z" />
+            <defs>
+              <linearGradient id="45de2b6b-92d5-4d68-a6a0-9b9b2abad533" x1="1155.49" x2="-78.208" y1=".177" y2="474.645" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#9089FC" />
+                <stop offset="1" stop-color="#FF80B5" />
+              </linearGradient>
+            </defs>
+        </svg>
+      </div>
+
+      <svg class="absolute inset-0 -z-10 h-full w-full stroke-purple-700/15 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]" aria-hidden="true">
+        <defs>
+          <pattern id="983e3e4c-de6d-4c3f-8d64-b9761d1534cc" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
+            <path d="M.5 200V.5H200" fill="none" />
+          </pattern>
+        </defs>
+
+        <svg x="50%" y="-1" class="overflow-visible fill-purple-200/20">
+          <path d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z" stroke-width="0" />
+        </svg>
+        <rect width="100%" height="100%" stroke-width="0" fill="url(#983e3e4c-de6d-4c3f-8d64-b9761d1534cc)" />
+      </svg>
+    </div>
+
+    <x-nav.landing
+      :items="[
+        ['href' => '#features', 'title' => 'Features' ],
+        ['href' => '#download', 'title' => 'Download' ],
+        ['href' => '/docs', 'title' => 'Docs' ],
+        ['href' => '#resources', 'title' => 'Resources' ],
+        ['href' => 'https://discord.gg/7WmKUks', 'title' => 'Get Help' ],
+      ]"
+      :dark="false"
+    />
+
+    <div class="relative px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl py-32 sm:py-48 lg:py-56">
+        <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+          <a href="{{ route('nova-3') }}" class="group inline-flex items-center rounded-full font-medium space-x-3 px-3.5 py-0.5 bg-purple-200/60 text-purple-700 text-sm hover:bg-purple-200 hover:text-purple-800 transition">
+            <div class="shrink-0 inline-flex items-center -ml-2.5">
+              <div class="inline-flex items-center bg-purple-50 rounded-full px-2.5">Nova 3</div>
+            </div>
+            <span class="inline-flex items-center">Explore Nova&rsquo;s next generation <span class="text-base ml-1.5 text-purple-500 group-hover:text-purple-700 font-semibold transition">&rarr;</span></span>
+          </a>
         </div>
 
-        <x-nova2.nav />
+        <div class="text-center">
+          <h1 class="mt-4 relative mx-auto max-w-4xl text-4xl font-extrabold tracking-tight text-slate-700 sm:text-6xl md:text-7xl">
+            <span class="before:block before:absolute before:rounded-xl before:-inset-1 before:-skew-y-3 before:bg-gradient-to-r before:from-purple-500 before:to-sky-400 relative inline-block px-2 py-1.5">
+              <span class="relative text-white">Painless</span>
+            </span>
+            <span class="relative whitespace-nowrap">RPG management</span>
+          </h1>
 
-        <main class="relative mt-16 sm:mt-24">
-            <div class="mx-auto max-w-7xl">
-                <div class="lg:grid lg:grid-cols-12 lg:gap-8">
-                    <div class="px-4 sm:px-6 lg:px-8 sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:items-center">
-                        <div>
-                            <a href="{{ route('nova-3') }}" class="inline-flex items-center text-white bg-gray-900 rounded-full p-1 pr-2 sm:text-base lg:text-sm xl:text-base hover:text-gray-200">
-                                <span class="px-3 py-0.5 text-white text-xs font-semibold leading-5 uppercase tracking-wide bg-gradient-to-r from-orange-500 to-amber-500 rounded-full">The future of Nova</span>
-                                <span class="ml-4 text-sm">Visit the Nova 3 preview page</span>
+          <p class="mt-6 mx-auto max-w-2xl text-lg leading-8 text-slate-600">
+            With an easy-to-use interface, integrated posting system, a wide array of developer tools and much more, Nova is all you need to stop managing your game and get back to playing it.
+          </p>
 
-                                <svg class="ml-2 w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                            <h1 class="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-6 lg:text-5xl xl:text-6xl">
-                                <span class="block">Painless</span>
-                                <span class="block bg-clip-text text-transparent leading-tight bg-gradient-to-r from-orange-500 to-amber-500">RPG management</span>
-                            </h1>
-                            <p class="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                                With an easy-to-use interface, integrated posting system, a wide array of developer tools and much more, Nova is all you need to stop managing your game and get back to playing it.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="mt-16 sm:mt-24 lg:mt-0 lg:col-span-6">
-                        <div class="-mt-6 aspect-w-4 aspect-h-3">
-                            <img src="/images/nova2-manifest.webp" alt="Nova 2 manifest screenshot" class="translate-x-0 translate-y-6 md:rounded-xl object-cover object-left-top sm:translate-x-40 lg:translate-y-0">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+          <div class="mt-10 flex flex-col md:flex-row items-center justify-center gap-y-6 md:gap-y-0 md:gap-x-6">
+            <x-button href="#download" variant="light" color="primary">
+              Download now
+            </x-button>
+            <x-button href="#features" variant="light" color="secondary">
+              Learn more
+            </x-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
+        <svg class="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]" viewBox="0 0 1155 678" xmlns="http://www.w3.org/2000/svg">
+          <path fill="url(#ecb5b0c9-546c-4772-8c71-4d3f06d544bc)" fill-opacity=".3" d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z" />
+          <defs>
+            <linearGradient id="ecb5b0c9-546c-4772-8c71-4d3f06d544bc" x1="1155.49" x2="-78.208" y1=".177" y2="474.645" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#9089FC" />
+              <stop offset="1" stop-color="#FF80B5" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
     </div>
-</div>
-
-{{-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="text-gray-800 "><path fill="currentColor" fill-opacity="1" d="M0,32L60,48C120,64,240,96,360,101.3C480,107,600,85,720,80C840,75,960,85,1080,106.7C1200,128,1320,160,1380,176L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg> --}}
+  </div>
+</header>

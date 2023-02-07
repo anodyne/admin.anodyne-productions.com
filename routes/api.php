@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\GetAddonsController;
 use App\Http\Controllers\Api\GetPremiumSponsorsController;
 use App\Http\Controllers\Api\LatestVersionController;
 use App\Http\Controllers\Api\RegisterGameController;
+use App\Http\Controllers\Api\ShowAddonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/addons', GetAddonsController::class);
+Route::get('/addons/{addon}/show', ShowAddonController::class);
 
 Route::post('/games', RegisterGameController::class);
 
