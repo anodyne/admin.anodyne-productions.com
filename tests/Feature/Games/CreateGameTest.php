@@ -24,5 +24,5 @@ it('does not render the create game page for users', function () {
 });
 
 it('redirects guests who try to view the create game page', function () {
-    get(GameResource::getUrl('create'))->assertRedirect('/login');
+    get(GameResource::getUrl('create'))->assertRedirect('/admin/login');
 });

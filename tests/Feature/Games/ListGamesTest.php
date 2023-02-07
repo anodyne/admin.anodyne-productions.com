@@ -24,5 +24,5 @@ it('does not render the list of games for users', function () {
 });
 
 it('redirects guests who try to view the list of games', function () {
-    get(GameResource::getUrl())->assertRedirect('/login');
+    get(GameResource::getUrl())->assertRedirect('/admin/login');
 });

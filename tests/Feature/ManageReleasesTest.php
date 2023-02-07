@@ -33,7 +33,7 @@ it('does not render the releases resource for users', function () {
 });
 
 it('does not render the releases resource for guests', function () {
-    get(ReleaseResource::getUrl())->assertRedirect('/login');
+    get(ReleaseResource::getUrl())->assertRedirect('/admin/login');
 });
 
 it('lists releases', function () {

@@ -32,5 +32,5 @@ it('does not render the edit game page for users', function () {
 });
 
 it('redirects guests who try to view the edit game page', function () {
-    get(GameResource::getUrl('edit', $this->game))->assertRedirect('/login');
+    get(GameResource::getUrl('edit', $this->game))->assertRedirect('/admin/login');
 });
