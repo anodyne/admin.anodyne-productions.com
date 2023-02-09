@@ -22,4 +22,12 @@ Route::get('/nova-3', function () {
     return view('nova-3');
 })->name('nova-3');
 
+Route::get('/addons', function () {
+    //
+})->name('addons.index');
+
+Route::get('/addon', function () {
+    return view('addons.show');
+})->name('addons.show');
+
 Route::redirect('/', '/nova');

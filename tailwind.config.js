@@ -1,5 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
+const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette');
 
 module.exports = {
   content: [
@@ -47,6 +48,8 @@ module.exports = {
       colors: {
         transparent: 'transparent',
 
+        white: '#fff',
+
         primary: colors.purple,
         danger: colors.rose,
         success: colors.emerald,
@@ -70,6 +73,14 @@ module.exports = {
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/forms'),
-    require('@tailwindcss/typography')
+    require('@tailwindcss/typography'),
+    function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          highlight: (value) => ({ boxShadow: `inset 0 1px 0 0 ${value}` }),
+        },
+        { values: flattenColorPalette(theme('backgroundColor')), type: 'color' }
+      )
+    },
   ],
 };

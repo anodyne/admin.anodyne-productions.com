@@ -10,45 +10,48 @@
     selectedGenre: null,
     selectedVersion: null,
     genres: [
+      { id: 6, value: 'sga', name: 'Atlantis', content: 'Stargate' },
       { id: 1, value: 'bl5', name: 'Babylon 5' },
-      { id: 2, value: 'blank', name: 'Blank' },
+      { id: 8, value: 'baj', name: 'Bajorans', content: 'Star Trek' },
       { id: 3, value: 'bsg', name: 'Battlestar Galactica' },
-      { id: 4, value: 'dnd', name: 'Dungeons and Dragons' },
+      { id: 2, value: 'blank', name: 'Blank' },
+      { id: 9, value: 'crd', name: 'Cardassians', content: 'Star Trek' },
+      { id: 10, value: 'ds9', name: 'Deep Space 9', content: 'Star Trek' },
+      { id: 4, value: 'dnd', name: 'Dungeons & Dragons' },
+      { id: 11, value: 'ent', name: 'Enterprise era', content: 'Star Trek' },
+      { id: 12, value: 'kli', name: 'Klingons', content: 'Star Trek' },
+      { id: 13, value: 'mov', name: 'Movie era', content: 'Star Trek' },
+      { id: 14, value: 'rom', name: 'Romulans', content: 'Star Trek' },
       { id: 5, value: 'dsv', name: 'seaQuest DSV' },
-      { id: 6, value: 'sga', name: 'Stargate Atlantis' },
-      { id: 7, value: 'sg1', name: 'Stargate SG-1' },
-      { id: 8, value: 'baj', name: 'Bajorans (Star Trek)' },
-      { id: 9, value: 'crd', name: 'Cardassians (Star Trek)' },
-      { id: 10, value: 'ds9', name: 'Deep Space Nine (Star Trek)' },
-      { id: 11, value: 'ent', name: 'Enterprise era (Star Trek)' },
-      { id: 12, value: 'kli', name: 'Klingons (Star Trek)' },
-      { id: 13, value: 'mov', name: 'Movie era (Star Trek)' },
-      { id: 14, value: 'rom', name: 'Romulans (Star Trek)' },
-      { id: 15, value: 'tos', name: 'The Original Series (Star Trek)' },
-      { id: 16, value: 'sto', name: 'Star Trek Online' },
+      { id: 7, value: 'sg1', name: 'SG-1', content: 'Stargate' },
+      { id: 16, value: 'sto', name: 'Star Trek: Online', content: 'Star Trek' },
+      { id: 15, value: 'tos', name: 'The Original Series era', content: 'Star Trek' },
     ],
     versions: [
       {
         id: 1,
         name: '{{ $version }}',
         value: '{{ $version }}',
+        content: 'Latest version',
       },
       {
         id: 2,
-        name: '2.6.2 (Legacy - PHP 5.6)',
+        name: '2.6.2',
         value: '2.6.2',
+        content: 'Legacy version for PHP 5.6',
       },
       {
         id: 3,
-        name: '2.3.2 (Legacy - PHP 5.3)',
+        name: '2.3.2',
         value: '2.3.2',
+        content: 'Legacy version for PHP 5.2',
       },
     ],
   }"
   x-init="() => selectedVersion = versions[0]"
 >
   <div class="py-24 px-6 sm:px-6 sm:py-32 lg:px-8">
-    <div class="mx-auto max-w-2xl text-center">
+    <div class="mx-auto max-w-4xl text-center">
       <h2 class="text-3xl tracking-tight text-white/50 sm:text-4xl">
         Ready to get started?
       </h2>
@@ -57,112 +60,94 @@
         Download Nova today.
       </h2>
 
-      <div class="relative grid grid-cols-1 sm:grid-cols-2 gap-8 text-left mt-6">
-        <div
-          x-listbox
-          x-model="selectedVersion"
-          class="relative"
-        >
-          <label x-listbox:label class="font-medium text-white/75 text-sm">Version</label>
+      <div class="mt-12">
+        <label class="text-slate-100 text-lg">Choose your version</label>
 
-          <button
-            x-listbox:button
-            class="relative w-full cursor-default rounded-lg bg-white mt-1 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-purple-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
-          >
-            <span x-text="selectedVersion ? selectedVersion.name : 'Select a version'" class="block truncate"></span>
-
-            <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="shrink-0 w-5 h-5 text-slate-400"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" /></svg>
-            </span>
-          </button>
-
-          <ul
-            x-listbox:options
-            x-transition.origin.top.left
-            x-cloak
-            class="absolute max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-          >
-            <template x-for="version in versions" :key="version.id">
-              <li
-                x-listbox:option
-                :value="version"
+        <div class="mt-4 flex flex-col md:flex-row md:items-center md:justify-center gap-y-6 md:gap-y-0 md:gap-x-6">
+          <template x-for="version in versions" :key="version.id">
+            <button
+              type="button"
+              @click="selectedVersion = version"
+              :class="{
+                'bg-purple-600 highlight-white/10': selectedVersion === version,
+                'bg-white bg-opacity-10 text-slate-200 hover:bg-opacity-15': selectedVersion !== version,
+              }"
+              class="flex flex-col flex-1 px-3 py-1.5 transition rounded-lg text-left"
+            >
+              <div
+                x-text="version.name"
+                class="text-base font-semibold"
                 :class="{
-                  'bg-purple-500/10 text-slate-900': $listboxOption.isActive,
-                  'text-slate-600': ! $listboxOption.isActive,
-                  'opacity-50 cursor-not-allowed': $listboxOption.isDisabled,
+                  'text-white': selectedVersion === version,
+                  'text-slate-200': selectedVersion !== version,
                 }"
-                class="flex items-center cursor-default justify-between gap-2 w-full px-4 py-2 text-sm transition-colors"
-              >
-                <span x-text="version.name"></span>
-
-                <span x-show="$listboxOption.isSelected" class="text-purple-600 font-bold">&check;</span>
-              </li>
-            </template>
-          </ul>
-        </div>
-
-        <div
-          x-listbox
-          x-model="selectedGenre"
-          class="relative"
-          x-data
-        >
-          <label x-listbox:label class="font-medium text-white/75 text-sm">Genre</label>
-
-          <button
-            x-listbox:button
-            @click="$float()"
-            class="relative w-full cursor-default rounded-lg bg-white mt-1 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-purple-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
-          >
-            <span x-text="selectedGenre ? selectedGenre.name : 'Select a genre'" class="block truncate"></span>
-
-            <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="shrink-0 w-5 h-5 text-slate-400"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" /></svg>
-            </span>
-          </button>
-
-          <ul
-            x-listbox:options
-            x-transition.origin.top.left
-            x-float.placement.bottom-start
-            x-ref="panel"
-            x-cloak
-            class="max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
-          >
-            <template x-for="genre in genres" :key="genre.id">
-              <li
-                x-listbox:option
-                :value="genre"
-                :disabled="genre.disabled"
+              ></div>
+              <div
+                x-text="version.content"
+                class="text-xs font-normal"
                 :class="{
-                  'bg-purple-500/10 text-slate-900': $listboxOption.isActive,
-                  'text-slate-600': ! $listboxOption.isActive,
-                  'opacity-50 cursor-not-allowed': $listboxOption.isDisabled,
+                  'text-purple-200': selectedVersion === version,
+                  'text-slate-400': selectedVersion !== version,
                 }"
-                class="flex items-center cursor-default justify-between gap-2 w-full px-4 py-2 text-sm transition-colors"
-              >
-                <span x-text="genre.name"></span>
-
-                <span x-show="$listboxOption.isSelected" class="text-purple-600 font-bold">&check;</span>
-              </li>
-            </template>
-          </ul>
+              ></div>
+            </button>
+          </template>
         </div>
       </div>
 
-      <div class="mt-8 flex space-x-3 text-white font-medium text-sm leading-6 text-left" x-show="selectedVersion?.value.includes('2.6')">
+      <div class="mt-8 flex space-x-3 text-white font-medium text-sm leading-6 text-left max-w-lg mx-auto" x-show="selectedVersion?.value.includes('2.6')">
         @svg('flex-alert-diamond', 'h-8 w-8 text-danger-500 shrink-0')
-        <span>Nova 2.6.2 is legacy software and intended only for games hosted on a server running PHP 5.3 - 5.6. This version of Nova is no longer receiving updates.</span>
+        <span>Nova 2.6.2 is a legacy version and intended only for games hosted on a server running PHP 5.3 - 5.6. This version of Nova is no longer receiving updates.</span>
       </div>
 
-      <div class="mt-8 flex space-x-3 text-white font-medium text-sm leading-6 text-left" x-show="selectedVersion?.value.includes('2.3')">
+      <div class="mt-8 flex space-x-3 text-white font-medium text-sm leading-6 text-left max-w-lg mx-auto" x-show="selectedVersion?.value.includes('2.3')">
         @svg('flex-alert-diamond', 'h-8 w-8 text-danger-500 shrink-0')
-        <span>Nova 2.3.2 is legacy software and intended only for games hosted on a server running PHP 5.2. This version of Nova is no longer receiving updates.</span>
+        <span>Nova 2.3.2 is a legacy version and intended only for games hosted on a server running PHP 5.2. This version of Nova is no longer receiving updates.</span>
+      </div>
+
+      <div class="mt-8">
+        <label class="text-slate-100 text-lg">Choose your genre</label>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-4 gap-y-6 md:gap-x-6 md:gap-y-3">
+          <template x-for="genre in genres" :key="genre.id">
+            <button
+              type="button"
+              @click="selectedGenre = genre"
+              :class="{
+                'bg-purple-600 highlight-white/10': selectedGenre === genre,
+                'bg-white bg-opacity-10 text-slate-200 hover:bg-opacity-15': selectedGenre !== genre,
+              }"
+              class="flex-1 px-3 py-1.5 transition rounded-lg text-left"
+            >
+              <div
+                x-text="genre.name"
+                class="text-sm font-semibold"
+                :class="{
+                  'text-white': selectedGenre === genre,
+                  'text-slate-200': selectedGenre !== genre,
+                }"
+              ></div>
+              <div
+                x-text="genre.content"
+                class="text-xs font-normal"
+                :class="{
+                  'text-purple-200': selectedGenre === genre,
+                  'text-slate-400': selectedGenre !== genre,
+                }"
+              ></div>
+            </button>
+          </template>
+        </div>
       </div>
 
       <div x-show="selectedVersion && selectedGenre">
-        <x-button href="#" variant="dark" color="brand" class="mt-10 flex items-center space-x-2.5">
-          <div>Download</div>
+        <x-button href="#" variant="dark" color="brand" class="mt-12 flex items-center space-x-2.5">
+          <div>
+            Download Nova
+            <span x-text="selectedVersion?.name"></span>
+            &ndash;
+            <span x-text="selectedGenre?.name"></span>
+          </div>
           @svg('flex-cloud-download', 'h-5 w-5 shrink-0')
         </x-button>
       </div>

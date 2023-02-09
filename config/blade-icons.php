@@ -18,6 +18,11 @@ return [
             'prefix' => 'flex',
             'class' => '',
         ],
+        'fs' => [
+            'path' => 'resources/svg/flex-solid',
+            'prefix' => 'fs',
+            'class' => '',
+        ],
         'uxl' => [
             'path' => 'resources/svg/ux-line',
             'prefix' => 'uxl',
