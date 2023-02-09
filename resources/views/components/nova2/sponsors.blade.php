@@ -34,10 +34,10 @@
         @foreach ($sponsors as $sponsor)
           <li class="group relative rounded-lg p-4 bg-white/10 hover:bg-white/[15%] ring-1 ring-inset ring-white/10 space-y-4 text-center transition">
             <h3 class="font-display text-xl leading-7 text-white">
-              {{ $sponsor->name }}
+              {{ $sponsor->formattedName }}
             </h3>
 
-            <img src="{{ $sponsor->image }}" alt="{{ $sponsor->name }}" width="500" height="500" layout="fill" class="block mx-auto w-auto h-32" />
+            <img src="{{ $sponsor->getFirstMediaUrl('logo') }}" alt="{{ $sponsor->formattedName }}" width="500" height="500" class="block mx-auto w-auto h-32" />
 
             <div class='flex items-center justify-center space-x-1.5 text-blue-100 font-medium text-sm'>
               <span>Visit site</span>
