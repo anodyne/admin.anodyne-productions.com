@@ -37,7 +37,7 @@
               {{ $sponsor->formattedName }}
             </h3>
 
-            <img src="{{ $sponsor->getFirstMediaUrl('logo') }}" alt="{{ $sponsor->formattedName }}" width="500" height="500" class="block mx-auto w-auto h-32" />
+            <img src="{{ $sponsor->getFirstMediaUrl('logo') }}" alt="{{ $sponsor->formattedName }}" width="500" height="500" class="block mx-auto w-auto h-32 rounded-md" />
 
             <div class='flex items-center justify-center space-x-1.5 text-blue-100 font-medium text-sm'>
               <span>Visit site</span>

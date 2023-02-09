@@ -10,7 +10,12 @@ Route::get('/nova', function () {
         ->latest('date')
         ->first();
 
-    $sponsors = Sponsor::active()->premiumTier()->shouldBeDisplayed()->get();
+    $sponsors = Sponsor::query()
+        ->active()
+        ->premiumTier()
+        ->shouldBeDisplayed()
+        ->get()
+        ->sortBy('formattedName');
 
     return view('nova-2', [
         'latestVersion' => $release->version,
