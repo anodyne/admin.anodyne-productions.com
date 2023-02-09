@@ -69,10 +69,10 @@
               type="button"
               @click="selectedVersion = version"
               :class="{
-                'bg-purple-600 highlight-white/10': selectedVersion === version,
-                'bg-white bg-opacity-10 text-slate-200 hover:bg-opacity-15': selectedVersion !== version,
+                'bg-purple-600 ring-opacity-20': selectedVersion === version,
+                'bg-white bg-opacity-10 text-slate-200 hover:bg-opacity-15 ring-opacity-10': selectedVersion !== version,
               }"
-              class="flex flex-col flex-1 px-3 py-1.5 transition rounded-lg text-left"
+              class="flex flex-col flex-1 px-3 py-1.5 transition rounded-lg text-left ring-1 ring-inset ring-white"
             >
               <div
                 x-text="version.name"
@@ -95,12 +95,12 @@
         </div>
       </div>
 
-      <div class="mt-8 flex space-x-3 text-white font-medium text-sm leading-6 text-left max-w-lg mx-auto" x-show="selectedVersion?.value.includes('2.6')">
+      <div class="mt-8 flex space-x-3 text-white font-medium text-sm leading-6 text-left max-w-lg mx-auto" x-show="selectedVersion?.value.includes('2.6')" x-cloak>
         @svg('flex-alert-diamond', 'h-8 w-8 text-danger-500 shrink-0')
         <span>Nova 2.6.2 is a legacy version and intended only for games hosted on a server running PHP 5.3 - 5.6. This version of Nova is no longer receiving updates.</span>
       </div>
 
-      <div class="mt-8 flex space-x-3 text-white font-medium text-sm leading-6 text-left max-w-lg mx-auto" x-show="selectedVersion?.value.includes('2.3')">
+      <div class="mt-8 flex space-x-3 text-white font-medium text-sm leading-6 text-left max-w-lg mx-auto" x-show="selectedVersion?.value.includes('2.3')" x-cloak>
         @svg('flex-alert-diamond', 'h-8 w-8 text-danger-500 shrink-0')
         <span>Nova 2.3.2 is a legacy version and intended only for games hosted on a server running PHP 5.2. This version of Nova is no longer receiving updates.</span>
       </div>
@@ -114,10 +114,10 @@
               type="button"
               @click="selectedGenre = genre"
               :class="{
-                'bg-purple-600 highlight-white/10': selectedGenre === genre,
-                'bg-white bg-opacity-10 text-slate-200 hover:bg-opacity-15': selectedGenre !== genre,
+                'bg-purple-600 ring-opacity-20': selectedGenre === genre,
+                'bg-white bg-opacity-10 text-slate-200 hover:bg-opacity-15 ring-opacity-10': selectedGenre !== genre,
               }"
-              class="flex-1 px-3 py-1.5 transition rounded-lg text-left"
+              class="flex-1 px-3 py-1.5 transition rounded-lg text-left ring-1 ring-inset ring-white"
             >
               <div
                 x-text="genre.name"
