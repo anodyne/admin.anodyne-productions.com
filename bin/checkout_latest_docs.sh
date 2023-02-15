@@ -4,14 +4,13 @@ DOCS_VERSIONS=(
   3.0
   2.7
   2.6
-  1.0
 )
 
 for v in "${DOCS_VERSIONS[@]}"; do
     path=${v/./_}
     if [ -d "resources/views/docs/$path" ]; then
         echo "Pulling latest documentation updates for $v..."
-        (cd resources/views/docs/$path && git pull)
+        (cd resources/views/docs/$path && git reset HEAD --hard && git pull)
     else
         echo "Cloning $v..."
         git clone --single-branch --branch "$v" git@github.com:anodyne/docs.git "resources/views/docs/$path"
@@ -22,8 +21,8 @@ for v in "${DOCS_VERSIONS[@]}"; do
         (rm -r public/images/docs/$v)
     fi;
 
-    if [ -d "resources/views/docs/$path/images/docs/$v" ]; then
+    if [ -d "resources/views/docs/$path/images" ]; then
         echo "Moving images for $v..."
-        (cp -r resources/views/docs/$path/images/docs/$v public/images/docs/$v)
+        (cp -r resources/views/docs/$path/images public/images/docs/$v)
     fi;
 done

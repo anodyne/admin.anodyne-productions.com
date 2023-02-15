@@ -5,7 +5,7 @@
 
   <x-nova3.faq />
 
-  <x-footer
+  <x-footer.landing
     :items="[
       ['name' => 'Features', 'href' => '#features' ],
       ['name' => 'Demo', 'href' => '#demo' ],

@@ -9,7 +9,7 @@
 
   <x-nova2.sponsors :sponsors="$sponsors" />
 
-  <x-footer
+  <x-footer.landing
     :items="[
       ['name' => 'Features', 'href' => '#features' ],
       ['name' => 'Download', 'href' => '#download' ],

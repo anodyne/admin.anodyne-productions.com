@@ -2,21 +2,47 @@
 
 namespace App\View\Components;
 
+use Domain\Docs\Documentation;
 use Illuminate\View\Component;
 
 class DocsLayout extends Component
 {
-    public array $sections;
+    public ?object $nextPage = null;
 
-    public string $current;
+    public ?object $previousPage = null;
 
-    public string $version;
+    public array $navigation = [];
 
-    public function __construct($sections = [], $current = '', $version = 'main')
+    public function __construct(
+        public array $sections = [],
+        public string $current = '',
+        public string $version = 'main',
+        public array $frontmatter = []
+    ) {
+        $this->navigation = $this->navigation($version);
+    }
+
+    public function navigation(): array
     {
-        $this->sections = $sections;
-        $this->current = $current;
-        $this->version = $version;
+        $docs = app(Documentation::class);
+
+        $navigation = $docs->navigation($this->version);
+
+        $allLinks = collect($navigation)->flatMap(fn ($navItem) => $navItem->links);
+        $linkIndex = $allLinks->search(fn ($link) => $link->href === request()->route('page'));
+
+        $this->previousPage = ($linkIndex > 0) ? $allLinks[$linkIndex - 1] : null;
+        $this->nextPage = ($linkIndex < $allLinks->count() - 1) ? $allLinks[$linkIndex + 1] : null;
+
+        return $navigation;
+    }
+
+    public function pageNavigation(string $direction)
+    {
+        return match ($direction) {
+            'next' => 'Next',
+            default => 'Previous'
+        };
     }
 
     public function render()

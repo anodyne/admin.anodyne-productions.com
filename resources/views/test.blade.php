@@ -1,4 +1,8 @@
 <x-base-layout>
+    <div class="p-16 bg-white">
+        {!! $markdown !!}
+    </div>
+
     <div class="p-16 bg-white space-y-4">
         <div class="flex items-center space-x-4">
             <x-badge color="purple" size="sm">Badge</x-badge>

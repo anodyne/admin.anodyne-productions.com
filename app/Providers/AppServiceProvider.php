@@ -31,6 +31,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->callAfterResolving('markdown.environment', function ($environment) {
+            $environment->mergeConfig(['heading_permalink' => [
+                'html_class' => '',
+                'id_prefix' => '',
+                'fragment_prefix' => '',
+                'symbol' => '',
+                'min_heading_level' => 2,
+                'max_heading_level' => 3,
+            ]]);
+        });
     }
 
     /**

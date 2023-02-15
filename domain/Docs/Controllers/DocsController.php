@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Domain\Docs\Controllers;
 
 use Domain\Docs\Documentation;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 class DocsController
 {
@@ -32,10 +33,13 @@ class DocsController
 
         $path = "docs.{$cleanVersion}.{$page}";
 
-        $sections = $docs->toc($version);
-        $markdown = $docs->get($version, $page);
-        $title = $docs->title($markdown);
+        [
+            'frontmatter' => $frontmatter,
+            'markdown' => $markdown,
+        ] = $docs->get($version, $page);
+        $sections = $docs->toc($markdown);
+        $markdown = Markdown::convert($markdown)->getContent();
 
-        return view('docs', compact('version', 'page', 'sections', 'title', 'markdown', 'path'));
+        return view('docs', compact('version', 'page', 'sections', 'markdown', 'path', 'frontmatter'));
     }
 }

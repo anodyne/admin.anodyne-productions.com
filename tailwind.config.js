@@ -6,6 +6,7 @@ module.exports = {
   content: [
     './resources/**/*.{js,blade.php,css}',
     './vendor/filament/**/*.blade.php',
+    './app/CommonMark/Extensions/Tag/Renderers/*.php',
     './app/View/Components/*.php',
     './app/Filament/Resources/*.php',
     './vendor/livewire-ui/modal/resources/views/*.blade.php',

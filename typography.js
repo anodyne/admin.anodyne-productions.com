@@ -3,9 +3,9 @@ module.exports = ({ theme }) => ({
     css: {
       '--tw-prose-body': theme('colors.slate.700'),
       '--tw-prose-headings': theme('colors.slate.900'),
-      '--tw-prose-links': theme('colors.sky.500'),
-      '--tw-prose-links-hover': theme('colors.sky.600'),
-      '--tw-prose-links-underline': theme('colors.sky.500 / 0.3'),
+      '--tw-prose-links': theme('colors.purple.500'),
+      '--tw-prose-links-hover': theme('colors.purple.600'),
+      '--tw-prose-links-underline': theme('colors.purple.500 / 0.3'),
       '--tw-prose-bold': theme('colors.slate.900'),
       '--tw-prose-counters': theme('colors.slate.500'),
       '--tw-prose-bullets': theme('colors.slate.300'),
@@ -21,9 +21,9 @@ module.exports = ({ theme }) => ({
 
       '--tw-prose-invert-body': theme('colors.slate.400'),
       '--tw-prose-invert-headings': theme('colors.white'),
-      '--tw-prose-invert-links': theme('colors.sky.400'),
-      '--tw-prose-invert-links-hover': theme('colors.sky.500'),
-      '--tw-prose-invert-links-underline': theme('colors.sky.500 / 0.3'),
+      '--tw-prose-invert-links': theme('colors.purple.400'),
+      '--tw-prose-invert-links-hover': theme('colors.purple.500'),
+      '--tw-prose-invert-links-underline': theme('colors.purple.500 / 0.3'),
       '--tw-prose-invert-bold': theme('colors.white'),
       '--tw-prose-invert-counters': theme('colors.slate.400'),
       '--tw-prose-invert-bullets': theme('colors.slate.600'),
@@ -180,11 +180,11 @@ module.exports = ({ theme }) => ({
       // Headings
       h1: {
         color: 'var(--tw-prose-headings)',
-        fontWeight: '400',
+        fontWeight: '800',
         fontSize: theme('fontSize.4xl')[0],
         ...theme('fontSize.4xl')[1],
         marginBottom: theme('spacing.4'),
-        fontFamily: theme('fontFamily.display')[0]
+        fontFamily: theme('fontFamily.sans')[0]
       },
       h2: {
         color: 'var(--tw-prose-headings)',
