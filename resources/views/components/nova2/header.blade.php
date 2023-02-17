@@ -31,8 +31,9 @@
       :items="[
         ['href' => '#features', 'title' => 'Features' ],
         ['href' => '#download', 'title' => 'Download' ],
-        ['href' => '/docs', 'title' => 'Docs' ],
         ['href' => '#resources', 'title' => 'Resources' ],
+        ['href' => route('docs'), 'title' => 'Docs' ],
+        ['href' => route('addons.index'), 'title' => 'Addons' ],
         ['href' => 'https://discord.gg/7WmKUks', 'title' => 'Get Help' ],
       ]"
       :dark="false"
@@ -62,11 +63,12 @@
           </p>
 
           <div class="mt-10 flex flex-col md:flex-row items-center justify-center gap-y-6 md:gap-y-0 md:gap-x-6">
-            <x-button href="#download" variant="light" color="primary">
-              Download now
+            <x-button href="#download" variant="hero" size="md">
+              <span>Download now</span>
             </x-button>
-            <x-button href="#features" variant="light" color="secondary">
-              Learn more
+            <x-button href="#features" variant="text">
+              <span>Learn more</span>
+              <span>&rarr;</span>
             </x-button>
           </div>
         </div>

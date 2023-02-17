@@ -5,6 +5,7 @@ const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenCo
 module.exports = {
   content: [
     './resources/**/*.{js,blade.php,css}',
+    './resources/svg/flex-duo/*.svg',
     './vendor/filament/**/*.blade.php',
     './app/CommonMark/Extensions/Tag/Renderers/*.php',
     './app/View/Components/*.php',
@@ -38,6 +39,33 @@ module.exports = {
       },
       boxShadow: {
         glow: '0 0 4px rgb(0 0 0 / 0.1)',
+        input: `
+          0px 1px 0px -1px var(--tw-shadow-color),
+          0px 1px 1px -1px var(--tw-shadow-color),
+          0px 1px 2px -1px var(--tw-shadow-color),
+          0px 2px 4px -2px var(--tw-shadow-color),
+          0px 3px 6px -3px var(--tw-shadow-color)
+        `,
+        button: `
+          inset 0px 1px 0px 0px #fff,
+          0px 0px 0px 1px rgba(0,0,0,.08),
+          0px 1px 0px 0px rgba(0,0,0,.06),
+          0px 2px 2px 0px rgba(0,0,0,.04),
+          0px 3px 3px 0px rgba(0,0,0,.02),
+          0px 4px 4px 0px rgba(0,0,0,.01)
+        `,
+        'button-purple': `
+          inset 0px 1px 0px 0px #fff,
+          0px 0px 0px 1px rgba(168,85,247,.22),
+          0px 1px 0px 0px rgba(168,85,247,.45),
+          0px 2px 2px 0px rgba(168,85,247,.1),
+          0px 3px 3px 0px rgba(168,85,247,.06),
+          0px 4px 4px 0px rgba(168,85,247,.04)
+        `,
+        highlight: `
+          inset 0px 0px 0px 1px var(--tw-shadow-color),
+          inset 0px 1px 0px var(--tw-shadow-color)
+        `,
       },
       fontFamily: {
         sans: ['"Inter var"', ...defaultTheme.fontFamily.sans],
@@ -50,6 +78,7 @@ module.exports = {
         transparent: 'transparent',
 
         white: '#fff',
+        black: '#000',
 
         primary: colors.purple,
         danger: colors.rose,
@@ -61,7 +90,7 @@ module.exports = {
         '2xl': '40rem',
         '3xl': '50rem',
         '5xl': '66rem',
-        '8xl': '88rem',
+        '8xl': '90rem',
       },
       opacity: {
         1: '0.01',

@@ -28,7 +28,7 @@
       :items="[
         ['href' => '#features', 'title' => 'Features' ],
         ['href' => '#demo', 'title' => 'Demo' ],
-        ['href' => '/docs/3.0/introduction', 'title' => 'Docs' ],
+        ['href' => route('docs', '3.0'), 'title' => 'Docs' ],
         ['href' => '#faq', 'title' => 'FAQs' ],
         ['href' => 'https://discord.gg/7WmKUks', 'title' => 'Discuss' ],
       ]"
@@ -49,8 +49,9 @@
             </p>
 
             <div class="mt-10 flex items-center justify-center gap-x-6">
-              <x-button href="#" variant="dark" color="secondary">
-                Learn more <span class="pl-1.5" aria-hidden="true">&rarr;</span>
+              <x-button href="#" variant="hero">
+                <span>Learn more</span>
+                <span>&rarr;</span>
               </x-button>
             </div>
           </div>

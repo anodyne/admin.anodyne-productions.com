@@ -1,4 +1,4 @@
-<x-base-layout>
+<x-base-layout title="Nova by Anodyne Productions" :has-appearance-modes="false">
   <x-nova2.header />
 
   <x-nova2.features />
@@ -13,8 +13,9 @@
     :items="[
       ['name' => 'Features', 'href' => '#features' ],
       ['name' => 'Download', 'href' => '#download' ],
-      ['name' => 'Docs', 'href' => '/docs' ],
       ['name' => 'Resources', 'href' => '#resources' ],
+      ['name' => 'Docs', 'href' => route('docs') ],
+      ['name' => 'Addons', 'href' => route('addons.index') ],
       ['name' => 'Get Help', 'href' => 'https://discord.gg/7WmKUks' ],
       ['name' => 'Nova 3', 'href' => '/nova-3' ],
     ]"

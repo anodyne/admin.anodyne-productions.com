@@ -1,5 +1,5 @@
 <a name="demo"></a>
-<section id="demo" class="overflow-hidden bg-slate-900 py-24 sm:py-32">
+<section id="demo" class="overflow-hidden bg-slate-900 py-24 sm:py-32 dark">
   <div class="mx-auto max-w-7xl md:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-y-16 gap-x-8 sm:gap-y-20 lg:grid-cols-2 lg:items-start">
       <div class="px-6 lg:px-0 lg:pt-4 lg:pr-4">
@@ -26,8 +26,9 @@
               <dd class="inline">secret</dd>
             </div>
 
-            <x-button href="https://nova3.anodyne-productions.com" variant="dark" color="secondary">
-              Go to the demo <span class="pl-1.5" aria-hidden="true">&rarr;</span>
+            <x-button href="https://nova3.anodyne-productions.com" variant="primary">
+              <span>Go to the demo</span>
+              <span>&rarr;</span>
             </x-button>
           </dl>
         </div>

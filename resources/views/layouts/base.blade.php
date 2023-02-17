@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="font-sans {{ $textColor }} antialiased {{ $bgColor }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,10 +22,25 @@
         <!-- Scripts -->
         <script defer src="https://unpkg.com/@alpinejs/ui@3.10.5-beta.8/dist/cdn.min.js"></script>
         <script defer src="{{ asset('js/app.js') }}"></script>
+
+        @if ($hasAppearanceModes)
+            <script>
+                if (localStorage.mode === 'dark' || (!('mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark')
+                } else {
+                    document.documentElement.classList.remove('dark')
+                }
+            </script>
+        @endif
     </head>
-    <body>
+    <body class="font-sans {{ $textColor }} antialiased {{ $bgColor }}">
         {{ $slot }}
 
         @livewireScripts
+        <script>
+            window.addEventListener('refresh-page', event => {
+                window.location.reload(false);
+            });
+        </script>
     </body>
 </html>

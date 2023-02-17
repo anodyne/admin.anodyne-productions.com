@@ -23,6 +23,11 @@ return [
             'prefix' => 'fs',
             'class' => '',
         ],
+        'fd' => [
+            'path' => 'resources/svg/flex-duo',
+            'prefix' => 'fd',
+            'class' => '',
+        ],
         'uxl' => [
             'path' => 'resources/svg/ux-line',
             'prefix' => 'uxl',

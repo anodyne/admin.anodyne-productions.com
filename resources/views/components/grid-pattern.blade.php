@@ -6,8 +6,8 @@
   'squares' => [],
 ])
 
-<div class="absolute inset-0 -z-10 mx-0 max-w-none overflow-hidden" x-data x-id="['grid-pattern']">
-  <div class="absolute left-1/2 top-0 ml-[-38rem] h-[25rem] w-[81.25rem] dark:[mask-image:linear-gradient(white,transparent)]">
+<div class="absolute inset-0 -z-10 mx-0 max-w-none" x-data x-id="['grid-pattern']">
+  <div class="absolute left-1/2 top-0 ml-[-38rem] h-[30rem] w-[81.25rem] dark:[mask-image:linear-gradient(white,transparent)]">
     <div class="absolute inset-0 bg-gradient-to-r from-sky-500 to-purple-300 opacity-40 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] dark:from-sky-500/50 dark:to-purple-500/40 dark:opacity-100">
       <svg aria-hidden="true" class="absolute inset-x-0 inset-y-[-50%] h-[200%] w-full skew-y-[-18deg] fill-black/40 stroke-black/50 mix-blend-overlay dark:fill-white/2.5 dark:stroke-white/5">
         <defs>

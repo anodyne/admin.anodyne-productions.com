@@ -21,11 +21,9 @@
         We launched a Patreon as a way for people to support Anodyne and help us continue to provide Nova and all of its resources to the community for free. As a patron, you&rsquo;ll have access to a private Discord community, early access to Nova 3, and more. Join today!
       </p>
 
-      <x-button href="https://www.patreon.com/anodyneproductions" variant="light" color="primary" class="mt-6" target="_blank">
-        <div class="flex items-center space-x-2.5">
-          <div>Become a patron</div>
-          @svg('flex-arrow-right-circle', 'h-5 w-5 shrink-0')
-        </div>
+      <x-button href="https://www.patreon.com/anodyneproductions" variant="primary" class="mt-6" target="_blank">
+        <span>Become a patron</span>
+        <span>&rarr;</span>
       </x-button>
     </div>
 

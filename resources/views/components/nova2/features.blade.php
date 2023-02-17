@@ -3,32 +3,32 @@
     [
       'title' => 'All-in-one website',
       'content' => "A dedicated website with all of your content lets you easily show off your game to the world.",
-      'icon' => 'fs-browser-favorite',
+      'icon' => 'fd-browser-favorite',
     ],
     [
       'title' => 'Easy character management',
       'content' => "Manage all of your game's characters in one place and let players take ownership of the characters they play.",
-      'icon' => 'fs-theater-mask',
+      'icon' => 'fd-theater-mask',
     ],
     [
       'title' => 'Tell your stories',
       'content' => "An integrated story and posting system gives you and your players the freedom to tell your game's stories.",
-      'icon' => 'fs-book-edit',
+      'icon' => 'fd-book-edit',
     ],
     [
       'title' => 'Post locking',
       'content' => "Post locking intelligently locks and unlocks multi-author posts to help prevent your changes being overwritten.",
-      'icon' => 'fs-lock-closed',
+      'icon' => 'fd-lock-closed',
     ],
     [
       'title' => 'Reporting',
       'content' => "Get valuable insights into activity, posting levels, and even forecasting game activity for the rest of the month.",
-      'icon' => 'fs-graph',
+      'icon' => 'fd-graph-dot',
     ],
     [
       'title' => 'Customize your way',
       'content' => "Change the way your site looks or works with tools to customize things any way you want.",
-      'icon' => 'fs-wrench',
+      'icon' => 'fd-wrench',
     ],
   ];
 @endphp
@@ -55,7 +55,8 @@
       @foreach ($features as $feature)
         <div class="relative pl-9">
           <dt class="inline font-semibold text-slate-900">
-            @svg($feature['icon'], 'absolute top-1 left-1 h-5 w-5 text-purple-600')
+            @svg($feature['icon'], 'absolute top-0.5 left-0 h-6 w-6')
+            {{-- @svg($feature['icon'], 'absolute top-1 left-1 h-5 w-5 text-purple-600') --}}
             {{ $feature['title'] }}
           </dt>
           <dd class="inline">{{ $feature['content'] }}</dd>

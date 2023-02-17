@@ -1,6 +1,7 @@
 <?php
 
 use App\CommonMark\Extensions\Tag\TagExtension;
+use App\Models\Addon;
 use App\Models\Release;
 use App\Models\Sponsor;
 use Domain\Docs\Controllers\DocsController;
@@ -37,7 +38,11 @@ Route::get('/docs/{version?}/{page?}', DocsController::class)
     ->name('docs');
 
 Route::get('/addons', function () {
-    //
+    $addons = Addon::get();
+
+    return view('addons.index', [
+        'addons' => $addons,
+    ]);
 })->name('addons.index');
 
 Route::get('/addon', function () {

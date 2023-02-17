@@ -36,7 +36,7 @@
   <div class="hidden md:flex items-center">
     @auth
       <div x-data x-menu class="relative">
-        <x-button x-menu:button variant="light" color="secondary" size="sm">
+        <x-button x-menu:button variant="hero" size="xs">
           My Account
         </x-button>
 
@@ -93,9 +93,8 @@
     @guest
       <x-button
         :href="route('filament.auth.login')"
-        :variant="$dark ? 'dark' : 'light'"
-        color="secondary"
-        size="sm"
+        variant="hero"
+        size="xs"
       >
         Sign in
       </x-button>

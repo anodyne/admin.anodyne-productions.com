@@ -71,7 +71,7 @@
       'text-slate-400' => !$dark,
       'text-slate-500' => $dark,
     ])>
-      &copy; {{ now()->format('Y') }} Anodyne. All rights reserved.
+      Copyright &copy; {{ now()->format('Y') }} Anodyne Productions
     </p>
   </div>
 </footer>

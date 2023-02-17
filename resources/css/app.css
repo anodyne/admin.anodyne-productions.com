@@ -37,6 +37,10 @@ body {
     @apply hidden;
 }
 
+.border {
+    background-clip: padding-box;
+}
+
 @layer components {
     .docs {
         h1 {

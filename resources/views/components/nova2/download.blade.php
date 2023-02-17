@@ -47,6 +47,9 @@
         content: 'Legacy version for PHP 5.2',
       },
     ],
+    downloadLink () {
+      return '{{ config('anodyne.download-url') }}/nova-' + this.selectedVersion?.value + '-' + this.selectedGenre?.value + '.zip'
+    }
   }"
   x-init="() => selectedVersion = versions[0]"
 >
@@ -141,7 +144,7 @@
       </div>
 
       <div x-show="selectedVersion && selectedGenre">
-        <x-button href="#" variant="dark" color="brand" class="mt-12 flex items-center space-x-2.5">
+        <x-button x-bind:href="downloadLink()" variant="brand" class="mt-12 flex items-center space-x-2.5">
           <div>
             Download Nova
             <span x-text="selectedVersion?.name"></span>
