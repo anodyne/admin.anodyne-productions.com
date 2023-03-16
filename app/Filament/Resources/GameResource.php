@@ -98,9 +98,15 @@ class GameResource extends Resource
                 Tables\Columns\TextColumn::make('server_software')->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->since()
-                    ->label('Initial install')
+                    ->label('Installed')
                     ->size('sm')
-                    ->toggleable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->since()
+                    ->label('Last updated')
+                    ->size('sm')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
             ])
             ->filters([
