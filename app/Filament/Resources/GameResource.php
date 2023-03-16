@@ -100,7 +100,8 @@ class GameResource extends Resource
                     ->since()
                     ->label('Initial install')
                     ->size('sm')
-                    ->toggleable(),
+                    ->toggleable()
+                    ->sortable(),
             ])
             ->filters([
                 //
