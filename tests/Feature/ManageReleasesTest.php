@@ -59,6 +59,7 @@ test('admins can create a release', function () {
             'severity' => $releaseData->severity,
             'link' => $releaseData->link,
             'published' => $releaseData->published,
+            'release_series_id' => $releaseData->release_series_id,
         ])
         ->assertHasNoPageActionErrors()
         ->assertNotified();
@@ -99,6 +100,7 @@ it('updates a release', function () {
             'severity' => $newReleaseData->severity,
             'link' => $newReleaseData->link,
             'published' => $newReleaseData->published,
+            'release_series_id' => $newReleaseData->release_series_id,
         ])
         ->assertHasNoTableActionErrors()
         ->assertNotified();

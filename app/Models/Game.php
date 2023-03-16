@@ -19,6 +19,7 @@ class Game extends Model
         'db_version',
         'server_software',
         'release_id',
+        'release_series_id',
         'created_at',
     ];
 

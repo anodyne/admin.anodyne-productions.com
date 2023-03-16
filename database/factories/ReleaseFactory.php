@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\ReleaseSeverity;
+use App\Models\ReleaseSeries;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,6 +25,7 @@ class ReleaseFactory extends Factory
             'date' => now(),
             'link' => $this->faker->url,
             'published' => true,
+            'release_series_id' => ReleaseSeries::factory(),
         ];
     }
 }

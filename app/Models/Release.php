@@ -14,7 +14,14 @@ class Release extends Model
     use HasFactory;
 
     protected $fillable = [
-        'version', 'date', 'notes', 'severity', 'link', 'upgrade_guide_link', 'published',
+        'version',
+        'date',
+        'notes',
+        'severity',
+        'link',
+        'upgrade_guide_link',
+        'published',
+        'release_series_id',
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'id'];
