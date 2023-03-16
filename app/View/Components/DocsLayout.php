@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use Domain\Docs\Documentation;
+use App\Support\Documentation;
 use Illuminate\View\Component;
 
 class DocsLayout extends Component

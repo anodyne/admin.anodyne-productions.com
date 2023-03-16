@@ -2,16 +2,13 @@
 
 namespace App\Filament\Resources\AddonResource\RelationManagers;
 
-use App\Models\Product;
 use App\Models\Version;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Filament\Tables\Contracts\HasRelationshipTable;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class VersionsRelationManager extends RelationManager
@@ -26,9 +23,10 @@ class VersionsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('version')->required(),
                 Forms\Components\Select::make('product')
+                    ->label('Supported Nova version')
                     ->required()
                     ->multiple()
-                    ->placeholder('Select product')
+                    ->placeholder('Select Nova version')
                     ->relationship('product', 'name', fn (Builder $query) => $query->published())
                     ->preload()
                     ->maxItems(1),
@@ -53,7 +51,7 @@ class VersionsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('downloads_count')
                     ->counts('downloads')
                     ->label('Downloads'),
-                Tables\Columns\TextColumn::make('product.name')->label('Product'),
+                Tables\Columns\TextColumn::make('product.name')->label('Nova version'),
                 Tables\Columns\ToggleColumn::make('published'),
             ])
             ->filters([
@@ -61,14 +59,7 @@ class VersionsRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()
-                    ->using(function (HasRelationshipTable $livewire, array $data) {
-                        $record = $livewire->getRelationship()->create($data);
-
-                        $record->product()->attach(Product::findOrFail($data['product']));
-
-                        return $record;
-                    })
-                    ->successNotificationMessage('New add-on version created'),
+                    ->successNotificationTitle('New add-on version created'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
@@ -76,26 +67,12 @@ class VersionsRelationManager extends RelationManager
                     ->size('md')
                     ->iconButton()
                     ->color('secondary')
-                    ->mutateRecordDataUsing(function (array $data): array {
-                        $data['product'] = data_get($data, 'product.0.id');
-
-                        return $data;
-                    })
-                    ->using(function (Model $record, array $data): Model {
-                        $record->update($data);
-
-                        $record->product()->detach();
-
-                        $record->product()->attach(Product::findOrFail($data['product']));
-
-                        return $record;
-                    })
-                    ->successNotificationMessage('Add-on version updated'),
+                    ->successNotificationTitle('Add-on version updated'),
                 Tables\Actions\DeleteAction::make()
                     ->icon('flex-delete-bin')
                     ->size('md')
                     ->iconButton()
-                    ->successNotificationMessage('Add-on version deleted'),
+                    ->successNotificationTitle('Add-on version deleted'),
             ])
             ->bulkActions([])
             ->defaultSort('version', 'desc');
@@ -116,7 +93,7 @@ class VersionsRelationManager extends RelationManager
         return 'uxl-download';
     }
 
-    protected function getTableQuery(): Builder | Relation
+    protected function getTableQuery(): Builder|Relation
     {
         return parent::getTableQuery()->with('product');
     }

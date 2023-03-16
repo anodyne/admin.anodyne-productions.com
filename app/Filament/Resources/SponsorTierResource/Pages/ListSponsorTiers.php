@@ -16,4 +16,19 @@ class ListSponsorTiers extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getTableEmptyStateHeading(): ?string
+    {
+        return 'No sponsorship tiers found';
+    }
+
+    protected function getTableEmptyStateDescription(): ?string
+    {
+        return 'Add a sponsorship tier from Patreon.';
+    }
+
+    protected function getTableEmptyStateIcon(): ?string
+    {
+        return 'uxl-advertise-announce';
+    }
 }

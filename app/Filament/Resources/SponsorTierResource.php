@@ -33,9 +33,13 @@ class SponsorTierResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->size('lg')
+                    ->weight('bold')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('sponsors_count')
-                    ->counts('sponsors'),
+                    ->counts('sponsors')
+                    ->label('# of sponsors'),
             ])
             ->filters([
                 //

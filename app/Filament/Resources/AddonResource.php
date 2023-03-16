@@ -23,7 +23,7 @@ class AddonResource extends Resource
 
     protected static ?string $navigationIcon = 'flex-application-add';
 
-    protected static ?string $navigationGroup = 'Exchange';
+    protected static ?string $navigationGroup = 'Add-ons';
 
     protected static ?string $navigationLabel = 'Add-Ons';
 
@@ -35,17 +35,12 @@ class AddonResource extends Resource
     {
         return $form->schema(
             [
-                Forms\Components\Card::make()->schema(
-                    self::getFormSchema()
-                )
+                Forms\Components\Tabs::make('Add-on')->tabs([
+                    Forms\Components\Tabs\Tab::make('Basic info')->schema(self::getFormSchema()),
+                    Forms\Components\Tabs\Tab::make('Preview images')->schema(self::getFormSchema('previews')),
+                ])
                 ->columns(1)
-                ->columnSpan('full'),
-
-                Forms\Components\Card::make()->schema(
-                    self::getFormSchema('previews')
-                )
-                ->columns(1)
-                ->columnSpan('full'),
+                ->columnSpanFull(),
             ]
         );
     }
@@ -64,27 +59,33 @@ class AddonResource extends Resource
                             ->all()
                     )
                     ->colors([
-                        'ring-1 ring-warning-300 bg-warning-400/10 text-warning-500 dark:ring-warning-400/30 dark:bg-warning-400/10 dark:text-warning-400' => AddonType::extension->value,
-                        'ring-1 ring-success-300 dark:ring-success-400/30 bg-success-400/10 text-success-500 dark:text-success-400' => AddonType::theme->value,
+                        'ring-1 ring-emerald-300 bg-emerald-400/10 text-emerald-500 dark:ring-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400' => AddonType::extension->value,
+                        'ring-1 ring-purple-300 dark:ring-purple-400/30 bg-purple-400/10 text-purple-500 dark:text-purple-400' => AddonType::theme->value,
                         // 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-400' => AddonType::genre->value,
-                        'ring-1 ring-primary-300 bg-primary-400/10 text-primary-500 dark:ring-primary-400/30 dark:bg-primary-400/10 dark:text-primary-400' => AddonType::rank->value,
+                        'ring-1 ring-amber-300 bg-amber-400/10 text-amber-500 dark:ring-amber-400/30 dark:bg-amber-400/10 dark:text-amber-400' => AddonType::rank->value,
                     ]),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Author')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('products.name')
+                    ->label('Nova version(s)')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('downloads_count')
                     ->counts('downloads')
-                    ->label('# of Downloads'),
-                Tables\Columns\TextColumn::make('rating')->sortable(),
+                    ->label('# of downloads')
+                    ->toggleable(),
+                // Tables\Columns\TextColumn::make('rating')
+                //     ->sortable()
+                //     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\ToggleColumn::make('published'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
+                    ->multiple()
                     ->options(
-                        collect(AddonType::cases())
-                            ->flatMap(fn ($type) => [$type->value => $type->displayName()])
-                            ->all()
+                        collect(AddonType::cases())->flatMap(fn ($type) => [$type->value => $type->displayName()])->all()
                     ),
                 Tables\Filters\SelectFilter::make('author')
                     ->relationship('user', 'name')
@@ -133,7 +134,7 @@ class AddonResource extends Resource
         return [
             RelationManagers\VersionsRelationManager::class,
             RelationManagers\QuestionsRelationManager::class,
-            RelationManagers\ProductsRelationManager::class,
+            RelationManagers\CompatibilityRelationManager::class,
         ];
     }
 
@@ -182,7 +183,6 @@ class AddonResource extends Resource
                         Forms\Components\TextInput::make('version')
                             ->required()
                             ->columnSpan(2),
-
                         Forms\Components\Select::make('product')
                             ->required()
                             ->multiple()
@@ -191,18 +191,14 @@ class AddonResource extends Resource
                             ->preload()
                             ->maxItems(1)
                             ->columnSpan(2),
-
                         Forms\Components\MarkdownEditor::make('release_notes')
                             ->columnSpan('full'),
-
                         Forms\Components\MarkdownEditor::make('upgrade_instructions')
                             ->columnSpan('full'),
-
                         Forms\Components\SpatieMediaLibraryFileUpload::make('filename')
                             ->required()
                             ->collection('downloads')
                             ->columnSpan('full'),
-
                         Forms\Components\Toggle::make('published')
                             ->default(true)
                             ->columnSpan(2),
@@ -213,13 +209,16 @@ class AddonResource extends Resource
         if ($section === 'previews') {
             return [
                 Forms\Components\Group::make([
-                    Forms\Components\SpatieMediaLibraryFileUpload::make('previews')
-                        ->label('Preview image(s)')
-                        ->helperText('Upload up to 5 screenshots for your add-on to give users a preview of what they can expect')
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('primary-preview')
+                        ->label('Primary preview image')
+                        ->collection('primary-preview')
+                        ->columnSpan('full'),
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('additional-previews')
+                        ->label('Additional preview image(s)')
+                        ->helperText('Upload up to 4 additional screenshots for your add-on to give users a preview of what they can expect')
                         ->multiple()
-                        ->maxFiles(5)
-                        ->enableReordering()
-                        ->collection('previews')
+                        ->maxFiles(4)
+                        ->collection('additional-previews')
                         ->columnSpan('full'),
                 ])
                 ->columns(3)
@@ -230,11 +229,15 @@ class AddonResource extends Resource
         if ($section === 'static-previews') {
             return [
                 Forms\Components\Group::make([
-                    Forms\Components\SpatieMediaLibraryFileUpload::make('previews')
-                        ->label('Preview image(s)')
-                        ->helperText('Upload up to 5 screenshots for your add-on to give users a preview of what they can expect')
-                        ->maxFiles(5)
-                        ->collection('previews')
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('primary-preview')
+                        ->label('Primary preview image')
+                        ->collection('primary-preview')
+                        ->columnSpan('full'),
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('additional-previews')
+                        ->label('Additional preview image(s)')
+                        ->helperText('Upload up to 4 additional screenshots for your add-on to give users a preview of what they can expect')
+                        ->maxFiles(4)
+                        ->collection('additional-previews')
                         ->columnSpan('full'),
                 ])
                 ->columns(3)
@@ -247,7 +250,6 @@ class AddonResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->columnSpan(1),
-
                 Forms\Components\Select::make('type')
                     ->placeholder('Select a type')
                     ->required()
@@ -257,19 +259,16 @@ class AddonResource extends Resource
                             ->all()
                     )
                     ->columnSpan(1),
-
                 Forms\Components\Select::make('products')
-                    ->label('Product(s)')
+                    ->label('Supported Nova versions')
                     ->required()
                     ->multiple()
-                    ->placeholder('Select product(s)')
+                    ->placeholder('Select Nova version(s)')
                     ->relationship('products', 'name', fn (Builder $query) => $query->published())
                     ->preload()
                     ->columnSpan(1),
-
                 Forms\Components\MarkdownEditor::make('description')
                     ->columnSpan('full'),
-
                 Forms\Components\Toggle::make('published')
                     ->helperText('Only published add-ons will be available for download')
                     ->default(false)

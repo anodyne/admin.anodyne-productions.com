@@ -1,3 +1,4 @@
+@import "../../vendor/wire-elements/pro/resources/css/tailwind/overlay-component.css";
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -20,8 +21,16 @@
     font-named-instance: 'Italic';
 }
 
-body {
+body, button {
     font-feature-settings: 'ss01', 'ss03', 'cv11', 'zero';
+}
+
+.wep-modal {
+    @apply z-50;
+}
+
+.wep-modal-content {
+    @apply rounded-2xl bg-white dark:bg-slate-800;
 }
 
 /*

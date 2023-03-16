@@ -1,10 +1,12 @@
 <?php
 
 use App\CommonMark\Extensions\Tag\TagExtension;
+use App\Http\Controllers\DocsController;
+use App\Http\Livewire\AddonsDisplay;
+use App\Http\Livewire\AddonsList;
 use App\Models\Addon;
 use App\Models\Release;
 use App\Models\Sponsor;
-use Domain\Docs\Controllers\DocsController;
 use Illuminate\Support\Facades\Route;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
@@ -29,25 +31,18 @@ Route::get('/nova', function () {
     ]);
 })->name('home');
 
-Route::get('/nova-3', function () {
-    return view('nova-3');
-})->name('nova-3');
+Route::view('/nova-3', 'nova-3')->name('nova-3');
 
 Route::get('/docs/{version?}/{page?}', DocsController::class)
     ->where('page', '(.*)')
     ->name('docs');
 
-Route::get('/addons', function () {
-    $addons = Addon::get();
+Route::get('/addons', AddonsList::class)->name('addons.index');
+Route::get('/addons/{addon}', AddonsDisplay::class)->name('addons.show');
 
-    return view('addons.index', [
-        'addons' => $addons,
-    ]);
-})->name('addons.index');
-
-Route::get('/addon', function () {
-    return view('addons.show');
-})->name('addons.show');
+// Route::get('/addons/{addon}', function (Addon $addon) {
+//     return view('addons.show', compact('addon'));
+// })->name('addons.show');
 
 Route::redirect('/', '/nova');
 

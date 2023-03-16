@@ -1,7 +1,6 @@
 <x-base-layout
+  class="bg-gray-900 text-gray-400"
   title="Nova 3 by Anodyne Productions"
-  bg-color="bg-gray-900"
-  text-color="text-gray-400"
   :has-appearance-modes="false"
 >
   <x-nova3.header />

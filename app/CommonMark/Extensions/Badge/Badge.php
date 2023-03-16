@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Docs\CommonMark\Extensions\Badge;
+namespace App\CommonMark\Extensions\Badge;
 
 use League\CommonMark\Node\Inline\AbstractInline;
 use League\CommonMark\Node\Inline\DelimitedInterface;

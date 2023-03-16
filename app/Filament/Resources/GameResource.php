@@ -89,9 +89,18 @@ class GameResource extends Resource
                         collect(GameGenre::cases())
                             ->flatMap(fn ($genre) => [$genre->value => $genre->displayName()])
                             ->all()
-                    ),
+                    )
+                    ->colors(['ring-1 ring-slate-300 bg-slate-400/10 text-slate-500 dark:ring-slate-400/30 dark:bg-slate-400/10 dark:text-slate-400']),
                 Tables\Columns\TextColumn::make('release.version')->label('Nova version'),
-                Tables\Columns\TextColumn::make('php_version')->label('PHP version'),
+                Tables\Columns\TextColumn::make('php_version')->label('PHP version')->toggleable(),
+                Tables\Columns\TextColumn::make('db_driver')->label('Database driver')->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('db_version')->label('Database version')->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('server_software')->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->since()
+                    ->label('Initial install')
+                    ->size('sm')
+                    ->toggleable(),
             ])
             ->filters([
                 //

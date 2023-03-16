@@ -26,19 +26,28 @@ class User extends Authenticatable implements FilamentUser, HasMedia
     use CausesActivity;
     use InteractsWithMedia;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'name',
         'email',
         'password',
         'role',
-        'is_exchange_author',
-        'is_galaxy_author',
+        'is_addon_author',
     ];
 
     protected static $logFillable = true;
 
     protected static $logOnlyDirty = true;
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -46,10 +55,15 @@ class User extends Authenticatable implements FilamentUser, HasMedia
         'two_factor_secret',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'role' => UserRole::class,
         'email_verified_at' => 'datetime',
-        'is_exchange_author' => 'boolean',
+        'is_addon_author' => 'boolean',
     ];
 
     public function sponsor(): HasOne

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Docs\CommonMark\Extensions\Note;
+namespace App\CommonMark\Extensions\Note;
 
 use League\CommonMark\Block\Parser\BlockParserInterface;
 use League\CommonMark\ContextInterface;

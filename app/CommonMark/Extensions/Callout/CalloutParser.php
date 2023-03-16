@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Docs\CommonMark\Extensions\Callout;
+namespace App\CommonMark\Extensions\Callout;
 
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;

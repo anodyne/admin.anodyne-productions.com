@@ -9,8 +9,10 @@ module.exports = {
     './vendor/filament/**/*.blade.php',
     './app/CommonMark/Extensions/Tag/Renderers/*.php',
     './app/View/Components/*.php',
-    './app/Filament/Resources/*.php',
+    './app/Filament/Resources/**/*.php',
     './vendor/livewire-ui/modal/resources/views/*.blade.php',
+    './vendor/wire-elements/pro/config/wire-elements-pro.php',
+    './vendor/wire-elements/pro/**/*.blade.php',
     './storage/framework/views/*.php',
     './safelist.txt',
   ],
@@ -54,6 +56,15 @@ module.exports = {
           0px 3px 3px 0px rgba(0,0,0,.02),
           0px 4px 4px 0px rgba(0,0,0,.01)
         `,
+        'button-dark': `
+          0px 1px 1px -1px rgba(0,0,0,.08),
+          0px 2px 2px -1px rgba(0,0,0,.08),
+          0px 0px 0px 1px rgba(0,0,0,.06),
+          inset 0px 1px 0px rgba(255,255,255,.1),
+          inset 0px 1px 2px 1px rgba(255,255,255,.1),
+          inset 0px 1px 2px rgba(0,0,0,.06),
+          inset 0px -4px 8px -4px rgba(0,0,0,.04)
+        `,
         'button-purple': `
           inset 0px 1px 0px 0px #fff,
           0px 0px 0px 1px rgba(168,85,247,.22),
@@ -80,7 +91,7 @@ module.exports = {
         white: '#fff',
         black: '#000',
 
-        primary: colors.purple,
+        primary: colors.sky,
         danger: colors.rose,
         success: colors.emerald,
         warning: colors.amber,

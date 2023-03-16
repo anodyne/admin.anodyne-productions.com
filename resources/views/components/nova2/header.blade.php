@@ -33,7 +33,7 @@
         ['href' => '#download', 'title' => 'Download' ],
         ['href' => '#resources', 'title' => 'Resources' ],
         ['href' => route('docs'), 'title' => 'Docs' ],
-        ['href' => route('addons.index'), 'title' => 'Addons' ],
+        ['href' => route('addons.index'), 'title' => 'Add-ons' ],
         ['href' => 'https://discord.gg/7WmKUks', 'title' => 'Get Help' ],
       ]"
       :dark="false"

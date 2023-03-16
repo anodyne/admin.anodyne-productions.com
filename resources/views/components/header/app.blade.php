@@ -2,6 +2,7 @@
   'items',
   'title',
   'section',
+  'back' => false,
 ])
 
 <div
@@ -12,10 +13,9 @@
     <div class="py-4 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10 mx-4 lg:mx-0">
       <div class="relative flex items-center">
         <div class="flex items-center space-x-3">
-          <a class="flex-none w-[2.0625rem] overflow-hidden md:w-auto" href="/">
+          <a class="flex-none w-auto overflow-hidden" href="/">
             <span class="sr-only">Nova home page</span>
-            <x-logos.nova class="hidden md:block text-slate-700 dark:text-white w-auto h-7"></x-logos.nova>
-            <x-logos.nova.mark class="block md:hidden w-auto h-8"></x-logos.nova.mark>
+            <x-logos.nova class="text-slate-700 dark:text-white w-auto h-8 md:h-7"></x-logos.nova>
           </a>
 
           {{ $trailingLogo ?? '' }}
@@ -34,62 +34,47 @@
             </ul>
           </nav>
 
-          <div class="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-700" x-data="{ ...appearanceModeToggle(), open: false }">
-            <div class="relative" x-menu x-model="open">
-              <label class="sr-only">Theme</label>
-              <button x-menu:button type="button" aria-haspopup="true" aria-expanded="false" class="flex items-center">
+          <div class="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-700" x-data="appearanceModeToggle()">
+            <x-dropdown placement="bottom-end">
+              <x-slot:trigger>
                 <span class="dark:hidden">
                   @svg('flex-weather-sun', 'w-5 h-5 text-purple-500')
                 </span>
                 <span class="hidden dark:inline">
                   @svg('flex-weather-moon', 'w-5 h-5 text-purple-500')
                 </span>
-              </button>
+              </x-slot:trigger>
 
-              <div
-                x-menu:items
-                x-transition.origin.top.right
-                class="absolute top right-0 w-40 mt-2 z-10 origin-top-right bg-white dark:bg-slate-800 shadow-md ring-1 ring-slate-900/10 dark:ring-0 dark:highlight-white/5 rounded-lg outline-none p-1 font-medium"
-                x-cloak
-              >
+              <x-dropdown.group>
                 <button
-                  x-menu:item
                   type="button"
                   @click="setMode('light');open = false;"
-                  @class([
-                    'flex items-center w-full px-3 py-1.5 text-sm transition-colors rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 space-x-2',
-                  ])
-                  :class="{ 'text-purple-500': isLightModeSelected(), 'text-slate-500 dark:text-gray-400': !isLightModeSelected() }"
+                  class="flex items-center w-full px-3 py-1.5 text-sm transition-colors rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 space-x-2"
+                  x-bind:class="{ 'text-purple-500': isLightModeSelected(), 'text-slate-500 dark:text-gray-400': !isLightModeSelected() }"
                 >
                   @svg('flex-weather-sun', 'w-5 h-5')
                   <span>Light</span>
                 </button>
                 <button
-                  x-menu:item
                   type="button"
                   @click="setMode('dark');open = false;"
-                  @class([
-                    'flex items-center w-full px-3 py-1.5 text-sm transition-colors rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 space-x-2',
-                  ])
-                  :class="{ 'text-purple-500': isDarkModeSelected(), 'text-slate-500 dark:text-gray-400': !isDarkModeSelected() }"
+                  class="flex items-center w-full px-3 py-1.5 text-sm transition-colors rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 space-x-2"
+                  x-bind:class="{ 'text-purple-500': isDarkModeSelected(), 'text-slate-500 dark:text-gray-400': !isDarkModeSelected() }"
                 >
                   @svg('flex-weather-moon', 'w-5 h-5')
                   <span>Dark</span>
                 </button>
                 <button
-                  x-menu:item
                   type="button"
                   @click="setMode();open = false;"
-                  @class([
-                    'flex items-center w-full px-3 py-1.5 text-sm transition-colors rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 space-x-2',
-                  ])
-                  :class="{ 'text-purple-500': isSystemModeSelected(), 'text-slate-500 dark:text-gray-400': !isSystemModeSelected() }"
+                  class="flex items-center w-full px-3 py-1.5 text-sm transition-colors rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 space-x-2"
+                  x-bind:class="{ 'text-purple-500': isSystemModeSelected(), 'text-slate-500 dark:text-gray-400': !isSystemModeSelected() }"
                 >
                   @svg('flex-computer', 'w-5 h-5')
                   <span>System</span>
                 </button>
-              </div>
-            </div>
+              </x-dropdown.group>
+            </x-dropdown>
 
             @auth
               <a href="#" class="ml-6 block text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-400">
@@ -107,35 +92,90 @@
           </div>
         </div>
 
-                <button type="button" class="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
-                    <span class="sr-only">Search</span>
-                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 19-3.5-3.5"></path><circle cx="11" cy="11" r="6"></circle></svg>
-                </button>
+        <button type="button" class="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
+          <span class="sr-only">Search</span>
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 19-3.5-3.5"></path><circle cx="11" cy="11" r="6"></circle></svg>
+        </button>
 
-                <div class="ml-2 -my-1 lg:hidden">
-                    <button type="button" class="text-slate-500 w-8 h-8 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300">
-                        <span class="sr-only">Navigation</span>
-                        <svg width="24" height="24" fill="none" aria-hidden="true"><path d="M12 6v.01M12 12v.01M12 18v.01M12 7a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                    </button>
+        <div class="ml-2 -my-1 lg:hidden" x-data="appearanceModeToggle()">
+          <x-dropdown class="fixed top-4 right-4 w-full max-w-xs" placement="top" fixed>
+            <x-slot:trigger class="text-slate-500 w-8 h-8 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300">
+              <span class="sr-only">Navigation</span>
+              <svg width="24" height="24" fill="none" aria-hidden="true"><path d="M12 6v.01M12 12v.01M12 18v.01M12 7a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </x-slot:trigger>
 
-                    <div style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px; display: none;"></div>
-                </div>
+            <div class="p-6">
+              <button
+                type="button"
+                class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
+                tabindex="0"
+                @click="open = false"
+              >
+                <span class="sr-only">Close navigation</span>
+                <svg viewBox="0 0 10 10" class="w-2.5 h-2.5 overflow-visible" aria-hidden="true"><path d="M0 0L10 10M10 0L0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+              </button>
+
+              <ul class="space-y-6 font-medium">
+                @foreach ($items as $item)
+                  <li>
+                    <a href="{{ $item['href'] }}" class="text-slate-700 dark:text-white hover:text-purple-500 dark:hover:text-purple-400">
+                      {{ $item['title'] }}
+                    </a>
+                  </li>
+                @endforeach
+              </ul>
             </div>
-        </div>
 
-        <div class="flex items-center p-4 border-b border-slate-900/10 lg:hidden dark:border-slate-50/[0.06]">
-            <button type="button" class="text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300">
-                <span class="sr-only">Navigation</span>
-                <svg width="24" height="24"><path d="M5 6h14M5 12h14M5 18h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
-            </button>
+            <div class="mt-6 p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-900/5 overflow-hidden">
+              <div class="flex items-center justify-between">
+                <label for="theme" class="text-slate-700 font-normal dark:text-slate-400">Switch theme</label>
+                <div class="relative flex items-center ring-1 ring-slate-900/10 rounded-lg shadow-sm p-2 text-slate-700 font-semibold bg-white dark:bg-slate-600 dark:ring-0 dark:highlight-white/5 dark:text-slate-200">
+                  @svg('flex-weather-sun', 'w-5 h-5 mr-2 dark:hidden')
+                  @svg('flex-weather-moon', 'w-5 h-5 mr-2 hidden dark:block')
 
-            <ol class="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
-                <li class="flex items-center">
-                    {{ $section }}
-                    <svg width="3" height="6" aria-hidden="true" class="mx-3 overflow-visible text-slate-400"><path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
-                </li>
-                <li class="font-semibold text-slate-900 truncate dark:text-slate-200">{{ $title }}</li>
-            </ol>
+                  <span class="dark:hidden">Light</span>
+                  <span class="hidden dark:block">Dark</span>
+
+                  <svg class="w-6 h-6 ml-2 text-slate-400" fill="none"><path d="m15 11-3 3-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
+                  <select id="theme" class="absolute appearance-none inset-0 w-full h-full opacity-0" @change="setMode($event.target.value)">
+                    <option value="light" :selected="isLightModeSelected()">Light</option>
+                    <option value="dark" :selected="isDarkModeSelected()">Dark</option>
+                    <option value="system" :selected="isSystemModeSelected()">System</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </x-dropdown>
         </div>
+      </div>
     </div>
+
+    <div class="flex items-center p-4 border-b border-slate-900/10 lg:hidden dark:border-slate-50/[0.06] gap-x-4">
+      @if ($back)
+        <a href="{{ $back }}" class="text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300">
+          <span class="sr-only">Back</span>
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+        </a>
+      @endif
+
+      @isset($sidebar)
+        <button type="button" class="text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300">
+          <span class="sr-only">Navigation</span>
+          <svg width="24" height="24"><path d="M5 6h14M5 12h14M5 18h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+        </button>
+      @endisset
+
+      <ol class="flex text-sm leading-6 whitespace-nowrap min-w-0">
+        @isset($section)
+          <li class="flex items-center text-slate-600 dark:text-slate-400">
+            {{ $section }}
+            <svg width="3" height="6" aria-hidden="true" class="mx-3 overflow-visible text-slate-400"><path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+          </li>
+        @endisset
+
+        <li class="font-semibold text-slate-900 truncate dark:text-slate-200">{{ $title }}</li>
+      </ol>
+    </div>
+  </div>
 </div>

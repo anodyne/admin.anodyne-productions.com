@@ -26,9 +26,13 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\RichEditor::make('description')->columnSpan('full'),
-                Forms\Components\Toggle::make('published'),
+                Forms\Components\Card::make([
+                    Forms\Components\TextInput::make('name')->required()->columnSpan(1),
+                    Forms\Components\RichEditor::make('description')->columnSpan('full'),
+                    Forms\Components\Toggle::make('published'),
+                ])
+                ->columns(2)
+                ->columnSpanFull(),
             ]);
     }
 
@@ -37,14 +41,14 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->description(fn (Product $record): string => $record->description ?? '')
-                    ->wrap(),
+                    ->size('lg')
+                    ->weight('bold'),
                 Tables\Columns\TextColumn::make('addons_count')
                     ->counts('addons')
-                    ->label('# of Add-Ons'),
+                    ->label('# of add-ons'),
                 Tables\Columns\TextColumn::make('versions_count')
                     ->counts('versions')
-                    ->label('# of Versions'),
+                    ->label('# of versions'),
                 Tables\Columns\ToggleColumn::make('published'),
             ])
             ->filters([

@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             'name' => 'Bad User',
             'email' => 'bad-user@user.com',
             'password' => Hash::make('secret'),
-            'is_exchange_author' => false,
+            'is_addon_author' => false,
         ]);
     }
 }

@@ -1,4 +1,8 @@
-<x-base-layout title="Nova by Anodyne Productions" :has-appearance-modes="false">
+<x-base-layout
+  class="bg-gray-50 text-gray-500"
+  title="Nova by Anodyne Productions"
+  :has-appearance-modes="false"
+>
   <x-nova2.header />
 
   <x-nova2.features />
@@ -15,7 +19,7 @@
       ['name' => 'Download', 'href' => '#download' ],
       ['name' => 'Resources', 'href' => '#resources' ],
       ['name' => 'Docs', 'href' => route('docs') ],
-      ['name' => 'Addons', 'href' => route('addons.index') ],
+      ['name' => 'Add-ons', 'href' => route('addons.index') ],
       ['name' => 'Get Help', 'href' => 'https://discord.gg/7WmKUks' ],
       ['name' => 'Nova 3', 'href' => '/nova-3' ],
     ]"

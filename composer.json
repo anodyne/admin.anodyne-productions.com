@@ -9,56 +9,60 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "blade-ui-kit/blade-icons": "^1.4.1",
-        "blade-ui-kit/blade-ui-kit": "^0.3.4",
-        "doctrine/dbal": "^3.5.3",
-        "fideloper/proxy": "^4.4.2",
-        "filament/filament": "^2.16.60",
-        "filament/spatie-laravel-media-library-plugin": "^2.16.60",
+        "blade-ui-kit/blade-icons": "^1.5",
+        "blade-ui-kit/blade-ui-kit": "^0.4",
+        "doctrine/dbal": "^3.0",
+        "filament/filament": "^2.16",
+        "filament/spatie-laravel-media-library-plugin": "^2.16",
         "flowframe/laravel-trend": "^0.1.1",
-        "fruitcake/laravel-cors": "^2.2",
-        "graham-campbell/github": "^10.6",
-        "graham-campbell/markdown": "^14.0",
+        "graham-campbell/markdown": "^15.0",
         "guzzlehttp/guzzle": "^7.5",
         "http-interop/http-factory-guzzle": "^1.2",
-        "jeffgreco13/filament-breezy": "^1.4.9",
-        "kirschbaum-development/laravel-route-file-macro": "^1.0.1",
-        "laravel/framework": "^9.46",
-        "laravel/sanctum": "^2.15.1",
+        "jeffgreco13/filament-breezy": "^1.4",
+        "kirschbaum-development/laravel-route-file-macro": "^1.1",
+        "laravel/framework": "^10.0",
+        "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.7.3",
         "league/commonmark": "^2.3.8",
         "league/flysystem-aws-s3-v3": "^3.12.1",
         "livewire/livewire": "^2.10.8",
         "lorisleiva/laravel-actions": "^2.4.3",
         "silber/page-cache": "^1.0.8",
+        "spatie/eloquent-sortable": "^4.0",
         "spatie/laravel-activitylog": "^4.7.2",
         "spatie/laravel-collection-macros": "^7.12",
-        "spatie/laravel-query-builder": "^5.1.1",
         "spatie/laravel-sluggable": "^3.4",
         "staudenmeir/belongs-to-through": "^2.12.1",
         "symfony/yaml": "^6.2",
-        "torchlight/torchlight-commonmark": "^0.5.5"
+        "torchlight/torchlight-commonmark": "^0.5.5",
+        "wire-elements/pro": "^3.0"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.21",
-        "itsgoingd/clockwork": "^5.1.12",
-        "laravel/pint": "^1.3",
-        "laravel/sail": "^1.17",
-        "mockery/mockery": "^1.5.1",
-        "nunomaduro/collision": "^6.4",
+        "fakerphp/faker": "^1.9.1",
+        "itsgoingd/clockwork": "^5.1",
+        "laravel/pint": "^1.0",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^6.1",
         "pestphp/pest": "^1.22",
         "pestphp/pest-plugin-laravel": "^1.4",
         "pestphp/pest-plugin-livewire": "^1.0",
         "pestphp/pest-plugin-parallel": "^1.2",
-        "phpunit/phpunit": "^9.5.27",
-        "spatie/laravel-ignition": "^1.6.4"
+        "phpunit/phpunit": "^9.6",
+        "spatie/laravel-ignition": "^2.0"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wire-elements-pro.composer.sh"
+        }
+    ],
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
         }
     },
     "extra": {
@@ -69,7 +73,6 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Domain\\": "domain/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -79,7 +82,7 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [

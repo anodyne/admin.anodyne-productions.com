@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Docs\CommonMark\Extensions\Note;
+namespace App\CommonMark\Extensions\Note;
 
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ExtensionInterface;

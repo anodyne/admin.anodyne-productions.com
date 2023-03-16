@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Docs\CommonMark\Extensions\Callout;
+namespace App\CommonMark\Extensions\Callout;
 
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ExtensionInterface;

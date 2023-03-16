@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Docs\CommonMark\Extensions\Note;
+namespace App\CommonMark\Extensions\Note;
 
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;

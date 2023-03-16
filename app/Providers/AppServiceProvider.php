@@ -2,18 +2,9 @@
 
 namespace App\Providers;
 
-use App\Filament\Resources\AddonResource;
 use App\Models;
 use App\View\Components\Button;
-use App\View\Components\LandingDefinitionList;
-use App\View\Components\LandingDefinitionListItem;
-use App\View\Components\LandingFeatureList;
-use App\View\Components\LandingFeatureListItem;
-use App\View\Components\LandingPanel;
-use App\View\Components\LandingSection;
 use Filament\Facades\Filament;
-use Filament\Navigation\NavigationBuilder;
-use Filament\Navigation\NavigationItem;
 use Filament\Navigation\UserMenuItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,11 +16,27 @@ use Illuminate\Support\Str;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
-     *
-     * @return void
+     * Bootstrap any application services.
      */
-    public function register()
+    public function boot(): void
+    {
+        Blade::component('button', Button::class);
+
+        Relation::morphMap([
+            'addon' => Models\Addon::class,
+            'question' => Models\Question::class,
+            'version' => Models\Version::class,
+        ]);
+
+        $this->setupFactories();
+        $this->setupMacros();
+        $this->setupFilament();
+    }
+
+    /**
+     * Register any application services.
+     */
+    public function register(): void
     {
         $this->callAfterResolving('markdown.environment', function ($environment) {
             $environment->mergeConfig(['heading_permalink' => [
@@ -41,33 +48,6 @@ class AppServiceProvider extends ServiceProvider
                 'max_heading_level' => 3,
             ]]);
         });
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        Blade::component('button', Button::class);
-
-        Blade::component('landing-panel', LandingPanel::class);
-        Blade::component('landing-section', LandingSection::class);
-        Blade::component('landing-feature-list', LandingFeatureList::class);
-        Blade::component('landing-feature-list-item', LandingFeatureListItem::class);
-        Blade::component('landing-definition-list', LandingDefinitionList::class);
-        Blade::component('landing-definition-list-item', LandingDefinitionListItem::class);
-
-        Relation::morphMap([
-            'addon' => Models\Addon::class,
-            'question' => Models\Question::class,
-            'version' => Models\Version::class,
-        ]);
-
-        $this->setupFactories();
-        $this->setupMacros();
-        $this->setupFilament();
     }
 
     protected function setupFactories()
@@ -91,17 +71,6 @@ class AppServiceProvider extends ServiceProvider
                 'logout' => UserMenuItem::make()->icon('flex-logout'),
             ]);
         });
-
-        // Filament::navigation(function (NavigationBuilder $builder): NavigationBuilder {
-        //     return $builder->items([
-        //         NavigationItem::make('Dashboard')
-        //             ->icon('flex-home')
-        //             ->isActiveWhen(fn (): bool => request()->routeIs('filament.pages.dashboard'))
-        //             ->url(route('filament.pages.dashboard')),
-        //         // ...AddonResource::getNavigationItems(),
-        //         // ...Settings::getNavigationItems(),
-        //     ]);
-        // });
     }
 
     protected function setupMacros()

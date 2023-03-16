@@ -114,11 +114,17 @@ class SponsorResource extends Resource
 
     protected static function getNavigationBadge(): ?string
     {
-        return static::getModel()::premiumTier()->whereNull('link')->count();
+        $count = static::getModel()::premiumTier()->whereNull('link')->count();
+
+        if ($count === 0) {
+            return null;
+        }
+
+        return $count;
     }
 
     protected static function getNavigationBadgeColor(): ?string
     {
-        return static::getNavigationBadge() > 0 ? 'danger' : 'secondary';
+        return 'danger';
     }
 }

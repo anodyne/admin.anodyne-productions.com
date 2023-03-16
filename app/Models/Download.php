@@ -11,6 +11,8 @@ class Download extends Model
 {
     protected $table = 'addon_downloads';
 
+    protected $fillable = ['addon_id', 'version_id', 'user_id'];
+
     public function addon(): BelongsTo
     {
         return $this->belongsTo(Addon::class);

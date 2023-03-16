@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Docs\CommonMark\Extensions\Badge;
+namespace App\CommonMark\Extensions\Badge;
 
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ExtensionInterface;

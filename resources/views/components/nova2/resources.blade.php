@@ -4,7 +4,7 @@
       'title' => 'Learn all about Nova',
       'category' => 'Documentation',
       'cta' => 'Read more',
-      'url' => '/docs',
+      'url' => route('docs'),
       'content' => "Nova's documentation has been re-written to be clearer and more helpful. We've added all-new sections about getting started, added pages to explain complex features, and dug deeper into the core of Nova to help users understand how to get the most out Nova.",
     ],
     [
@@ -18,7 +18,7 @@
       'title' => 'Make Nova your own',
       'category' => 'Add-ons',
       'cta' => 'Explore add-ons',
-      'url' => '/addons',
+      'url' => route('addons.index'),
       'content' => "Nova provides incredible flexibility to make your game stand out from others. Whether you're trying to change the way it looks with a brand-new skin or rank set or even update how it works with a MOD, the talented authors on the AnodyneXtras site have you covered.",
     ],
   ];

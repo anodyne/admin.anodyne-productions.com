@@ -31,6 +31,11 @@ class Addon extends Model implements HasMedia
         'type' => AddonType::class,
     ];
 
+    public function compatibility(): HasMany
+    {
+        return $this->hasMany(Compatibility::class);
+    }
+
     public function downloads(): HasMany
     {
         return $this->hasMany(Download::class);
@@ -98,7 +103,10 @@ class Addon extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('previews')
+        $this->addMediaCollection('primary-preview')
+            ->acceptsMimeTypes(['image/jpeg', 'image/jpg', 'image/png']);
+
+        $this->addMediaCollection('additional-previews')
             ->acceptsMimeTypes(['image/jpeg', 'image/jpg', 'image/png']);
     }
 }

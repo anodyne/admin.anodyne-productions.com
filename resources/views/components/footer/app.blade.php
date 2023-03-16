@@ -1,4 +1,8 @@
-<footer class="mx-auto max-w-2xl space-y-10 pb-16 lg:max-w-5xl">
+@props([
+  'wide' => false
+])
+
+<footer class="mx-auto max-w-2xl space-y-10 pb-16 {{ $wide ? 'lg:max-w-8xl' : 'lg:max-w-5xl' }}">
   <div class="flex flex-col items-center justify-between gap-5 border-t border-slate-900/5 pt-8 dark:border-white/5 sm:flex-row">
     <p class="text-sm text-slate-500">
       Copyright &copy; {{ now()->format('Y') }} Anodyne Productions

@@ -28,28 +28,31 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Grid::make(4)->schema([
-                    Forms\Components\TextInput::make('name')
-                        ->required()
-                        ->columnSpan(2),
-                    Forms\Components\TextInput::make('email')
-                        ->required()
-                        ->columnSpan(2),
-                    Forms\Components\Select::make('role')
-                        ->required()
-                        ->placeholder('Select a role')
-                        ->options(
-                            collect(UserRole::cases())
-                                ->flatMap(fn ($case) => [$case->value => $case->displayName()])
-                                ->all()
-                        )
-                        ->visible(fn () => auth()->user()->isAdmin)
-                        ->columnSpan(2),
-                    Forms\Components\Toggle::make('is_exchange_author')
-                        ->label('Exchange author')
-                        ->helperText('Can this user create add-ons in Exchange?')
-                        ->columnSpan('full'),
-                ]),
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->columnSpan(2),
+                        Forms\Components\TextInput::make('email')
+                            ->required()
+                            ->columnSpan(2),
+                        Forms\Components\Select::make('role')
+                            ->required()
+                            ->placeholder('Select a role')
+                            ->options(
+                                collect(UserRole::cases())
+                                    ->flatMap(fn ($case) => [$case->value => $case->displayName()])
+                                    ->all()
+                            )
+                            ->visible(fn () => auth()->user()->isAdmin)
+                            ->columnSpan(2),
+                        Forms\Components\Toggle::make('is_addon_author')
+                            ->label('Add-on author')
+                            ->helperText('Can this user create add-ons?')
+                            ->columnSpan('full'),
+                    ])
+                    ->columns(4)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -71,13 +74,13 @@ class UserResource extends Resource
                         collect(UserRole::cases())->flatMap(fn ($role) => [$role->value => $role->displayName()])->all()
                     )
                     ->colors([
-                        'bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-400' => UserRole::admin->value,
-                        'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-400' => UserRole::staff->value,
-                        'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-400' => UserRole::user->value,
+                        'ring-1 ring-purple-300 dark:ring-purple-400/30 bg-purple-400/10 text-purple-500 dark:text-purple-400' => UserRole::admin->value,
+                        'ring-1 ring-emerald-300 bg-emerald-400/10 text-emerald-500 dark:ring-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400' => UserRole::staff->value,
+                        'ring-1 ring-slate-300 bg-slate-400/10 text-slate-500 dark:ring-slate-400/30 dark:bg-slate-400/10 dark:text-slate-400' => UserRole::user->value,
                     ]),
-                Tables\Columns\IconColumn::make('is_exchange_author')
+                Tables\Columns\IconColumn::make('is_addon_author')
                     ->boolean()
-                    ->label('Exchange Author')
+                    ->label('Add-on author')
                     ->trueIcon('flex-check-square')
                     ->falseIcon('flex-delete-square'),
             ])
@@ -87,14 +90,14 @@ class UserResource extends Resource
                         fn ($role) => $role->value,
                         UserRole::cases()
                     )),
-                Tables\Filters\TernaryFilter::make('is_exchange_author')->label('Is Exchange Author'),
+                Tables\Filters\TernaryFilter::make('is_addon_author')->label('Is add-on author'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->icon('flex-eye')
-                    ->size('md')
-                    ->iconButton()
-                    ->color('secondary'),
+                // Tables\Actions\ViewAction::make()
+                //     ->icon('flex-eye')
+                //     ->size('md')
+                //     ->iconButton()
+                //     ->color('secondary'),
                 Tables\Actions\EditAction::make()
                     ->icon('flex-edit-circle')
                     ->size('md')
@@ -120,7 +123,7 @@ class UserResource extends Resource
         return [
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
-            'view' => Pages\ViewUser::route('/{record}'),
+            // 'view' => Pages\ViewUser::route('/{record}'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }

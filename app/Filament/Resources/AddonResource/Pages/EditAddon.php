@@ -10,6 +10,11 @@ class EditAddon extends EditRecord
 {
     protected static string $resource = AddonResource::class;
 
+    public function hasCombinedRelationManagerTabsWithForm(): bool
+    {
+        return true;
+    }
+
     protected function getActions(): array
     {
         return [
@@ -19,13 +24,13 @@ class EditAddon extends EditRecord
         ];
     }
 
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            AddonResource\Widgets\AddonDownloads::class,
-            AddonResource\Widgets\AddonRating::class,
-        ];
-    }
+    // protected function getHeaderWidgets(): array
+    // {
+    //     return [
+    //         AddonResource\Widgets\AddonDownloads::class,
+    //         AddonResource\Widgets\AddonRating::class,
+    //     ];
+    // }
 
     protected function getSavedNotificationMessage(): ?string
     {

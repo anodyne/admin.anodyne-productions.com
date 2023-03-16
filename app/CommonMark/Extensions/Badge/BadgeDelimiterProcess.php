@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Docs\CommonMark\Extensions\Badge;
+namespace App\CommonMark\Extensions\Badge;
 
 use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;

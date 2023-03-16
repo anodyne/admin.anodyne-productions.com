@@ -32,26 +32,31 @@ class AddonPolicy
 
     public function create(User $user): bool
     {
-        return $user->is_exchange_author;
+        return $user->is_addon_author;
     }
 
     public function update(User $user, Addon $addon): bool
     {
-        return $user->is_exchange_author && $addon->user->is($user);
+        return $user->is_addon_author && $addon->user->is($user);
     }
 
     public function delete(User $user, Addon $addon): bool
     {
-        return $user->is_exchange_author && $addon->user->is($user);
+        return $user->is_addon_author && $addon->user->is($user);
     }
 
     public function restore(User $user, Addon $addon): bool
     {
-        return $user->is_exchange_author && $addon->user->is($user);
+        return $user->is_addon_author && $addon->user->is($user);
     }
 
     public function forceDelete(User $user, Addon $addon): bool
     {
-        return $user->is_exchange_author && $addon->user->is($user);
+        return $user->is_addon_author && $addon->user->is($user);
+    }
+
+    public function overrideCompatibility(User $user, Addon $addon): bool
+    {
+        return $user->isAdmin;
     }
 }

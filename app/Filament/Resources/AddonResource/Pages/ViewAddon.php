@@ -9,11 +9,16 @@ class ViewAddon extends ViewRecord
 {
     protected static string $resource = AddonResource::class;
 
-    protected function getHeaderWidgets(): array
+    public function hasCombinedRelationManagerTabsWithForm(): bool
     {
-        return [
-            AddonResource\Widgets\AddonDownloads::class,
-            AddonResource\Widgets\AddonRating::class,
-        ];
+        return true;
     }
+
+    // protected function getHeaderWidgets(): array
+    // {
+    //     return [
+    //         AddonResource\Widgets\AddonDownloads::class,
+    //         AddonResource\Widgets\AddonRating::class,
+    //     ];
+    // }
 }

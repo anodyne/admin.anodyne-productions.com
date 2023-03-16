@@ -22,21 +22,27 @@ class ReleaseResource extends Resource
 
     protected static ?string $navigationGroup = 'System';
 
-    protected static ?int $navigationSort = 40;
+    protected static ?int $navigationSort = 50;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('version')->required()->columnSpanFull(),
-                Forms\Components\DatePicker::make('date')
-                    ->nullable()
-                    ->weekStartsOnSunday()
+                Forms\Components\TextInput::make('version')
+                    ->required()
                     ->columnSpan(1),
                 Forms\Components\Select::make('severity')
                     ->options(
                         collect(ReleaseSeverity::cases())->flatMap(fn ($severity) => [$severity->value => $severity->displayName()])
                     )
+                    ->required()
+                    ->columnSpan(1),
+                Forms\Components\DatePicker::make('date')
+                    ->nullable()
+                    ->weekStartsOnSunday()
+                    ->columnSpan(1),
+                Forms\Components\Select::make('release_series_id')
+                    ->relationship('releaseSeries', 'name')
                     ->required()
                     ->columnSpan(1),
                 Forms\Components\MarkdownEditor::make('notes')->columnSpanFull(),
@@ -70,14 +76,16 @@ class ReleaseResource extends Resource
                 Tables\Columns\BadgeColumn::make('severity')
                     ->formatStateUsing(fn ($state) => ucfirst($state))
                     ->colors([
-                        'danger' => static fn ($state): bool => $state === 'critical' || $state === 'security',
-                        'primary' => 'minor',
-                        'success' => 'major',
+                        'ring-1 ring-rose-300 bg-rose-400/10 text-rose-500 dark:ring-rose-400/30 dark:bg-rose-400/10 dark:text-rose-400' => static fn ($state): bool => $state === 'critical' || $state === 'security',
+                        'ring-1 ring-sky-300 bg-sky-400/10 text-sky-500 dark:ring-sky-400/30 dark:bg-sky-400/10 dark:text-sky-400' => 'minor',
+                        'ring-1 ring-purple-300 bg-purple-400/10 text-purple-500 dark:ring-purple-400/30 dark:bg-purple-400/10 dark:text-purple-400' => 'major',
+                        'ring-1 ring-slate-300 bg-slate-400/10 text-slate-500 dark:ring-slate-400/30 dark:bg-slate-400/10 dark:text-slate-400' => 'patch',
                     ]),
                 Tables\Columns\TextColumn::make('games_count')
                     ->counts('games')
                     ->alignLeft()
                     ->label('# of games'),
+                Tables\Columns\TextColumn::make('releaseSeries.name')->label('Release series'),
                 Tables\Columns\ToggleColumn::make('published')
                     ->hidden(! auth()->user()->isAdmin),
             ])
@@ -85,6 +93,9 @@ class ReleaseResource extends Resource
                 Tables\Filters\SelectFilter::make('severity')->options(
                     collect(ReleaseSeverity::cases())->flatMap(fn ($severity) => [$severity->value => $severity->displayName()])
                 ),
+                Tables\Filters\SelectFilter::make('release_series_id')
+                    ->relationship('releaseSeries', 'name')
+                    ->label('Release series'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
@@ -117,11 +128,17 @@ class ReleaseResource extends Resource
 
     protected static function getNavigationBadge(): ?string
     {
-        return static::getModel()::hasPendingRelease()->count();
+        $count = static::getModel()::hasPendingRelease()->count();
+
+        if ($count === 0) {
+            return null;
+        }
+
+        return $count;
     }
 
     protected static function getNavigationBadgeColor(): ?string
     {
-        return static::getNavigationBadge() > 0 ? 'danger' : 'secondary';
+        return 'danger';
     }
 }

@@ -1,5 +1,9 @@
+@props([
+  'gradient' => false,
+])
+
 <svg aria-hidden="true" viewBox="0 0 956 170" {{ $attributes }}>
-  <x-logos.anodyne.mark-paths identifier="2" />
+  <x-logos.anodyne.mark-paths identifier="2" :gradient="$gradient" />
   <g fill="currentColor">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M282.302 106.206H310.193L296.246 74.854L282.302 106.206ZM321.546 131.697L318.225 124.15H274.274L270.954 131.697H251.273L296.246 30.7797L341.222 131.697H321.546Z" />
     <path fill-rule="evenodd" clip-rule="evenodd" d="M380.849 76.7839V131.696H362.905V34.141L423.263 93.2153V38.3054H441.205V135.858L380.849 76.7839Z" />
