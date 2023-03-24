@@ -63,10 +63,10 @@
           </p>
 
           <div class="mt-10 flex flex-col md:flex-row items-center justify-center gap-y-6 md:gap-y-0 md:gap-x-6">
-            <x-button href="#download" variant="hero" size="md">
+            <x-button href="#download" variant="brand" size="md">
               <span>Download now</span>
             </x-button>
-            <x-button href="#features" variant="text">
+            <x-button href="#features" variant="secondary">
               <span>Learn more</span>
               <span>&rarr;</span>
             </x-button>

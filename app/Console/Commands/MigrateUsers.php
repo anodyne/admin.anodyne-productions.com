@@ -34,7 +34,9 @@ class MigrateUsers extends Command
     {
         $legacyUsers = LegacyUser::get();
 
-        $legacyUsers->each(function (LegacyUser $legacyUser) {
+        $bar = $this->output->createProgressBar(count($legacyUsers));
+
+        $legacyUsers->each(function (LegacyUser $legacyUser) use ($bar) {
             $username = str($legacyUser->username)
                 ->replace([' ', '\'', '"'], '')
                 ->before('@');
@@ -53,11 +55,17 @@ class MigrateUsers extends Command
                 $newUser->password = Hash::make($password);
                 $newUser->save();
 
-                $newUser->notify(new AnodyneAccountMigrated($newUser, $password));
+                // $newUser->notify(new AnodyneAccountMigrated($newUser, $password));
             }
+
+            $bar->advance();
         });
 
-        $this->info('Users migrated');
+        $bar->finish();
+
+        $this->newLine();
+
+        $this->info(count($legacyUsers).' users migrated');
 
         return Command::SUCCESS;
     }

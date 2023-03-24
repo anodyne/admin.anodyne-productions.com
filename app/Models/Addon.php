@@ -24,7 +24,15 @@ class Addon extends Model implements HasMedia
     use InteractsWithMedia;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'type', 'rating', 'published', 'user_id'];
+    protected $fillable = [
+        'name',
+        'description',
+        'type',
+        'rating',
+        'published',
+        'user_id',
+        'install_instructions',
+    ];
 
     protected $casts = [
         'published' => 'boolean',

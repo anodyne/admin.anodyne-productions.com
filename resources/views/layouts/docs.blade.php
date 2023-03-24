@@ -13,10 +13,10 @@
   >
     <x-slot:trailingLogo>
       <div class="relative" x-data x-menu>
-        <x-button x-menu:button variant="secondary" size="xs" aria-haspopup="true" aria-expanded="false">
+        <button type="button" x-menu:button class="group relative inline-flex items-center justify-center transition-all rounded-full leading-none font-sans font-semibold bg-slate-200/50 hover:bg-slate-200/70 text-slate-600 py-2 px-3 text-xs space-x-1.5" aria-haspopup="true" aria-expanded="false">
           <span>v{{ request()->route('version') }}</span>
           <svg width="6" height="3" class="overflow-visible" aria-hidden="true"><path d="M0 0L3 3L6 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
-        </x-button>
+        </button>
 
         <div
           x-menu:items
@@ -51,40 +51,47 @@
       <div class="hidden lg:block fixed z-20 inset-0 top-[3.8125rem] left-[max(0px,calc(50%-45rem))] right-auto w-[19.5rem] pb-10 px-8 overflow-y-auto">
         <nav id="nav" class="lg:text-sm lg:leading-6 relative">
           <div class="sticky top-0 -ml-0.5 pointer-events-none z-10">
-            <div class="h-10 bg-white dark:bg-slate-900"></div>
-            <div
-              class="bg-white dark:bg-slate-900 pointer-events-auto z-50 relative"
-              x-data="{ open: false }"
-            >
-              <button
-                type="button"
-                class="hidden w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700"
-                @click="open = true"
+
+            @if (config('services.algolia.apiKey'))
+              <div class="h-10 bg-white dark:bg-slate-900"></div>
+
+              <div
+                class="bg-white dark:bg-slate-900 pointer-events-auto z-50 relative"
+                x-data="{ open: false }"
               >
-                <svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none"><path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
-                Quick search...<span class="ml-auto pl-3 flex-none text-xs font-semibold">⌘K</span>
-              </button>
+                <button
+                  type="button"
+                  class="hidden w-full lg:flex items-center text-sm leading-6 text-slate-400 rounded-md ring-1 ring-slate-900/10 shadow-sm py-1.5 pl-2 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700"
+                  @click="open = true"
+                >
+                  <svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none"><path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                  Quick search...<span class="ml-auto pl-3 flex-none text-xs font-semibold">⌘K</span>
+                </button>
 
-              <div x-dialog x-model="open" :initial-focus="$refs.searchField">
-                <template x-teleport="#overlay">
-                  <div x-dialog:overlay class="fixed inset-0 bg-slate-900 bg-opacity-25 transition-opacity z-[100] backdrop-blur"></div>
-                </template>
+                <div x-dialog x-model="open" :initial-focus="$refs.searchField">
+                  <template x-teleport="#overlay">
+                    <div x-dialog:overlay class="fixed inset-0 bg-slate-900 bg-opacity-25 transition-opacity z-[100] backdrop-blur"></div>
+                  </template>
 
-                <template x-teleport="#modal">
-                  <div x-dialog:panel class="fixed inset-0 z-[100] overflow-y-auto p-4 sm:p-6 md:p-20">
-                    <div class="mx-auto max-w-xl transform divide-y divide-slate-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
-                      <div class="relative">
-                        <svg class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-                        </svg>
-                        <input type="text" class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." role="combobox" aria-expanded="false" aria-controls="options" x-ref="searchField">
+                  <template x-teleport="#modal">
+                    <div x-dialog:panel class="fixed inset-0 z-[100] overflow-y-auto p-4 sm:p-6 md:p-20">
+                      <div class="mx-auto max-w-xl transform divide-y divide-slate-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
+                        <div class="relative">
+                          <svg class="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                          </svg>
+                          <input type="text" class="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." role="combobox" aria-expanded="false" aria-controls="options" x-ref="searchField">
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </template>
+                  </template>
+                </div>
               </div>
-            </div>
-            <div class="h-8 bg-gradient-to-b from-white dark:from-slate-900"></div>
+              <div class="h-8 bg-gradient-to-b from-white dark:from-slate-900"></div>
+            @else
+              <div class="h-1.5 bg-white dark:bg-slate-900"></div>
+              <div class="h-8 bg-gradient-to-b from-white dark:from-slate-900"></div>
+            @endif
           </div>
 
           <ul role="list">

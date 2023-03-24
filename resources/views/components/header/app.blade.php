@@ -35,7 +35,7 @@
           </nav>
 
           <div class="flex items-center border-l border-slate-200 ml-6 pl-6 dark:border-slate-700" x-data="appearanceModeToggle()">
-            <x-dropdown placement="bottom-end">
+            <x-dropdown placement="bottom-end" class="w-40">
               <x-slot:trigger>
                 <span class="dark:hidden">
                   @svg('flex-weather-sun', 'w-5 h-5 text-purple-500')
@@ -77,10 +77,38 @@
             </x-dropdown>
 
             @auth
-              <a href="#" class="ml-6 block text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-400">
-                <span class="sr-only">My account</span>
-                @svg('flex-user-square', 'w-5 h-5')
-              </a>
+              <div class="ml-6">
+                <x-dropdown placement="bottom-end" class="w-56">
+                  <x-slot:trigger class="text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-400">
+                    <span class="sr-only">My account</span>
+                    @svg('flex-user-square', 'w-5 h-5')
+                  </x-slot:trigger>
+
+                  <x-dropdown.group>
+                    <div class="px-3 py-1.5 text-sm font-medium">
+                      <div class="font-normal text-xs leading-5 text-slate-500 dark:text-slate-400">
+                        Signed in as
+                      </div>
+                      <div class="truncate">
+                        {{ auth()->user()->email }}
+                      </div>
+                    </div>
+                  </x-dropdown.group>
+                  <x-dropdown.group>
+                    <x-dropdown.item :href="route('filament.pages.dashboard')">Dashboard</x-dropdown.item>
+                    <x-dropdown.item :href="route('filament.pages.my-profile')">My profile</x-dropdown.item>
+                  </x-dropdown.group>
+                  <x-dropdown.group>
+                    <x-dropdown.item type="submit" form="logout-form">
+                      <span>Sign out</span>
+
+                      <x-slot:buttonForm>
+                        <x-form :action="route('filament.auth.logout')" class="hidden" id="logout-form" />
+                      </x-slot:buttonForm>
+                    </x-dropdown.item>
+                  </x-dropdown.group>
+                </x-dropdown>
+              </div>
             @endauth
 
             @guest
@@ -92,19 +120,28 @@
           </div>
         </div>
 
-        <button type="button" class="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
-          <span class="sr-only">Search</span>
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 19-3.5-3.5"></path><circle cx="11" cy="11" r="6"></circle></svg>
-        </button>
+        @if (config('services.algolia.apiKey'))
+          <button type="button" class="ml-auto text-slate-500 w-8 h-8 -my-1 flex items-center justify-center hover:text-slate-600 lg:hidden dark:text-slate-400 dark:hover:text-slate-300">
+            <span class="sr-only">Search</span>
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m19 19-3.5-3.5"></path><circle cx="11" cy="11" r="6"></circle></svg>
+          </button>
+        @endif
 
-        <div class="ml-2 -my-1 lg:hidden" x-data="appearanceModeToggle()">
+        <div
+          @class([
+            'ml-auto' => !config('services.algolia.apiKey'),
+            'ml-2' => config('services.algolia.apiKey'),
+            '-my-1 lg:hidden'
+          ])
+          x-data="appearanceModeToggle()"
+        >
           <x-dropdown class="fixed top-4 right-4 w-full max-w-xs" placement="top" fixed>
             <x-slot:trigger class="text-slate-500 w-8 h-8 flex items-center justify-center hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300">
               <span class="sr-only">Navigation</span>
               <svg width="24" height="24" fill="none" aria-hidden="true"><path d="M12 6v.01M12 12v.01M12 18v.01M12 7a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </x-slot:trigger>
 
-            <div class="p-6">
+            <div class="p-4">
               <button
                 type="button"
                 class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
@@ -115,18 +152,41 @@
                 <svg viewBox="0 0 10 10" class="w-2.5 h-2.5 overflow-visible" aria-hidden="true"><path d="M0 0L10 10M10 0L0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
               </button>
 
-              <ul class="space-y-6 font-medium">
-                @foreach ($items as $item)
-                  <li>
-                    <a href="{{ $item['href'] }}" class="text-slate-700 dark:text-white hover:text-purple-500 dark:hover:text-purple-400">
-                      {{ $item['title'] }}
-                    </a>
-                  </li>
-                @endforeach
-              </ul>
+              @foreach ($items as $item)
+                <x-nav.link-mobile :href="$item['href']">
+                  {{ $item['title'] }}
+                </x-nav.link-mobile>
+              @endforeach
+
+              <hr class="m-2 border-slate-300/40" />
+
+              @auth
+                <p class="truncate w-full p-2 font-medium" role="none">
+                  <span class="block text-sm text-slate-500" role="none">Signed in as</span>
+                  <span class="mt-0.5 font-semibold" role="none">{{ auth()->user()->email }}</span>
+                </p>
+                <x-nav.link-mobile :href="route('filament.pages.dashboard')">
+                  Dashboard
+                </x-nav.link-mobile>
+                <x-nav.link-mobile :href="route('filament.pages.my-profile')">
+                  My profile
+                </x-nav.link-mobile>
+                <form action="{{ route('filament.auth.logout') }}" method="post">
+                  @csrf
+                  <x-nav.button-mobile type="submit">
+                    Sign out
+                  </x-nav.button-mobile>
+                </form>
+              @endauth
+
+              @guest
+                <x-nav.link-mobile :href="route('filament.auth.login')">
+                  Sign in
+                </x-nav.link-mobile>
+              @endguest
             </div>
 
-            <div class="mt-6 p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-900/5 overflow-hidden">
+            <div class="p-6 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-900/5 overflow-hidden">
               <div class="flex items-center justify-between">
                 <label for="theme" class="text-slate-700 font-normal dark:text-slate-400">Switch theme</label>
                 <div class="relative flex items-center ring-1 ring-slate-900/10 rounded-lg shadow-sm p-2 text-slate-700 font-semibold bg-white dark:bg-slate-600 dark:ring-0 dark:highlight-white/5 dark:text-slate-200">

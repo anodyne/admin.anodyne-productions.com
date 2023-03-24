@@ -117,7 +117,7 @@ class User extends Authenticatable implements FilamentUser, HasMedia
 
     protected function defaultProfilePhotoUrl()
     {
-        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=f99c26&background=fef3c7';
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=a855f7&background=f3e8ff';
     }
 
     public function registerMediaCollections(): void

@@ -25,6 +25,7 @@
     </div>
 
     <x-nav.landing
+      :home="route('nova-3')"
       :items="[
         ['href' => route('nova-3-features'), 'title' => 'Features' ],
         ['href' => route('nova-3').'#demo', 'title' => 'Demo' ],
@@ -41,28 +42,16 @@
           <div class="mx-auto max-w-2xl text-center">
             <h1 class="mt-4 relative mx-auto max-w-4xl text-4xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">
               Nova 3
-              <span class="relative whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-400">The Next Generation</span>
+              <div class="relative whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-sky-400">Feature Preview</div>
             </h1>
-
-            <p class="mt-6 text-lg leading-8 text-slate-300">
-              Re-written from the ground up, Nova 3 is the culmination of years of re-thinking the way stories can be told and RPGs should be managed. Say hello to the next generation.
-            </p>
-
-            <div class="mt-10 flex items-center justify-center gap-x-6 dark">
-              <x-button :href="route('nova-3-features')" variant="brand">
-                <span>Learn more</span>
-                <span>&rarr;</span>
-              </x-button>
-            </div>
           </div>
 
-          <img
-            src="/images/nova3-app-story-writing-dark.png"
-            alt="App screenshot"
-            width="2880"
-            height="2332"
-            class="mt-16 rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10 sm:mt-24"
-          />
+          <div class="mt-10 flex items-center justify-center gap-x-6 dark">
+            <x-button :href="route('nova-3')" variant="secondary">
+              <span>&larr;</span>
+              <span>Back to Nova 3 preview</span>
+            </x-button>
+          </div>
         </div>
 
         <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">

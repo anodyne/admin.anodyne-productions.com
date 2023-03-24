@@ -1,5 +1,5 @@
 <x-base-layout
-  class="bg-gray-50 text-gray-500"
+  class="bg-slate-50 text-slate-500"
   title="Nova by Anodyne Productions"
   :has-appearance-modes="false"
 >

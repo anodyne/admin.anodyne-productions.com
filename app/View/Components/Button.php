@@ -15,16 +15,15 @@ class Button extends Component
 
     public function baseStyles()
     {
-        return 'group relative inline-flex items-center justify-center rounded-full leading-none font-sans';
+        return 'group relative inline-flex items-center justify-center transition-all rounded-full leading-none font-sans font-semibold';
     }
 
     public function variantStyles()
     {
         return [
-            'hero' => 'bg-white dark:bg-slate-800 font-semibold text-slate-700 dark:text-slate-300 hover:text-purple-900 dark:hover:text-purple-300 shadow-button dark:shadow-button-dark hover:shadow-button-purple after:block after:absolute after:-inset-[1px] after:rounded-full after:bg-gradient-to-t after:from-black/5 dark:after:from-white/5 after:opacity-50 hover:after:opacity-100 hover:after:from-purple-100/50 after:transition-opacity border border-transparent border-none',
-            'primary' => 'font-semibold bg-slate-900 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-700 dark:hover:text-slate-900 transition',
-            'secondary' => 'font-semibold bg-slate-200/60 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition',
-            'brand' => 'font-semibold bg-purple-600 hover:bg-purple-700 text-white transition',
+            'brand' => 'bg-purple-500 hover:bg-purple-600 text-white ring-1 ring-inset ring-black/15 transition-all after:block after:absolute after:-inset-[1px] after:rounded-full after:bg-gradient-to-t dark:after:bg-gradient-to-b after:from-black/5 dark:after:from-white/5 after:opacity-50 hover:after:opacity-100 after:transition-opacity',
+            'primary' => 'bg-slate-700 dark:bg-white hover:bg-slate-600 dark:hover:bg-slate-200 text-white dark:text-slate-600 ring-1 ring-inset ring-black/15 transition-all after:block after:absolute after:-inset-[1px] after:rounded-full after:bg-gradient-to-t after:from-black/5 after:opacity-50 hover:after:opacity-100 after:transition-opacity',
+            'secondary' => 'bg-slate-200/50 dark:bg-slate-700 hover:bg-slate-200/70 dark:hover:bg-slate-600 text-slate-600 dark:text-white ring-1 ring-inset ring-black/15 transition-all after:block after:absolute after:-inset-[1px] after:rounded-full after:bg-gradient-to-t dark:after:bg-gradient-to-b after:from-black/5 dark:after:from-white/5 after:opacity-50 hover:after:opacity-100 after:transition-opacity',
             'text' => 'font-semibold text-slate-700 hover:text-slate-900 transition',
         ][$this->variant];
     }

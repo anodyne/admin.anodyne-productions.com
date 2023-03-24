@@ -15,5 +15,5 @@
 @endif
 
 @for ($l = 1; $l <= $leftover; $l++)
-    @svg('fluent-star', 'h-4 w-4 text-gray-400')
+    @svg('fluent-star', 'h-4 w-4 text-slate-400')
 @endfor

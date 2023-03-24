@@ -30,10 +30,13 @@ class VersionsRelationManager extends RelationManager
                     ->relationship('product', 'name', fn (Builder $query) => $query->published())
                     ->preload()
                     ->maxItems(1),
-                Forms\Components\MarkdownEditor::make('release_notes')->columnSpan('full'),
-                Forms\Components\MarkdownEditor::make('upgrade_instructions')->columnSpan('full'),
+                Forms\Components\MarkdownEditor::make('release_notes')->columnSpanFull(),
+                Forms\Components\MarkdownEditor::make('install_instructions')
+                    ->helperText('If you provide install instructions for the version, those will be displayed when the version is selected. Otherwise, the install instructions on the add-on will be used.')
+                    ->columnSpanFull(),
+                Forms\Components\MarkdownEditor::make('upgrade_instructions')->columnSpanFull(),
                 Forms\Components\SpatieMediaLibraryFileUpload::make('filename')
-                    ->columnSpan('full')
+                    ->columnSpanFull()
                     ->collection('downloads'),
                 Forms\Components\Toggle::make('published')->default(true),
             ]);

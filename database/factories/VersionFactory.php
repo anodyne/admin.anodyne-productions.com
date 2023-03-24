@@ -22,6 +22,7 @@ class VersionFactory extends Factory
         return [
             'version' => $this->faker->semver(),
             'release_notes' => $this->faker->paragraph,
+            'install_instructions' => mt_rand(0, 1) === 1 ? $this->faker->paragraphs(2, asText: true) : '',
             'upgrade_instructions' => $this->faker->paragraph,
             'published' => $this->faker->randomElement([true, false]),
         ];

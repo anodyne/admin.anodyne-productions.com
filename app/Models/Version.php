@@ -19,7 +19,12 @@ class Version extends Model implements HasMedia
     protected $table = 'addon_versions';
 
     protected $fillable = [
-        'version', 'release_notes', 'upgrade_instructions', 'published',
+        'addon_id',
+        'version',
+        'release_notes',
+        'install_instructions',
+        'upgrade_instructions',
+        'published',
     ];
 
     protected $casts = [

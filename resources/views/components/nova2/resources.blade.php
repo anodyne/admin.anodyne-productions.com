@@ -19,7 +19,7 @@
       'category' => 'Add-ons',
       'cta' => 'Explore add-ons',
       'url' => route('addons.index'),
-      'content' => "Nova provides incredible flexibility to make your game stand out from others. Whether you're trying to change the way it looks with a brand-new skin or rank set or even update how it works with a MOD, the talented authors on the AnodyneXtras site have you covered.",
+      'content' => "Nova provides the flexibility to make your game stand out from others. Whether you're trying to change the way it looks with a theme or rank set or even update how it works with an extension, the community's talented add-on authors here have you covered.",
     ],
   ];
 @endphp

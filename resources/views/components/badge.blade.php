@@ -18,7 +18,7 @@
     'px-3 py-1 text-sm' => $size === 'lg' && !$group,
     'px-3.5 py-1 text-sm' => $group,
 
-    'ring-slate-300 dark:ring-slate-700 text-gray-600 dark:text-gray-400' => $color === 'gray',
+    'ring-slate-300 dark:ring-slate-700 text-slate-600 dark:text-slate-400' => $color === 'gray',
     'ring-purple-300 dark:ring-purple-700 text-purple-600 dark:text-purple-400' => $color === 'purple',
     'ring-emerald-300 dark:ring-emerald-700 text-emerald-600 dark:text-emerald-400' => $color === 'emerald',
     'ring-amber-300 dark:ring-amber-800 text-amber-600 dark:text-amber-500' => $color === 'amber',

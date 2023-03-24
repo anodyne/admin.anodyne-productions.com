@@ -3,7 +3,7 @@
   <div class="lg:grid lg:grid-cols-7 lg:grid-rows-1 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
     <!-- Product image -->
     <div class="lg:col-span-4 lg:row-end-1" x-data="{ image: 0 }">
-      <div class="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
+      <div class="aspect-w-4 aspect-h-3 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
         @if ($addon->getMedia('primary-preview')->count() === 1)
           <img src="{{ $addon->getFirstMediaUrl('primary-preview') }}" alt="" class="object-cover object-center" x-show="image === 0" x-cloak>
         @else
@@ -74,7 +74,23 @@
         <div @class([
           'mt-4' => false
         ])>
-          <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">{{ $addon->name }}</h1>
+          <h2 class="sr-only">Tags</h2>
+          <div class="flex items-center space-x-2.5">
+            <x-badge size="xs" :color="$addon->type->badgeColor()" fill="neutral">
+              <x-slot:leading>
+                @svg($addon->type->icon(), 'h-4 w-4')
+              </x-slot:leading>
+              {{ $addon->type->displayName() }}
+            </x-badge>
+
+            @foreach ($addon->products as $product)
+              <div>
+                <x-badge size="xs" fill="neutral">{{ $product->name }}</x-badge>
+              </div>
+            @endforeach
+          </div>
+
+          <h1 class="mt-4 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">{{ $addon->name }}</h1>
 
           <div class="flex items-center space-x-1.5 relative mt-2">
             <div class="text-slate-700 dark:text-slate-300 font-medium text-sm">
@@ -86,7 +102,7 @@
             </div>
 
             @if ($this->versions->count() > 1)
-              <x-dropdown>
+              <x-dropdown class="w-40">
                 <x-slot:trigger class="group relative inline-flex items-center justify-center rounded-full leading-none py-2 px-3 text-xs font-semibold bg-slate-200/60 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition">
                   <span>{{ $version->version }}</span>
                   <svg width="6" height="3" class="overflow-visible" aria-hidden="true"><path d="M0 0L3 3L6 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
@@ -101,22 +117,6 @@
                 </x-dropdown.group>
               </x-dropdown>
             @endif
-          </div>
-
-          <h2 class="sr-only">Tags</h2>
-          <div class="flex items-center mt-4 space-x-2.5">
-            <x-badge size="xs" :color="$addon->type->badgeColor()" fill="neutral">
-              <x-slot:leading>
-                @svg($addon->type->icon(), 'h-4 w-4')
-              </x-slot:leading>
-              {{ $addon->type->displayName() }}
-            </x-badge>
-
-            @foreach ($addon->products as $product)
-              <div>
-                <x-badge size="xs" fill="neutral">{{ $product->name }}</x-badge>
-              </div>
-            @endforeach
           </div>
         </div>
 
@@ -169,63 +169,72 @@
         <x-button type="button" wire:click="download" variant="primary">Download</x-button>
       </div>
 
-      <div class="mt-10 border-t border-slate-200 dark:border-slate-200/10 pt-10">
-        <h3 class="text-sm font-medium text-slate-900 dark:text-white">Compatibility</h3>
-        <div class="prose prose-sm mt-4 text-slate-600 dark:text-slate-400">
-          <dl class="space-y-6" role="list">
-            @foreach ($this->releaseSeries as $series)
-              @php
-                $compatibility = $series->checkVersionCompatibility($version);
-                $totalReports = $compatibility['versionStats']->compatible + $compatibility['versionStats']->incompatible;
-              @endphp
+      @if ($version->product->first()?->name !== 'Nova 1')
+        <div class="mt-10 border-t border-slate-200 dark:border-slate-200/10 pt-10">
+          <div class="flex items-center space-x-1">
+            <h3 class="text-sm font-medium text-slate-900 dark:text-white">Compatibility</h3>
+            <button type="button" wire:click="$emit('modal.open', 'explain-compatibility')">
+              {{-- @svg('flex-info-circle', 'h-4 w-4 text-slate-500') --}}
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-slate-400 dark:text-slate-600"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+            </button>
+          </div>
 
-              <div>
-                <dt class="flex items-center space-x-2 font-bold tracking-tight">
-                  @svg($compatibility['status']->icon(), 'h-5 w-5 shrink-0 ' . $compatibility['status']->iconColor())
-                  <span class="{{ $compatibility['status']->textColor() }}">{{ $series->name }}</span>
-                </dt>
+          <div class="prose prose-sm mt-4 text-slate-600 dark:text-slate-400">
+            <dl class="space-y-6" role="list">
+              @foreach ($this->releaseSeries as $series)
+                @php
+                  $compatibility = $series->checkVersionCompatibility($version);
+                  $totalReports = $compatibility['versionStats']->compatible + $compatibility['versionStats']->incompatible;
+                @endphp
 
-                @if ($totalReports > 0 && ($compatibility['status'] === $compatibility['status']::compatible || $compatibility['status'] === $compatibility['status']::incompatible || $compatibility['status'] === $compatibility['status']::unknown))
-                  <dd class="pl-8 my-2">
-                    <div class="flex rounded-full h-3 w-full overflow-hidden">
-                      <div class="bg-emerald-500" style="width:{{ ($compatibility['versionStats']->compatible / $totalReports) * 100 }}%"></div>
+                <div>
+                  <dt class="flex items-center space-x-2 font-bold tracking-tight">
+                    @svg($compatibility['status']->icon(), 'h-5 w-5 shrink-0 ' . $compatibility['status']->iconColor())
+                    <span class="{{ $compatibility['status']->textColor() }}">{{ $series->name }}</span>
+                  </dt>
 
-                      @if ($compatibility['versionStats']->compatible > 0 && $compatibility['versionStats']->incompatible > 0)
-                        <div class="bg-white w-0.5"></div>
-                      @endif
+                  @if ($totalReports > 0 && ($compatibility['status'] === $compatibility['status']::compatible || $compatibility['status'] === $compatibility['status']::incompatible || $compatibility['status'] === $compatibility['status']::unknown))
+                    <dd class="pl-8 my-2">
+                      <div class="flex rounded-full h-3 w-full overflow-hidden">
+                        <div class="bg-emerald-500" style="width:{{ ($compatibility['versionStats']->compatible / $totalReports) * 100 }}%"></div>
 
-                      <div class="bg-rose-500" style="width:{{ ($compatibility['versionStats']->incompatible / $totalReports) * 100 }}%"></div>
-                    </div>
-                  </dd>
-                @endif
+                        @if ($compatibility['versionStats']->compatible > 0 && $compatibility['versionStats']->incompatible > 0)
+                          <div class="bg-white w-0.5"></div>
+                        @endif
 
-                <dd class="text-sm pl-8">
-                  {{
-                    $compatibility['status']->description(
-                      series: $series->name,
-                      hasResults: ($compatibility['versionStats']->incompatible > 0 || $compatibility['versionStats']->compatible > 0)
-                    )
-                  }}
-                </dd>
-
-                @auth
-                  @if ($compatibility['status'] !== $compatibility['status']::compatibleOverride && $compatibility['status'] !== $compatibility['status']::incompatibleOverride)
-                    <dd class="pl-8">
-                      <button
-                        type="button"
-                        wire:click="$emit('modal.open', 'compatibility-report', {'addon': '{{ $addon->slug }}', 'version': {{ $version->id }}, 'series': {{ $series->id }}})"
-                        class="underline text-purple-500 dark:text-purple-400 text-sm"
-                      >
-                        Using this add-on in this version of Nova? Let us know your experience!
-                      </button>
+                        <div class="bg-rose-500" style="width:{{ ($compatibility['versionStats']->incompatible / $totalReports) * 100 }}%"></div>
+                      </div>
                     </dd>
                   @endif
-                @endauth
-              </div>
-            @endforeach
-          </dl>
+
+                  <dd class="text-sm pl-8">
+                    {{
+                      $compatibility['status']->description(
+                        series: $series->name,
+                        hasResults: ($compatibility['versionStats']->incompatible > 0 || $compatibility['versionStats']->compatible > 0)
+                      )
+                    }}
+                  </dd>
+
+                  @auth
+                    @if ($compatibility['status'] !== $compatibility['status']::compatibleOverride && $compatibility['status'] !== $compatibility['status']::incompatibleOverride)
+                      <dd class="pl-8">
+                        <button
+                          type="button"
+                          wire:click="$emit('modal.open', 'compatibility-report', {'addon': '{{ $addon->slug }}', 'version': {{ $version->id }}, 'series': {{ $series->id }}})"
+                          class="underline text-purple-500 dark:text-purple-400 text-sm"
+                        >
+                          Using this add-on in this version of Nova? Let us know your experience!
+                        </button>
+                      </dd>
+                    @endif
+                  @endauth
+                </div>
+              @endforeach
+            </dl>
+          </div>
         </div>
-      </div>
+      @endif
     </div>
 
     <div class="mx-auto mt-16 w-full max-w-2xl lg:col-span-4 lg:mt-0 lg:max-w-none">
@@ -237,12 +246,15 @@
               x-tabs:tab
               type="button"
               id="tab-info"
-              class="whitespace-nowrap border-b-2 py-6 text-sm font-medium"
+              class="flex items-center space-x-2 whitespace-nowrap border-b-2 py-6 text-sm font-medium"
               :class="$tab.isSelected ? 'border-purple-600 dark:border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-slate-700 dark:text-slate-300 hover:text-slate-800 hover:border-slate-300'"
               aria-controls="tab-panel-info"
               role="tab"
             >
-              Info
+              <div :class="$tab.isSelected ? 'text-purple-500 dark:text-purple-500' : 'text-slate-500 dark:text-slate-500'">
+                @svg('flex-info-circle', 'h-4 w-4')
+              </div>
+              <span>Info</span>
             </button>
 
             @if ($this->questions->count() > 0)
@@ -250,20 +262,88 @@
                 x-tabs:tab
                 type="button"
                 id="tab-faq"
-                class="whitespace-nowrap border-b-2 py-6 text-sm font-medium"
+                class="flex items-center space-x-2 whitespace-nowrap border-b-2 py-6 text-sm font-medium"
                 :class="$tab.isSelected ? 'border-purple-600 dark:border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-slate-700 dark:text-slate-300 hover:text-slate-800 hover:border-slate-300'"
                 aria-controls="tab-panel-faq"
                 role="tab"
               >
-                FAQs
+                <div :class="$tab.isSelected ? 'text-purple-500 dark:text-purple-500' : 'text-slate-500 dark:text-slate-500'">
+                  @svg('flex-question-square', 'h-4 w-4')
+                </div>
+                <span>FAQs</span>
               </button>
             @endif
+
+            <button
+              x-tabs:tab
+              type="button"
+              id="tab-info"
+              class="flex items-center space-x-2 whitespace-nowrap border-b-2 py-6 text-sm font-medium"
+              :class="$tab.isSelected ? 'border-purple-600 dark:border-purple-500 text-purple-600 dark:text-purple-400' : 'border-transparent text-slate-700 dark:text-slate-300 hover:text-slate-800 hover:border-slate-300'"
+              aria-controls="tab-panel-info"
+              role="tab"
+            >
+              <div :class="$tab.isSelected ? 'text-purple-500 dark:text-purple-500' : 'text-slate-500 dark:text-slate-500'">
+                @svg('flex-favorite-star', 'h-4 w-4')
+              </div>
+              <span>Reviews</span>
+            </button>
           </div>
         </div>
 
         <div x-tabs:panels>
+          <!-- 'Info' panel, show/hide based on tab state -->
+          <div x-tabs:panel id="tab-panel-info" class="mt-10 text-sm text-slate-500" aria-labelledby="tab-info" role="tabpanel" tabindex="0">
+            <h3 class="sr-only">Version Info</h3>
+
+            <div class="prose dark:prose-invert">
+              <h2>{{ $version->version }}</h2>
+              <p class="text-xs">Last updated <time datetime="{{ $version->updated_at }}">{{ $version->updated_at->format('F d, Y') }}</time></p>
+
+              @if (filled($version->install_instructions) || filled($addon->install_instructions))
+                <h3>Install instructions</h3>
+                @if (filled($version->install_instructions))
+                  {!! str($version->install_instructions)->markdown() !!}
+                @else
+                  {!! str($addon->install_instructions)->markdown() !!}
+                @endif
+              @endif
+
+              @if (filled($version->release_notes))
+                <h3>Release notes</h3>
+                {!! str($version->release_notes)->markdown() !!}
+              @endif
+
+              @if (filled($version->upgrade_instructions))
+                <h3>Upgrade instructions</h3>
+                {!! str($version->upgrade_instructions)->markdown() !!}
+              @endif
+            </div>
+          </div>
+
+          <!-- 'FAQ' panel, show/hide based on tab state -->
+          @if ($this->questions->count() > 0)
+            <div x-tabs:panel id="tab-panel-faq" class="text-sm text-slate-500" aria-labelledby="tab-faq" role="tabpanel" tabindex="0">
+              <h3 class="sr-only">Frequently Asked Questions</h3>
+
+              <div class="prose dark:prose-invert mt-10">
+                @foreach ($this->questions as $question)
+                  <h3 class="mt-10">{{ $question->question }}</h3>
+                  {!! str($question->answer)->markdown() !!}
+                @endforeach
+              </div>
+            </div>
+          @endif
+
           <!-- 'Customer Reviews' panel, show/hide based on tab state -->
-          <div id="tab-panel-reviews" class="hidden" class="-mb-10" aria-labelledby="tab-reviews" role="tabpanel" tabindex="0">
+          <div x-tabs:panel id="tab-panel-reviews" id="tab-panel-reviews" class="relative -mb-10 px-4" aria-labelledby="tab-reviews" role="tabpanel" tabindex="0">
+            <div class="absolute inset-0 backdrop-blur bg-white bg-opacity-25">
+              <div class="flex flex-col items-center justify-center min-h-full prose dark:prose-invert">
+                <h2>Ratings and reviews are coming soon</h2>
+                <p>We&rsquo;re hard at work adding more features, so stay tuned</p>
+              </div>
+            </div>
+
             <h3 class="sr-only">Customer Reviews</h3>
 
             <div class="flex space-x-4 text-sm text-slate-500">
@@ -357,39 +437,7 @@
                 </div>
               </div>
             </div>
-
-            <!-- More reviews... -->
           </div>
-
-          <!-- 'Info' panel, show/hide based on tab state -->
-          <div x-tabs:panel id="tab-panel-info" class="mt-10 text-sm text-slate-500" aria-labelledby="tab-info" role="tabpanel" tabindex="0">
-            <h3 class="sr-only">Version Info</h3>
-
-            <div class="prose dark:prose-invert">
-              <h2>{{ $version->version }}</h2>
-              <p class="text-xs">Last updated <time datetime="{{ $version->updated_at }}">{{ $version->updated_at->format('F d, Y') }}</time></p>
-
-              <h3>Release notes</h3>
-              {!! str($addon->latestVersion->release_notes)->markdown() !!}
-
-              <h3>Upgrade instructions</h3>
-              {!! str($addon->latestVersion->upgrade_instructions)->markdown() !!}
-            </div>
-          </div>
-
-          <!-- 'FAQ' panel, show/hide based on tab state -->
-          @if ($this->questions->count() > 0)
-            <div x-tabs:panel id="tab-panel-faq" class="text-sm text-slate-500" aria-labelledby="tab-faq" role="tabpanel" tabindex="0">
-              <h3 class="sr-only">Frequently Asked Questions</h3>
-
-              <div class="prose dark:prose-invert mt-10">
-                @foreach ($this->questions as $question)
-                  <h3 class="mt-10">{{ $question->question }}</h3>
-                  {!! str($question->answer)->markdown() !!}
-                @endforeach
-              </div>
-            </div>
-          @endif
         </div>
       </div>
     </div>

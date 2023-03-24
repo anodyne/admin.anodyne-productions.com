@@ -26,7 +26,7 @@
               <dd class="inline">secret</dd>
             </div>
 
-            <x-button href="https://nova3.anodyne-productions.com" variant="primary">
+            <x-button href="https://nova3.anodyne-productions.com" variant="secondary">
               <span>Go to the demo</span>
               <span>&rarr;</span>
             </x-button>
@@ -40,10 +40,10 @@
 
           <div class="mx-auto max-w-2xl sm:mx-0 sm:max-w-none">
             <img
-              src="https://tailwindui.com/img/component-images/project-app-screenshot.png"
+              src="{{ asset('images/nova3-app-dashboard-light.png') }}"
               alt="Product screenshot"
-              width="2432"
-              height="1442"
+              width="2880"
+              height="1800"
               class="-mb-12 w-[57rem] max-w-none rounded-tl-xl bg-slate-800 ring-1 ring-white/10"
             />
           </div>

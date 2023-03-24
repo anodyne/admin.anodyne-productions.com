@@ -32,6 +32,7 @@ Route::get('/nova', function () {
 })->name('home');
 
 Route::view('/nova-3', 'nova-3')->name('nova-3');
+Route::view('/nova-3/features', 'nova-3-features')->name('nova-3-features');
 
 Route::get('/docs/{version?}/{page?}', DocsController::class)
     ->where('page', '(.*)')

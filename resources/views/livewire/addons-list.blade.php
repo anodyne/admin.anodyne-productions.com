@@ -1,6 +1,6 @@
 <x-addons-list-layout
   title="Make Nova your own"
-  description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam in et possimus mollitia, excepturi nemo consequuntur deserunt magni inventore quod recusandae id consectetur fugit quos vitae obcaecati cum quaerat explicabo."
+  description="Nova provides the flexibility to make your game stand out from others. Whether you're trying to change the way it looks with a theme or rank set or even update how it works with an extension, the community's talented add-on authors here have you covered."
   eyebrow="Add-ons"
 >
   <x-slot:sidebar>
@@ -48,6 +48,37 @@
           </ul>
         </div>
       </div>
+
+      {{-- <div>
+        <h2 class="text-xs font-semibold text-slate-900 dark:text-white">
+          Compatibility
+        </h2>
+
+        <div class="relative mt-3 pl-2">
+          @php
+            $compat = App\Enums\CompatibilityStatus::class
+          @endphp
+          <ul class="space-y-1">
+            <li class="relative flex items-center">
+              <x-input.checkbox :label="$compat::compatible->displayName()" id="compat_series_{{ $compat::compatible->value }}" :value="$compat::compatible->value" wire:model="filters.compat_status" />
+            </li>
+            <li>
+              <x-input.checkbox :label="$compat::incompatible->displayName()" id="compat_series_{{ $compat::incompatible->value }}" :value="$compat::incompatible->value" wire:model="filters.compat_status" />
+            </li>
+            <li>
+              <x-input.checkbox :label="$compat::unknown->displayName()" id="compat_series_{{ $compat::unknown->value }}" :value="$compat::unknown->value" wire:model="filters.compat_status" />
+            </li>
+          </ul>
+
+          <ul class="space-y-1 mt-4">
+            @foreach (App\Models\ReleaseSeries::get()->pluck('name', 'id') as $id => $name)
+              <li class="relative flex items-center">
+                <x-input.checkbox :label="$name" id="compat_series_{{ $id }}" :value="$id" wire:model="filters.compat_series" />
+              </li>
+            @endforeach
+          </ul>
+        </div>
+      </div> --}}
 
       <div>
         <x-button class="w-full" variant="secondary" size="sm" wire:click="resetFilters">Reset filters</x-button>
@@ -111,5 +142,7 @@
     @endforelse
   </div>
 
-  {{ $this->addons->links() }}
+  <div class="mt-12">
+    {{ $this->addons->links() }}
+  </div>
 </x-addons-list-layout>

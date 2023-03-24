@@ -192,13 +192,15 @@ class AddonResource extends Resource
                             ->maxItems(1)
                             ->columnSpan(2),
                         Forms\Components\MarkdownEditor::make('release_notes')
-                            ->columnSpan('full'),
-                        Forms\Components\MarkdownEditor::make('upgrade_instructions')
-                            ->columnSpan('full'),
+                            ->columnSpanFull(),
+                        Forms\Components\MarkdownEditor::make('install_instructions')
+                            ->helperText('If you provide install instructions for the version, those will be displayed when the version is selected. Otherwise, the install instructions on the add-on will be used.')
+                            ->columnSpanFull(),
+                        Forms\Components\MarkdownEditor::make('upgrade_instructions')->columnSpanFull(),
                         Forms\Components\SpatieMediaLibraryFileUpload::make('filename')
                             ->required()
                             ->collection('downloads')
-                            ->columnSpan('full'),
+                            ->columnSpanFull(),
                         Forms\Components\Toggle::make('published')
                             ->default(true)
                             ->columnSpan(2),
@@ -267,15 +269,17 @@ class AddonResource extends Resource
                     ->relationship('products', 'name', fn (Builder $query) => $query->published())
                     ->preload()
                     ->columnSpan(1),
-                Forms\Components\MarkdownEditor::make('description')
-                    ->columnSpan('full'),
+                Forms\Components\MarkdownEditor::make('description')->columnSpanFull(),
+                Forms\Components\MarkdownEditor::make('install_instructions')
+                    ->helperText('These install instructions will be used unless you provide install instructions on a version.')
+                    ->columnSpanFull(),
                 Forms\Components\Toggle::make('published')
                     ->helperText('Only published add-ons will be available for download')
                     ->default(false)
-                    ->columnSpan('full'),
+                    ->columnSpanFull(),
             ])
             ->columns(3)
-            ->columnSpan('full'),
+            ->columnSpanFull(),
         ];
     }
 }

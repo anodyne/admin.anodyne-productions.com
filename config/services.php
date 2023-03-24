@@ -36,4 +36,10 @@ return [
         'campaignId' => env('PATREON_CAMPAIGN_ID'),
     ],
 
+    'algolia' => [
+        'appId' => env('ALGOLIA_APP_ID'),
+        'apiKey' => env('ALGOLIA_API_KEY'),
+        'indexName' => env('ALGOLIA_INDEX_NAME'),
+    ],
+
 ];

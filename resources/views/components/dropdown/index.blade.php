@@ -47,8 +47,8 @@
     :id="$id('dropdown-button')"
     x-cloak
     @class([
-      'absolute top mt-2 w-40' => !$fixed,
-      'overflow-hidden z-10 bg-white dark:bg-slate-800 shadow-md ring-1 ring-slate-900/10 dark:ring-0 dark:highlight-white/5 rounded-lg outline-none font-medium',
+      'absolute top mt-2' => !$fixed,
+      'overflow-hidden z-10 bg-white dark:bg-slate-800 shadow-md ring-1 ring-slate-900/10 dark:ring-0 dark:highlight-white/5 divide-y divide-slate-200 dark:divide-slate-200/10 rounded-lg outline-none font-medium transition',
       $attributes->get('class'),
       'right-0 origin-top-right' => $placement === 'bottom-end',
       'left-0 origin-top-left' => $placement === 'bottom-start',

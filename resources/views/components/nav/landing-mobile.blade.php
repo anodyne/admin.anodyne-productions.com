@@ -58,7 +58,7 @@
     @auth
       <p class="truncate w-full p-2 font-medium" role="none">
         <span class="block text-sm text-slate-500" role="none">Signed in as</span>
-        <span class="mt-0.5 font-semibold" role="none">{{ auth()->user()->name }}</span>
+        <span class="mt-0.5 font-semibold" role="none">{{ auth()->user()->email }}</span>
       </p>
       <x-nav.link-mobile :href="route('filament.pages.dashboard')">
         Dashboard
@@ -66,10 +66,13 @@
       <x-nav.link-mobile :href="route('filament.pages.my-profile')">
         My profile
       </x-nav.link-mobile>
-      <x-nav.link-mobile :href="route('filament.pages.my-profile')">
-        Sign out
-      </x-nav.link-mobile>
-      @endauth
+      <form action="{{ route('filament.auth.logout') }}" method="post">
+        @csrf
+        <x-nav.button-mobile type="submit">
+          Sign out
+        </x-nav.button-mobile>
+      </form>
+    @endauth
 
     @guest
       <x-nav.link-mobile :href="route('filament.auth.login')">

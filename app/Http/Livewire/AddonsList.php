@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\AddonType;
+use App\Enums\CompatibilityStatus;
 use App\Models\Addon;
 use App\Models\Product;
 use App\View\Components\BaseLayout;
@@ -16,13 +18,15 @@ class AddonsList extends Component
 
     public array $filters = [
         'products' => ['1', '2'],
-        'types' => ['extension', 'rank', 'theme'],
+        'types' => [],
         'search' => '',
+        'compat_series' => [],
+        'compat_status' => [],
     ];
 
     public function resetFilters(): void
     {
-        $this->reset('filters');
+        $this->setFilterDefaults();
     }
 
     public function getAddonsProperty()
@@ -44,6 +48,17 @@ class AddonsList extends Component
                 $this->filters['search'],
                 fn (Builder $query, string $search) => $query->where('name', 'like', "%{$search}%")
             )
+            // ->when(
+            //     $this->filters['compat_status'],
+            //     fn (Builder $query, array $statuses) => $query->whereIn
+            // )
+            // ->when(
+            //     $this->filters['compat_series'],
+            //     fn (Builder $query, array $statuses): Builder => $query->whereHas(
+            //         'releaseSeries',
+            //         fn (Builder $q) => $q->whereIn('releaseSeries.id', $statuses)
+            //     )
+            // )
             ->paginate(15);
     }
 
@@ -53,6 +68,11 @@ class AddonsList extends Component
             ->published()
             ->get()
             ->pluck('name', 'id');
+    }
+
+    public function mount(): void
+    {
+        $this->setFilterDefaults();
     }
 
     public function render()
@@ -65,5 +85,24 @@ class AddonsList extends Component
                 'title' => 'Nova Add-ons by Anodyne',
                 'hasAppearanceModes' => true,
             ]);
+    }
+
+    protected function setFilterDefaults(): void
+    {
+        $this->filters['compat_status'] = [
+            CompatibilityStatus::compatible->value => CompatibilityStatus::compatible->displayName(),
+            CompatibilityStatus::incompatible->value => CompatibilityStatus::incompatible->displayName(),
+            CompatibilityStatus::unknown->value => CompatibilityStatus::unknown->displayName(),
+        ];
+
+        $this->filters['products'] = Product::query()
+            ->published()
+            ->get()
+            ->flatMap(fn ($product) => [(string) $product->id])
+            ->all();
+
+        $this->filters['types'] = collect(AddonType::cases())
+            ->flatMap(fn ($type) => [$type->value])
+            ->all();
     }
 }

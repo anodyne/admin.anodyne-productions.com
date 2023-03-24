@@ -1,53 +1,73 @@
-<div>
-    <div class="max-w-7xl mx-auto pb-16 px-4 sm:px-6 lg:pb-24 lg:px-8">
-        <div class="lg:text-center">
-            <a name="features"></a>
-            <h2 class="text-base text-amber-500 font-semibold tracking-wide uppercase">Features</h2>
-            <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
-                Better at... everything.
-            </p>
-        </div>
+<div class="bg-slate-900">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <x-nova3.feature-group
+      title="Storytelling"
+      content="We've re-thought how storytelling works in Nova and created a system that's incredibly flexible to give you and your writes the ability to tell stories the way you want."
+      color="text-purple-500"
+      :features="[
+        ['title' => 'The timeline', 'content' => 'Tell stories in whatever order you want, but keep them in the correct place in your game\'s timeline'],
+        ['title' => 'Stories inside stories', 'content' => 'Nest stories inside other stories for the freedom to organize your stories however you want'],
+        ['title' => 'Add posts anywhere in the story', 'content' => 'Writers have the freedom to add a post exactly where it should be in the story\'s timeline'],
+        ['title' => 'All-new authoring experience', 'content' => 'A brand-new rich authoring experience allows writers to focus on the most important parts of writing', 'image' => '/images/nova3-features/steps.png'],
+        ['title' => 'Post ratings & warnings', 'content' => 'Rate the content of a post and show warnings to readers when it contains certains kinds of mature content'],
+        ['title' => 'No character needed', 'content' => 'Easily write one-off characters in a post and credit them to users without having to jump through hoops'],
+      ]"
+    ></x-nova3.feature-group>
 
-        <div class="pt-20">
-            <div class="max-w-xl mx-auto lg:max-w-7xl">
-                <dl class="space-y-16 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
-                    <x-nova3.components.feature title="Mobile Friendly" text="Bring whatever device you want, Nova doesn't care! We've designed Nova from the ground up to work on devices of all sizes.">
-                        <x-slot name="icon">
-                            @svg('fluent-phone-desktop', 'h-8 w-8')
-                        </x-slot>
-                    </x-nova3.components.feature>
+    <x-nova3.feature-group
+      title="Post types"
+      content="Every game runs in their own way, but Nova has historically forced everyone into a single way of posting. Post types open up the possibilities for customizing your writing experience to be exactly what you want for your game."
+      color="text-sky-500"
+      :features="[
+        ['title' => 'Customize for your game', 'content' => 'Turn defaults on and off or create your own post types suited to your game'],
+        ['title' => 'Control access', 'content' => 'Require a specific access role in order to be able to write a type of post'],
+        ['title' => 'Choose your fields', 'content' => 'Pick which fields you want in a certain post type and whether it\'s required'],
+        ['title' => 'Notify: yes or no', 'content' => 'Granular control over which post types send notifications to users'],
+        ['title' => 'Include in post tracking', 'content' => 'Determine whether a post type should be included in stats'],
+        ['title' => 'Choose author types', 'content' => 'Choose whether a post can be multi-author, character only, or user only'],
+      ]"
+    ></x-nova3.feature-group>
 
-                    <x-nova3.components.feature title="Tell Your Stories" text="A brand-new way of thinking about stories led us to a innovative approach to help you tell your stories the way you want.">
-                        <x-slot name="icon">
-                            @svg('fluent-timeline', 'h-8 w-8')
-                        </x-slot>
-                    </x-nova3.components.feature>
+    <x-nova3.feature-group
+      title="Ranks 2.0"
+      content="We've heard from people over the years how difficult ranks are to manage in Nova. We listened and have re-built ranks from the ground up to be easy to work with and incredibly flexible for all types of games."
+      color="text-rose-500"
+      :features="[
+        ['title' => 'Group ranks', 'content' => 'Organize similar ranks together for easier searching and selecting'],
+        ['title' => 'Re-use basic info', 'content' => 'Easily manage and select the rank\'s name when managing a rank'],
+        ['title' => 'Multiple image support', 'content' => 'Ranks can be composed of base and overlay images for more flexibilty'],
+        ['title' => 'Live previews', 'content' => 'Preview what your new rank looks like in realtime as you build it'],
+        ['title' => 'Easy duplication', 'content' => 'Copy an entire rank group and change the base image in a couple of clicks'],
+      ]"
+    ></x-nova3.feature-group>
 
-                    <x-nova3.components.feature title="Post Types" text="Create different ways for players to contribute to the story through post types. Control what fields display as well as a range of other options.">
-                        <x-slot name="icon">
-                            @svg('fluent-edit-settings', 'h-8 w-8')
-                        </x-slot>
-                    </x-nova3.components.feature>
+    <x-nova3.feature-group
+      title="Users & Characters"
+      content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa sequi nihil est nam possimus suscipit, sed inventore, aut assumenda repellendus eum vitae id quidem eaque natus? Ducimus maxime sed rem?"
+      color="text-amber-500"
+      :features="[
+        ['title' => 'Create new users', 'content' => 'Admins can create new users without needing to use the join form'],
+        ['title' => 'Multi-user character ownership', 'content' => 'Allow multiple users to own and manage the same character'],
+        ['title' => 'Character creation controls', 'content' => 'More flexibility around who can create characters and what requires approval'],
+        ['title' => 'Application review', 'content' => 'The entire applicant review process on a single screen', 'image' => '/images/nova3-features/description-lists.png'],
+        ['title' => 'Default role(s)', 'content' => 'Pick which role(s) are assigned to all new users by default'],
+      ]"
+    ></x-nova3.feature-group>
 
-                    <x-nova3.components.feature title="Ranks Done Right" text="A re-imagined system for handling ranks makes it infinitely easier to manage your ranks and build them exactly how you want them.">
-                        <x-slot name="icon">
-                            @svg('fluent-layer', 'h-8 w-8')
-                        </x-slot>
-                    </x-nova3.components.feature>
-
-                    <x-nova3.components.feature title="Application Review" text="Game masters rarely decide alone on an application, so why shouldn't reviewing it involve everyone making the decision?">
-                        <x-slot name="icon">
-                            @svg('fluent-checkmark-circle', 'h-8 w-8')
-                        </x-slot>
-                    </x-nova3.components.feature>
-
-                    <x-nova3.components.feature title="Hello Darkness, My Old Friend" text="Want your admin panel to use a dark theme instead of light theme? Just flip a switch and enjoy the darkness.">
-                        <x-slot name="icon">
-                            @svg('fluent-moon', 'h-8 w-8')
-                        </x-slot>
-                    </x-nova3.components.feature>
-                </dl>
-            </div>
-        </div>
-    </div>
+    <x-nova3.feature-group
+      title="And much more..."
+      content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa sequi nihil est nam possimus suscipit, sed inventore, aut assumenda repellendus eum vitae id quidem eaque natus? Ducimus maxime sed rem?"
+      color="text-purple-500"
+      :features="[
+        ['title' => 'Mobile support', 'content' => 'Do everything from your phone or tablet that you would at your computer'],
+        ['title' => 'Dark mode', 'content' => 'Choose between light and dark mode for the admin interface'],
+        ['title' => 'Easy color customization', 'content' => 'Change the different colors Nova uses for the admin interface'],
+        ['title' => 'Lightning quick navigation', 'content' => 'Move around Nova without taking your hands off the keyboard'],
+        ['title' => 'Personal notes', 'content' => 'Store your story ideas, personal notes, or scratchpad inside of Nova'],
+        ['title' => 'More notification options', 'content' => 'Choose to get your notifications by email or inside of Nova'],
+        ['title' => 'Discord integration', 'content' => 'Send some of your game\'s notifications directly to your Discord server'],
+        ['title' => 'Tips & tricks', 'content' => 'Helpful tips and tricks are included on many pages'],
+      ]"
+    ></x-nova3.feature-group>
+  </div>
 </div>
